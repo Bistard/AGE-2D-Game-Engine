@@ -13,7 +13,7 @@
 namespace AGE
 {
 
-class Box
+class Box final
 {
 public:
     Box(Point<int> leftTop, Point<int> rightBottom): _leftTop {leftTop}, _rightBottom {rightBottom} {}

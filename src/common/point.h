@@ -12,11 +12,11 @@ namespace AGE
 {
 
 template<typename T = int> // T = float
-class Point
+class Point final
 {
 public:
     Point(T x, T y): _x {x}, _y {y} {}
-    virtual ~Point() {};
+    ~Point() {};
 
     T X() const noexcept { return _x; }
     T Y() const noexcept { return _y; }
