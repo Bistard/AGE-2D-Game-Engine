@@ -12,6 +12,9 @@
 #include <chrono>
 #include <thread>
 
+#define AGE_DEFAULT_FPS  2
+#define AGE_ENHANCED_FPS 60
+
 namespace AGE
 {
 
