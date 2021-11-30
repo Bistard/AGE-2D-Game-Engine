@@ -5,6 +5,8 @@
  * @date 2021-11-27
  ******************************************************************************/
 
+#include <initializer_list>
+
 #ifndef __AGE_POINT__
 #define __AGE_POINT__
 
@@ -16,6 +18,11 @@ class Point final
 {
 public:
     Point(T x, T y): _x {x}, _y {y} {}
+    Point(std::initializer_list<T> ls) 
+    {
+        _x = *ls.begin();
+        _y = *ls.end();
+    }
     ~Point() {};
 
     T X() const noexcept { return _x; }
