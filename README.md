@@ -9,10 +9,39 @@ AGE is a simple 2D console game engine runs in UNIX using third library Ncurses.
 3. Once it compiles, runs the executable called `vm`.
 
 # Architecture
-* see `/doc/uml.pdf`
+* see `/doc/uml.pdf` for more details
 
 # Plan of Attack
-* see `/doc/plan.md`
+* **Controller**
+  * ✔`Controller` class
+  * ✔Ncurses Adapter
+  * ✔Timer
+  * ✔Gneral engine class
+* **Model**
+  * `WindowModel`
+    * mutiple inheritance from `WindowModel`
+      * `BoardWindow`
+      * `StatusWindow`
+* `View` 
+  * `BoardView`
+    * provide two different printing algorithms
+  * `TextView`
+  * [Painter's Algorithm](https://en.wikipedia.org/wiki/Painter's_algorithm)
+    * advantage
+    * disadvantage
+    * time & space complexcity
+    * Limitations (cyclic overlap or piercing polygons)
+* `ObjectModel` 
+  * nonCollidableObject
+  * collidableObject
+  * object can have different bounding (not just Rect, but cycle, or more complex geometry, so I need an abstract class named `BoundingBox` as a base class)
+* Motion & Gravity
+* Collision
+* `Quadtree`
+* Game1
+* Game2
+* trivial enhancement
+* see `/doc/plan.md` for more details
 
 # Enhancement
 * Quadtree - for fast collision detection (`log(n)`)
