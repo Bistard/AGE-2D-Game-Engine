@@ -12,6 +12,8 @@
 
 class WindowModel;
 
+#define AGE_INPUT_ERR ERR
+
 namespace AGE
 {
 

@@ -54,7 +54,7 @@ void destroy()
 
 std::unique_ptr<Window> newWindow(int w, int h, int start_x, int start_y)
 {
-    std::unique_ptr<Window> window { new Window {w, h, start_x, start_y} };
+    std::unique_ptr<Window> window { std::make_unique<Window>(w, h, start_x, start_y) };
 
     refresh(); // let the console knows a new window is created
     return window;

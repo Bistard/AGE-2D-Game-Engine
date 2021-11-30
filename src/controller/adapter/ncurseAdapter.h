@@ -15,7 +15,8 @@
 
 #include <ncurses.h>
 
-#include "point.h"
+#include "../../common/point.h"
+
 
 namespace AGE
 {
