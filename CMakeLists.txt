@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.4)
-project(vm)
+project(mario)
 
 set(CMAKE_C_COMPILER "g++")
 set(CMAKE_SUPPRESS_REGENERATION 1)
@@ -19,6 +19,9 @@ aux_source_directory(src/view SRC_LIST)
 aux_source_directory(src/utils SRC_LIST)
 aux_source_directory(src/common SRC_LIST)
 
+# superMarioBros
+aux_source_directory(game/superMarioBros SRC_LIST)
+
 ### recursively build the program, but this will build the whole program every time
 # file(GLOB_RECURSE SRC_LIST RELATIVE ${CMAKE_SOURCE_DIR} "src/*.cpp" "src/*/*.cpp" "src/*/*/*.cpp")
 
@@ -34,7 +37,8 @@ include_directories(
 	src/view
 	src/utils
 	src/common
+	game/superMarioBros
 )
 
-add_executable(vm ${SRC_LIST} ${OBJ_LIST})
-target_link_libraries(vm ncurses) #  clntsh ociei occi hiredis_vip protobuf
+add_executable(mario ${SRC_LIST} ${OBJ_LIST})
+target_link_libraries(mario ncurses) #  clntsh ociei occi hiredis_vip protobuf
