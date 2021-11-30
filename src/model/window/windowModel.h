@@ -42,7 +42,7 @@ protected:
     WindowModel &addSubWindow(std::unique_ptr<WindowModel> &&window);
     WindowModel &detachSubWindow(std::unique_ptr<WindowModel> &&window);
 private:
-    std::vector<std::unique_ptr<View>> _views;
+    std::vector<std::unique_ptr<View>> _views; // OPTIMIZE: do we actually need a vector for view?
     std::vector<std::unique_ptr<WindowModel>> _subWindowModels;
 };
 

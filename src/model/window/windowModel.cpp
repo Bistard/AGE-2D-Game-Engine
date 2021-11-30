@@ -2,7 +2,7 @@
 #include "windowModel.h"
 #include "../../controller/controller.h"
 #include "../../view/view.h"
-#include "../../view/boardView.h"
+#include "../../view/cameraView.h"
 #include "../../utils/camera.h"
 
 namespace AGE
@@ -30,7 +30,7 @@ void WindowModel::drawViews() const
 void WindowModel::updateViews() const
 {
     for (auto &win : _subWindowModels) {
-        win->drawViews();
+        win->updateViews();
     }
 
     for (auto &v : _views) {
@@ -94,8 +94,8 @@ WindowWithController::getController() const { return *_controller; }
  ******************************************************************************/
 WindowWithCamera::WindowWithCamera(Point<int> pos, size_t width, size_t height): WindowModel {pos, width, height}
 {
-    // construction of `WindowWithCamera` will auomatically add a `BoardView` into the vector.
-    this->addView( std::make_unique<BoardView>(*this) );
+    // construction of `WindowWithCamera` will auomatically add a `CameraView` into the vector.
+    this->addView( std::make_unique<CameraView>(*this) );
     _camera = std::make_unique<Camera>(pos, width, height);
 }
 

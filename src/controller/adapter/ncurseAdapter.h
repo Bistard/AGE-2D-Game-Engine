@@ -17,7 +17,6 @@
 
 #include "../../common/point.h"
 
-
 namespace AGE
 {
 

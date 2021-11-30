@@ -10,7 +10,7 @@
 #define __AGE_BOARD_WINDOW__
 
 #include "windowModel.h"
-#include "../../view/boardView.h"
+#include "../../view/cameraView.h"
 
 namespace AGE
 {
@@ -27,8 +27,8 @@ public:
     {}
     ~BoardWindow() override {}
 public:
-    BoardView &addBoardView(std::unique_ptr<BoardView> &&boardView) { return static_cast<BoardView &>(this->addView(std::move(boardView))); }
-    BoardView &detachBoardView(std::unique_ptr<BoardView> &&boardView) { return static_cast<BoardView &>(this->detechView(std::move(boardView))); }
+    CameraView &addBoardView(std::unique_ptr<CameraView> &&cameraView) { return static_cast<CameraView &>(this->addView(std::move(cameraView))); }
+    CameraView &detachBoardView(std::unique_ptr<CameraView> &&cameraView) { return static_cast<CameraView &>(this->detechView(std::move(cameraView))); }
 private:
     // std::unique_ptr<Grid> _grid;
     // bool _boardType;

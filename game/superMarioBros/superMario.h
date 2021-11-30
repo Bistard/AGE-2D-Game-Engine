@@ -22,6 +22,7 @@ public:
     SuperMarioEngine(int fps, size_t width, size_t height): AgeEngine<FPS> {fps}
     {}
     ~SuperMarioEngine() {}
+public:
     // TODO: 这可以跑？ 不是private virtual method么T-T
     void init() override
     {

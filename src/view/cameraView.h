@@ -1,8 +1,8 @@
 /**
- * @file boardView.h
+ * @file cameraView.h
  * @author Sihan Li (lshh1015813038@gmail.com)
- * @version 0.1
- * @date 2021-11-28
+ * @version 0.2
+ * @date 2021-11-30
  */
 
 #ifndef __AGE_BOARD_VIEW__
@@ -18,14 +18,16 @@ namespace Ncurses {
     class Window;
 };
 
+class WindowWithCamera;
+
 /*******************************************************************************
  * @brief Concrete Derived Class - for Ncurses
  ******************************************************************************/
-class BoardView : public View
+class CameraView : public View
 {
 public:
-    BoardView(const WindowWithCamera &model): View {}, _model {model} {}
-    ~BoardView() override {}
+    CameraView(const WindowWithCamera &model): View {}, _model {model} {}
+    ~CameraView() override {}
 public:
     void draw() override 
     {

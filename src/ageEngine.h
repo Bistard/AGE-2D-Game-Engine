@@ -25,7 +25,7 @@
 
 #include "view/view.h"
 #include "view/statusView.h"
-#include "view/boardView.h"
+#include "view/cameraView.h"
 
 #include "utils/timer.h"
 #include "utils/camera.h"
@@ -116,19 +116,18 @@ private:
     {
         this->init();
     
+        _mainWindow->drawViews();
+
         while (true) {
 
             int in = _mainWindow->getInput();
-            
-            // GameWindow &win = static_cast<GameWindow &>(*_mainWindow);
-            
-            // OPTIMIZE: testing 
-            if (in != AGE_INPUT_ERR) {
-                printw("%c", (char)in);
-            }
-            
+        
             // game logic function, overrides by the user.
             this->onEachFrame();
+
+            // TODO: this->updateGameLogic();
+
+            _mainWindow->updateViews();
 
             // must be invoked as the end of the loop inorder to let the program 
             //   pause utill the next frame.

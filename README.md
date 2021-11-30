@@ -23,7 +23,7 @@ AGE is a simple 2D console game engine runs in UNIX using third library Ncurses.
       * `BoardWindow`
       * `StatusWindow`
 * `View` 
-  * `BoardView`
+  * `CameraView`
     * provide two different printing algorithms
   * `TextView`
   * [Painter's Algorithm](https://en.wikipedia.org/wiki/Painter's_algorithm)
