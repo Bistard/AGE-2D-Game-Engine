@@ -21,7 +21,7 @@ public:
     Point(std::initializer_list<T> ls) 
     {
         _x = *ls.begin();
-        _y = *ls.end();
+        _y = *(ls.begin() + 1);
     }
     ~Point() {};
 
