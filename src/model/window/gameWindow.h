@@ -24,7 +24,10 @@ class Point;
  * @brief A helper function to create a GameWindow (the default AGE engine game layout).
  * This is the ONLY valid way to construct a GameWindow type.
  */
-std::unique_ptr<GameWindow> makeGameWindow(int FPS, Point<int> pos, size_t width, size_t height);
+std::unique_ptr<GameWindow> makeGameWindow(int FPS, 
+    Point<int> pos, size_t width, size_t height, 
+    Point<int> pos1, size_t width1, size_t height1, 
+    Point<int> pos2, size_t width2, size_t height2);
 
 class GameWindow : public WindowWithController
 {

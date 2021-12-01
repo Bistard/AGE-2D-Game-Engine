@@ -1,7 +1,6 @@
 /**
  * @file view.h
  * @author Sihan Li (lshh1015813038@gmail.com)
- * @brief 
  * @version 0.1
  * @date 2021-11-28
  */

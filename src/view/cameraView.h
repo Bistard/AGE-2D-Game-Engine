@@ -26,17 +26,11 @@ class WindowWithCamera;
 class CameraView : public View
 {
 public:
-    CameraView(const WindowWithCamera &model): View {}, _model {model} {}
-    ~CameraView() override {}
+    CameraView(WindowWithCamera &model);
+    ~CameraView() override;
 public:
-    void draw() override 
-    {
-        
-    }
-    void update() override 
-    {
-        // TODO: draw the Grid to the Ncurses::Window
-    }
+    void draw() override;
+    void update() override;
 private:
     // the screen output
     std::unique_ptr<Ncurses::Window> _window;

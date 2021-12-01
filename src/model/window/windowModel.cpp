@@ -12,7 +12,9 @@ namespace AGE
  * @brief `WindowModel` implementation
  ******************************************************************************/
 
-WindowModel::WindowModel(Point<int> pos, size_t width, size_t height) {}
+WindowModel::WindowModel(Point<int> pos, size_t width, size_t height): 
+    position {pos}, width {width}, height {height} 
+{}
 
 WindowModel::~WindowModel() {}
 
@@ -103,6 +105,18 @@ WindowWithCamera::~WindowWithCamera() {}
 
 const Camera &
 WindowWithCamera::getCamera() const { return *_camera; }
+
+void 
+WindowWithCamera::setBorder(bool show, int top, int bottom, int left, int right, int corner)
+{
+    _hasBorder = show;
+    
+    _topBorder = top;
+    _bottomBorder = bottom;
+    _leftBorder = left;
+    _rightBorder = right;
+    _cornerBorder = corner;
+}
 
 } // AGE
 

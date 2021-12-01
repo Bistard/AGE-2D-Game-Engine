@@ -38,8 +38,16 @@
     #define AGE_ENHANCED_FPS 60
 #endif
 
+#ifndef NCURSE_ERR
+    #define NCURSE_ERR ERR
+#endif
+
+#ifndef NCURSE_OK
+    #define NCURSE_OK OK
+#endif
+
 #ifndef AGE_INPUT_ERR
-    #define AGE_INPUT_ERR ERR
+    #define AGE_INPUT_ERR NCURSE_ERR
 #endif
 
 #define AGE_DEFAULT_WIN_WIDTH 80
@@ -72,9 +80,12 @@ public:
      */
     AgeEngine(int fps, size_t width = AGE_DEFAULT_WIN_WIDTH, size_t height = AGE_DEFAULT_WIN_HEIGHT)
     {
-        // 设置console大小
+        __init_curses(width, height);
         
-        std::unique_ptr<GameWindow> win = makeGameWindow(fps, {1, 1}, width, height);
+        // StatusWindow has 3 rows height. 
+        // BoardWindow with 22 rows height. 20 rows height without boarder.
+        std::unique_ptr<GameWindow> win = 
+            makeGameWindow(fps, {0, 0}, width, height, {0, height - 3}, width, 3, {0, 0}, width, height - 3);
         _mainWindow = std::move(win);
     }
 
@@ -86,9 +97,17 @@ public:
      *        ↙ ↘             ↙ ↘
      *     ...    ...         ...  ...
      */
-    AgeEngine(std::unique_ptr<WindowWithController> &&win): _mainWindow {std::move(win)} {}
+    AgeEngine(int fps, int width, int height, std::unique_ptr<WindowWithController> &&win)
+    {
+        __init_curses(width, height);
+        _mainWindow = std::move(win);
+    }
     
-    virtual ~AgeEngine() {}
+    virtual ~AgeEngine() 
+    {
+        // deallocates memory and ends ncurses
+        Ncurses::destroy();
+    }
 
 public:
 
@@ -105,6 +124,18 @@ public:
 
 private:
 
+    void __init_curses(size_t width, size_t height)
+    {
+        // sets up memeory for ncurses
+        Ncurses::init(Ncurses::WindowOpt::CBREAK, false);
+
+        // resize the current window 
+        // int res = resizeterm(height, width);
+        // if (res == NCURSE_ERR) {
+        //     // error while (re)allocating memory
+        // }
+    }
+
     virtual void init() { /* empty body. Client need to override. */ }
     virtual void onEachFrame() { /* empty body. Client need to override. */ }
 
@@ -116,12 +147,15 @@ private:
     {
         this->init();
     
+        GameWindow &win = static_cast<GameWindow &>(*_mainWindow);
+        BoardWindow &bwin = win.getBoardWindow();
+        bwin.setBorder(true, '-', '-', '|', '|', '+');
         _mainWindow->drawViews();
 
         while (true) {
 
             int in = _mainWindow->getInput();
-        
+            
             // game logic function, overrides by the user.
             this->onEachFrame();
 

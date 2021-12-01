@@ -82,7 +82,7 @@ public:
     short height();
 
     void print(std::string s, int x = -1, int y = -1);
-    void showBorder(int top = 0, int side = 0, int corner = 0);
+    void showBorder(int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32);
     void moveTo(int x, int y);
     void refresh(); // refresh this window
     

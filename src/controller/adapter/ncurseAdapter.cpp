@@ -83,9 +83,9 @@ void Window::refresh()
     wrefresh(_win);
 }
 
-void Window::showBorder(int top, int side, int corner)
+void Window::showBorder(int top, int bottom, int left, int right, int corner)
 {
-    wborder(_win, side, side, top, top, corner, corner, corner, corner);
+    wborder(_win, left, right, top, bottom, corner, corner, corner, corner);
     refresh(); // refreshes the specific WINDOW
 }
 

@@ -19,10 +19,9 @@ class CurseController : public Controller
 public:
     CurseController(int FPS): Controller {FPS}
     {
-        Ncurses::init(Ncurses::WindowOpt::CBREAK, false);
         Ncurses::setInputTimeout(1 / FPS);
     }
-    ~CurseController() { Ncurses::destroy(); }
+    ~CurseController() {}
 private:
     int __input() const override { return getch(); }
 };
