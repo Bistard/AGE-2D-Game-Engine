@@ -25,14 +25,14 @@ class Point;
  * This is the ONLY valid way to construct a GameWindow type.
  */
 std::unique_ptr<GameWindow> makeGameWindow(int FPS, 
-    Point<int> pos, size_t width, size_t height, 
-    Point<int> pos1, size_t width1, size_t height1, 
-    Point<int> pos2, size_t width2, size_t height2);
+    Point<int> pos, SIZE width, SIZE height, 
+    Point<int> pos1, SIZE width1, SIZE height1, 
+    Point<int> pos2, SIZE width2, SIZE height2);
 
 class GameWindow : public WindowWithController
 {
 public:
-    GameWindow(int FPS, Point<int> pos, size_t width, size_t height, 
+    GameWindow(int FPS, Point<int> pos, SIZE width, SIZE height, 
         std::unique_ptr<StatusWindow> &&statusWin, 
         std::unique_ptr<BoardWindow> &&boardWin);
     ~GameWindow() override;

@@ -31,7 +31,7 @@ class CameraView;
 class WindowModel
 {
 public:
-    WindowModel(Point<int> pos, size_t width, size_t height);
+    WindowModel(Point<int> pos, SIZE width, SIZE height);
     virtual ~WindowModel();
 public:
     void drawViews() const;
@@ -44,8 +44,8 @@ protected:
     WindowModel &detachSubWindow(std::unique_ptr<WindowModel> &&window);
 protected:
     const Point<int> position;
-    const size_t width;
-    const size_t height;
+    const SIZE width;
+    const SIZE height;
 private:
     std::vector<std::unique_ptr<View>> _views; // OPTIMIZE: do we actually need a vector for view?
     std::vector<std::unique_ptr<WindowModel>> _subWindowModels;
@@ -58,8 +58,8 @@ private:
 class WindowWithController: virtual public WindowModel
 {
 public:
-    WindowWithController(Point<int> pos, size_t width, size_t height);
-    WindowWithController(Point<int> pos, size_t width, size_t height, std::unique_ptr<Controller> &&controller);
+    WindowWithController(Point<int> pos, SIZE width, SIZE height);
+    WindowWithController(Point<int> pos, SIZE width, SIZE height, std::unique_ptr<Controller> &&controller);
     ~WindowWithController() override;
 public:
     // get users input directly from the built-in controller
@@ -77,7 +77,7 @@ private:
 class WindowWithCamera: virtual public WindowModel
 {
 public:
-    WindowWithCamera(Point<int> pos, size_t width, size_t height);
+    WindowWithCamera(Point<int> pos, SIZE width, SIZE height);
     ~WindowWithCamera() override;
 public:
     const Camera &getCamera() const;

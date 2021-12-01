@@ -9,9 +9,9 @@ namespace AGE
 
 std::unique_ptr<GameWindow> 
 makeGameWindow(int FPS, 
-    Point<int> pos, size_t width, size_t height, 
-    Point<int> pos1, size_t width1, size_t height1, 
-    Point<int> pos2, size_t width2, size_t height2)
+    Point<int> pos, SIZE width, SIZE height, 
+    Point<int> pos1, SIZE width1, SIZE height1, 
+    Point<int> pos2, SIZE width2, SIZE height2)
 {
     std::unique_ptr<StatusWindow> statusWin = std::make_unique<StatusWindow>(pos1, width1, height1);
     std::unique_ptr<BoardWindow> boardWin = std::make_unique<BoardWindow>(pos2, width2, height2);
@@ -20,7 +20,7 @@ makeGameWindow(int FPS,
     return gameWin;
 }
 
-GameWindow::GameWindow(int FPS, Point<int> pos, size_t width, size_t height, 
+GameWindow::GameWindow(int FPS, Point<int> pos, SIZE width, SIZE height, 
     std::unique_ptr<StatusWindow> &&statusWin, 
     std::unique_ptr<BoardWindow> &&boardWin): 
         WindowModel {pos, width, height},

@@ -19,7 +19,7 @@ template<std::intmax_t FPS = AGE_DEFAULT_FPS>
 class SuperMarioEngine : public AgeEngine<FPS>
 {
 public:
-    SuperMarioEngine(int fps, size_t width, size_t height): AgeEngine<FPS> {fps}
+    SuperMarioEngine(int fps, SIZE width, SIZE height): AgeEngine<FPS> {fps}
     {}
     ~SuperMarioEngine() {}
 public:

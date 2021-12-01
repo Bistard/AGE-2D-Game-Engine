@@ -21,7 +21,7 @@ class Point;
 class BoardWindow : public WindowWithCamera
 {
 public:
-    BoardWindow(Point<int> pos, size_t width, size_t height): 
+    BoardWindow(Point<int> pos, SIZE width, SIZE height): 
         WindowModel {pos, width, height},
         WindowWithCamera {pos, width, height}
     {}

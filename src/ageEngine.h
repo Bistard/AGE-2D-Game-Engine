@@ -30,29 +30,6 @@
 #include "utils/timer.h"
 #include "utils/camera.h"
 
-#ifndef AGE_DEFAULT_FPS
-    #define AGE_DEFAULT_FPS 2
-#endif
-
-#ifndef AGE_ENHANCED_FPS
-    #define AGE_ENHANCED_FPS 60
-#endif
-
-#ifndef NCURSE_ERR
-    #define NCURSE_ERR ERR
-#endif
-
-#ifndef NCURSE_OK
-    #define NCURSE_OK OK
-#endif
-
-#ifndef AGE_INPUT_ERR
-    #define AGE_INPUT_ERR NCURSE_ERR
-#endif
-
-#define AGE_DEFAULT_WIN_WIDTH 80
-#define AGE_DEFAULT_WIN_HEIGHT 25
-
 namespace AGE
 {
 
@@ -78,7 +55,7 @@ public:
      *            ↙          ↘
      *      BoardWindow    StatusWindow
      */
-    AgeEngine(int fps, size_t width = AGE_DEFAULT_WIN_WIDTH, size_t height = AGE_DEFAULT_WIN_HEIGHT)
+    AgeEngine(int fps, SIZE width = AGE_DEFAULT_WIN_WIDTH, SIZE height = AGE_DEFAULT_WIN_HEIGHT)
     {
         __init_curses(width, height);
         
@@ -97,7 +74,7 @@ public:
      *        ↙ ↘             ↙ ↘
      *     ...    ...         ...  ...
      */
-    AgeEngine(int fps, int width, int height, std::unique_ptr<WindowWithController> &&win)
+    AgeEngine(int fps, SIZE width, SIZE height, std::unique_ptr<WindowWithController> &&win)
     {
         __init_curses(width, height);
         _mainWindow = std::move(win);
@@ -124,7 +101,7 @@ public:
 
 private:
 
-    void __init_curses(size_t width, size_t height)
+    void __init_curses(SIZE width, SIZE height)
     {
         // sets up memeory for ncurses
         Ncurses::init(Ncurses::WindowOpt::CBREAK, false);

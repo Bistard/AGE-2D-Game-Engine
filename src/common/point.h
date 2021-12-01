@@ -10,6 +10,11 @@
 
 #include <initializer_list>
 
+#define AGE_DEFAULT_WIN_WIDTH 80
+#define AGE_DEFAULT_WIN_HEIGHT 25
+
+typedef unsigned short SIZE; // 0 ~ 255
+
 namespace AGE
 {
 

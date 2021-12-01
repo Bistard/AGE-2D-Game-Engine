@@ -17,6 +17,9 @@
 
 #include "../../common/point.h"
 
+#define NCURSE_ERR ERR
+#define NCURSE_OK OK
+
 namespace AGE
 {
 
