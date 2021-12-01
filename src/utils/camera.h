@@ -19,6 +19,13 @@ public:
     Camera(Point<int> pos, int width, int height): position {pos}, width {width}, height {height} {}
     ~Camera() = default;
 public:
+    // positive: move right  
+    // negative: move left
+    void moveH(int steps) { position.getX() += steps; }
+    // positive: move up  
+    // negative: move down
+    void moveV(int steps) { position.getY() -= steps; }
+public:
     Point<int> position;
     const int width;
     const int height;
