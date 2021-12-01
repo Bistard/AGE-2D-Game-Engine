@@ -23,6 +23,7 @@ template<typename T> class Point;
 class Controller;
 class View;
 class Camera;
+class CameraView;
 
 /*******************************************************************************
  * @brief Base Class - `Model` component in MVC which controls window's logic.
@@ -41,6 +42,10 @@ protected:
     View &detechView(std::unique_ptr<View> &&view);
     WindowModel &addSubWindow(std::unique_ptr<WindowModel> &&window);
     WindowModel &detachSubWindow(std::unique_ptr<WindowModel> &&window);
+protected:
+    const Point<int> position;
+    const size_t width;
+    const size_t height;
 private:
     std::vector<std::unique_ptr<View>> _views; // OPTIMIZE: do we actually need a vector for view?
     std::vector<std::unique_ptr<WindowModel>> _subWindowModels;
@@ -78,8 +83,15 @@ public:
     const Camera &getCamera() const;
     // void addObject(std::unique_ptr<ObjectModel> &&object);
     // void detachObject(std::unique_ptr<ObjectModel> &&object);
+
+    // default value: 32 -> blanks space
+    void setBorder(bool show, int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32);
 private:
+    // give data access to `CameraView` makes everything so much easier
+    friend class CameraView;
     std::unique_ptr<Camera> _camera;
+    bool _hasBorder;
+    int _topBorder, _bottomBorder, _leftBorder, _rightBorder, _cornerBorder;
     // std::vector<std::unique_ptr<NonCollidableObject>> _objects;
     // std::vector<std::unique_ptr<CollidableObject>> _objects;
 };
