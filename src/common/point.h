@@ -5,10 +5,10 @@
  * @date 2021-11-27
  ******************************************************************************/
 
-#include <initializer_list>
-
 #ifndef __AGE_POINT__
 #define __AGE_POINT__
+
+#include <initializer_list>
 
 namespace AGE
 {

@@ -9,6 +9,7 @@
 #define __AGE_VELOCITY__
 
 #include "point.h"
+#include <initializer_list>
 
 namespace AGE
 {
@@ -18,6 +19,12 @@ class Velocity final
 public:
     Velocity(float x, float y): _x {x}, _y {y} {}
     ~Velocity() = default;
+
+    Velocity(std::initializer_list<float> ls) 
+    {
+        _x = *ls.begin();
+        _y = *(ls.begin() + 1);
+    }
 
     void add(const Velocity &v) noexcept { getX() += v.X(); getY() += v.Y(); }
 

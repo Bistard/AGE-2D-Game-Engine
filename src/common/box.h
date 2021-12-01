@@ -9,6 +9,7 @@
 #define __AGE_BOX__
 
 #include "point.h"
+#include <initializer_list>
 
 namespace AGE
 {
@@ -17,7 +18,11 @@ class Box final
 {
 public:
     Box(Point<int> leftTop, Point<int> rightBottom): _leftTop {leftTop}, _rightBottom {rightBottom} {}
-    
+    ~Box() = default;
+
+    Box(std::initializer_list<Point<int>> ls): _leftTop {*ls.begin()}, _rightBottom {*(ls.begin() + 1)}
+    {}
+
     bool contains(const Point<int> &p) const noexcept
     {
         if ((_leftTop.X() <= p.X()) && (p.X() <= _rightBottom.X()) && 
