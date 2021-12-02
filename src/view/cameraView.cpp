@@ -24,6 +24,12 @@ void CameraView::draw()
 
 void CameraView::update()
 {
+
+}
+
+void CameraView::clear()
+{
+    
 }
 
 } // AGE

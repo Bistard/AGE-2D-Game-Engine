@@ -31,11 +31,16 @@ public:
 public:
     void draw() override;
     void update() override;
+    void clear() override;
+
+    
 private:
-    // the screen output
-    std::unique_ptr<Ncurses::Window> _window;
     // the reference to the `WindowWithCamera`
     const WindowWithCamera &_model;
+    
+    // the screen buffer (output)
+    std::unique_ptr<Ncurses::Window> _window;
+    // objectViews
 };
 
 } // AGE
