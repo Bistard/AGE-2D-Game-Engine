@@ -21,9 +21,11 @@ namespace Ncurses {
 }
 template<typename T> class Point;
 class Controller;
-class View;
 class Camera;
 class CameraView;
+
+class Collidable;
+class NonCollidable;
 
 /*******************************************************************************
  * @brief Base Class - `Model` component in MVC which controls window's logic.
@@ -33,24 +35,29 @@ class WindowModel
 public:
     WindowModel(Point<int> pos, SIZE width, SIZE height);
     virtual ~WindowModel();
-public:
-    void drawViews() const;
-    void updateViews() const;
-    void cleanViews();
 protected:
-    View &addView(std::unique_ptr<View> &&view);
-    View &detechView(std::unique_ptr<View> &&view);
     WindowModel &addSubWindow(std::unique_ptr<WindowModel> &&window);
     WindowModel &detachSubWindow(std::unique_ptr<WindowModel> &&window);
+
+    /**
+     * @brief These functions will recursively draw all the views from subwindows 
+     *  first. If the derived classes provide new `View`, they need to override
+     *  the following private virtual methods.
+     */
+    void drawViews() const;
+    void updateViews() const;
+    void clearViews();
+private:
+    virtual void drawView() const {}
+    virtual void updateView() const {}
+    virtual void clearView() {}
 protected:
     const Point<int> position;
     const SIZE width;
     const SIZE height;
 private:
-    std::vector<std::unique_ptr<View>> _views; // OPTIMIZE: do we actually need a vector for view?
     std::vector<std::unique_ptr<WindowModel>> _subWindowModels;
 };
-
 
 /*******************************************************************************
  * @brief Virtual Derived Class
@@ -86,14 +93,27 @@ public:
 
     // default value: 32 -> blanks space
     void setBorder(bool show, int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32);
+protected:
+    CameraView &addView(std::unique_ptr<CameraView> &&view);
+    CameraView &detechView(std::unique_ptr<CameraView> &&view);
+
+    
+private:
+    void drawView() const override;
+    void updateView() const override;
+    void clearView() override;
 private:
     // give data access to `CameraView` makes everything so much easier
     friend class CameraView;
+
     std::unique_ptr<Camera> _camera;
+    std::unique_ptr<CameraView> _cameraview;
+    
+    std::vector<std::unique_ptr<Collidable>> _collidables;
+    std::vector<std::unique_ptr<NonCollidable>> _nonCollidables;
+
     bool _hasBorder;
     int _topBorder, _bottomBorder, _leftBorder, _rightBorder, _cornerBorder;
-    // std::vector<std::unique_ptr<NonCollidableObject>> _objects;
-    // std::vector<std::unique_ptr<CollidableObject>> _objects;
 };
 
 } // AGE

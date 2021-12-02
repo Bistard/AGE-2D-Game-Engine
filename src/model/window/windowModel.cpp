@@ -4,6 +4,7 @@
 #include "../../view/view.h"
 #include "../../view/cameraView.h"
 #include "../../utils/camera.h"
+#include "../object/objectModel.h"
 
 namespace AGE
 {
@@ -18,45 +19,6 @@ WindowModel::WindowModel(Point<int> pos, SIZE width, SIZE height):
 
 WindowModel::~WindowModel() {}
 
-void WindowModel::drawViews() const
-{
-    for (auto &win : _subWindowModels) {
-        win->drawViews();
-    }
-    
-    for (auto &v : _views) {
-        v->draw();
-    }
-}
-
-void WindowModel::updateViews() const
-{
-    for (auto &win : _subWindowModels) {
-        win->updateViews();
-    }
-
-    for (auto &v : _views) {
-        v->update();
-    }
-}
-
-void WindowModel::cleanViews()
-{
-    _views.clear();
-}
-
-View &WindowModel::addView(std::unique_ptr<View> &&view)
-{
-    View &ref = *view;
-    _views.emplace_back( std::move(view) );
-    return ref;
-}
-
-View &WindowModel::detechView(std::unique_ptr<View> &&view)
-{
-    // TODO
-}
-
 WindowModel &WindowModel::addSubWindow(std::unique_ptr<WindowModel> &&window)
 {
     WindowModel &ref = *window;
@@ -67,6 +29,30 @@ WindowModel &WindowModel::addSubWindow(std::unique_ptr<WindowModel> &&window)
 WindowModel &detachSubWindow(std::unique_ptr<WindowModel> &&window)
 {
     // TODO
+}
+
+void WindowModel::drawViews() const
+{
+    for (auto &win : _subWindowModels) {
+        win->drawViews();
+    }
+    drawView();
+}
+
+void WindowModel::updateViews() const
+{
+    for (auto &win : _subWindowModels) {
+        win->updateViews();
+    }
+    updateView();
+}
+
+void WindowModel::clearViews()
+{
+    for (auto &win : _subWindowModels) {
+        win->clearViews();
+    }
+    clearView();
 }
 
 /*******************************************************************************
@@ -117,6 +103,34 @@ WindowWithCamera::setBorder(bool show, int top, int bottom, int left, int right,
     _rightBorder = right;
     _cornerBorder = corner;
 }
+
+CameraView &WindowWithCamera::addView(std::unique_ptr<CameraView> &&view)
+{
+    CameraView &ref = *view;
+    _cameraview =std::move(view);
+    return ref;
+}
+
+CameraView &WindowWithCamera::detechView(std::unique_ptr<CameraView> &&view)
+{
+    // TODO
+}
+
+void WindowWithCamera::drawView() const
+{
+    _cameraview->draw();
+}
+
+void WindowWithCamera::updateView() const
+{
+    _cameraview->update();
+}
+
+void WindowWithCamera::clearView()
+{
+    _cameraview->clear();
+}
+
 
 } // AGE
 
