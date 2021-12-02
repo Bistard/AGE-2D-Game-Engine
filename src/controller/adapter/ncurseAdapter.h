@@ -66,7 +66,7 @@ void setInputTimeout(int timeout);
 void destroy();
 
 // helper function for creating a Window.
-std::unique_ptr<Window> newWindow(int width, int height, int start_x, int start_y);
+std::unique_ptr<Window> newWindow(SIZE width, SIZE height, SIZE start_x, SIZE start_y);
 
 /*******************************************************************************
  * @brief Adapter class for wrapping Ncurses WINDOW - C++ friendly
@@ -76,25 +76,26 @@ class Window
 public:
     // you need to call `refresh()` from Ncurses libarary manually if you are 
     //   constructing a `Window` without the helper function `newWindow()`.
-    Window(int w, int h, int start_x, int start_y);
+    Window(SIZE w, SIZE h, SIZE start_x, SIZE start_y);
     ~Window();
 
     WINDOW *getWin() const;
-    Point<int> currPosition();
-    short width();
-    short height();
+    Point<SIZE> currPosition();
+    SIZE width();
+    SIZE height();
 
-    void print(std::string s, int x = -1, int y = -1);
+    void print(std::string s, SIZE x = -1, SIZE y = -1);
+    void print(const char *s, SIZE x = -1, SIZE y = -1);
     void showBorder(int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32);
-    void moveTo(int x, int y);
+    void moveTo(SIZE x, SIZE y);
     void refresh(); // refresh this window
     
     void clean(); // clears this window screen
 private:
     WINDOW *_win;
-    Point<int> _currPos;
-    short _w;
-    short _h;
+    Point<SIZE> _currPos;
+    SIZE _w;
+    SIZE _h;
 };
 
 } // Ncurses

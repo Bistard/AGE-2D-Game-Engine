@@ -52,7 +52,7 @@ void destroy()
     endwin();
 }
 
-std::unique_ptr<Window> newWindow(int w, int h, int start_x, int start_y)
+std::unique_ptr<Window> newWindow(SIZE w, SIZE h, SIZE start_x, SIZE start_y)
 {
     std::unique_ptr<Window> window { std::make_unique<Window>(w, h, start_x, start_y) };
 
@@ -64,10 +64,10 @@ std::unique_ptr<Window> newWindow(int w, int h, int start_x, int start_y)
  * @brief `Window` implementation
  ******************************************************************************/
 
-Window::Window(int w, int h, int start_x, int start_y)
+Window::Window(SIZE w, SIZE h, SIZE start_x, SIZE start_y)
     : _win { newwin(h, w, start_y, start_x) }, 
       _currPos {start_x, start_y},
-      _w {static_cast<short>(w)}, _h {static_cast<short>(h)}
+      _w {static_cast<SIZE>(w)}, _h {static_cast<SIZE>(h)}
 {}
 
 Window::~Window() 
@@ -89,27 +89,32 @@ void Window::showBorder(int top, int bottom, int left, int right, int corner)
     refresh(); // refreshes the specific WINDOW
 }
 
-void Window::print(std::string s, int x, int y)
+void Window::print(std::string s, SIZE x, SIZE y)
+{
+    print(s.c_str(), x, y);
+}
+
+void Window::print(const char *s, SIZE x, SIZE y)
 {
     if ((x != -1) && (y != -1)) {
         moveTo(y, x);
     }
-    wprintw(_win, s.c_str());
+    wprintw(_win, s);
     refresh();
 }
 
-void Window::moveTo(int x, int y)
+void Window::moveTo(SIZE x, SIZE y)
 {
     wmove(_win, y, x);
 }
 
 void Window::clean() { wclear(_win); }
 
-Point<int> Window::currPosition() { return _currPos; }
+Point<SIZE> Window::currPosition() { return _currPos; }
 
-short Window::width() { return _w; }
+SIZE Window::width() { return _w; }
 
-short Window::height() { return _h; }
+SIZE Window::height() { return _h; }
 
 } // Ncurses
 
