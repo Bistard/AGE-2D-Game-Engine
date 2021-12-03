@@ -3,7 +3,7 @@ AGE is a simple 2D console game engine runs in UNIX using third library Ncurses.
 
 # How-To-Run
 1. You need to install `ncurses` using the following command
-   > sudo apt-get install libncurses5-dev libncursesw5-dev
+   > `sudo apt-get install libncurses5-dev libncursesw5-dev`
 2. `cd` to the `build` directory and type
    > `make`
 3. Once it compiles, runs the executable called `vm`.
@@ -26,11 +26,14 @@ AGE is a simple 2D console game engine runs in UNIX using third library Ncurses.
   * `CameraView`
     * provide two different printing algorithms
   * `TextView`
+  * 光栅化 - Rasterization
   * [Painter's Algorithm](https://en.wikipedia.org/wiki/Painter's_algorithm)
     * advantage
     * disadvantage
     * time & space complexcity
     * Limitations (cyclic overlap or piercing polygons)
+  * [Reverse Painter's Algorithm]()
+  * [Z-buffer Algorithm]()
 * `ObjectModel` 
   * nonCollidableObject
   * collidableObject

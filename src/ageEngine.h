@@ -2,8 +2,8 @@
  * @file ageEngine.h
  * @author Sihan Li (lshh1015813038@gmail.com)
  * @brief They entry header file for the AGE engine.
- * @version 0.1
- * @date 2021-11-27
+ * @version 0.2
+ * @date 2021-12-04
  ******************************************************************************/
 
 #ifndef __AGE_AGE_ENGINE__
@@ -23,18 +23,22 @@
 #include "model/window/statusWindow.h"
 #include "model/window/boardWindow.h"
 
+#include "model/object/objectModel.h"
+#include "model/object/rectObject.h"
+
 #include "view/view.h"
 #include "view/statusView.h"
 #include "view/cameraView.h"
 
 #include "utils/timer.h"
 #include "utils/camera.h"
+#include "utils/math.h"
 
 namespace AGE
 {
 
 /*******************************************************************************
- * @brief The entry for the engine - client needs to inherit from this class.
+ * @brief Abstract Class - The entry for the engine - client needs to inherit from here.
  * 
  *   Clients need to override two private virtual functions when inheriting.
  *     - `init()`: will be invoked before the actual game loop.
@@ -51,7 +55,7 @@ public:
 
     /**
      * @brief default AGE engine layout with default Window Settings.
-     *              GameWindow 
+     *              GameWindow
      *            ↙          ↘
      *      BoardWindow    StatusWindow
      */
@@ -105,16 +109,10 @@ private:
     {
         // sets up memeory for ncurses
         Ncurses::init(Ncurses::WindowOpt::CBREAK, false);
-
-        // resize the current window 
-        // int res = resizeterm(height, width);
-        // if (res == NCURSE_ERR) {
-        //     // error while (re)allocating memory
-        // }
     }
 
-    virtual void init() { /* empty body. Client need to override. */ }
-    virtual void onEachFrame() { /* empty body. Client need to override. */ }
+    virtual void init() = 0;
+    virtual void onEachFrame(int input) = 0;
 
     /**
      * @brief actual inner game loop that controls every detail in each frame.
@@ -123,24 +121,21 @@ private:
     void __game_loop()
     {
         this->init();
-    
-        GameWindow &win = static_cast<GameWindow &>(*_mainWindow);
-        BoardWindow &bwin = win.getBoardWindow();
-        bwin.setBorder(true, '-', '-', '|', '|', '+');
+
         _mainWindow->drawViews();
 
         while (true) {
 
-            int in = _mainWindow->getInput();
+            int input = _mainWindow->getInput();
             
             // game logic function, overrides by the user.
-            this->onEachFrame();
+            this->onEachFrame(input);
 
             // TODO: this->updateGameLogic();
 
-            _mainWindow->updateViews();
+            // _mainWindow->updateViews();
 
-            // must be invoked as the end of the loop inorder to let the program 
+            // must be invoked at the end of the loop in order to let the program 
             //   pause utill the next frame.
             _timer.tick();
         }
