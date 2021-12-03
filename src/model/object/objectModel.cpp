@@ -2,6 +2,8 @@
 #include "../../common/box.h"
 #include "../../common/point.h"
 #include "../../common/velocity.h"
+#include "../../view/object/objectView.h"
+
 namespace AGE
 {
 
@@ -9,21 +11,15 @@ namespace AGE
  * @brief `ObjectModel` implementation
  ******************************************************************************/
 
-ObjectModel::ObjectModel() {}
+ObjectModel::ObjectModel(std::unique_ptr<ObjectView> &&view): _view {std::move(view)} {}
 
 ObjectModel::~ObjectModel() {}
 
-uint8_t ObjectModel::getAltitude() const noexcept { return _altitude; }
+SIZE ObjectModel::getAltitude() const noexcept { return _altitude; }
 
 void ObjectModel::setAltitude(char val) { _altitude = val; }
 
-/*******************************************************************************
- * @brief `ObjectDecorator` implementation
- ******************************************************************************/
-
-ObjectDecorator::ObjectDecorator(ObjectModel &object): object {object} {}
-
-ObjectDecorator::~ObjectDecorator() {}
+ObjectView &ObjectModel::getView() const noexcept { return *_view; }
 
 } // AGE
 
