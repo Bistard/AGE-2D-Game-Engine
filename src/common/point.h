@@ -13,9 +13,6 @@
 #define AGE_DEFAULT_WIN_WIDTH 80
 #define AGE_DEFAULT_WIN_HEIGHT 25
 
-typedef unsigned char  SIZE; // 0 ~ 255
-typedef unsigned short SSIZE; // 0 ~ 65,535
-
 namespace AGE
 {
 
