@@ -88,7 +88,7 @@ void Window::print(std::string s, SIZE x, SIZE y)
 void Window::print(const char *s, SIZE x, SIZE y)
 {
     if ((x != -1) && (y != -1)) {
-        moveTo(y, x);
+        moveTo(x, y);
     }
     wprintw(_win, s);
 }
