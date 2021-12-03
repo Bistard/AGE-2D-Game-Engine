@@ -16,7 +16,7 @@ namespace AGE
 typedef unsigned char  SIZE; // 0 ~ 255
 typedef unsigned short SSIZE; // 0 ~ 65,535
 
-// round to the nearest int position
+// round to the nearest integer position
 Point<int> roundPoint(const Point<float> &p);
 
 } // AGE

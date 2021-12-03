@@ -17,6 +17,9 @@ class ObjectView;
 
 /*******************************************************************************
  * @brief Concrete `Object` class
+ * 
+ * Each concrete `ObjectModel` class should constructs its own `ObjectView` type. 
+ *  Such an `ObjectView` determines HOW to draw the object onto the window buffer.
  ******************************************************************************/
 class ObjectModel : public Object
 {

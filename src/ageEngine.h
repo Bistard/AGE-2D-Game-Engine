@@ -133,7 +133,7 @@ private:
 
             // TODO: this->updateGameLogic();
 
-            // _mainWindow->updateViews();
+            _mainWindow->updateViews();
 
             // must be invoked at the end of the loop in order to let the program 
             //   pause utill the next frame.

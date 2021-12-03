@@ -30,11 +30,15 @@ private:
         
         BoardWindow &bwin = win.getBoardWindow();
         bwin.setBorder(true, '-', '-', '|', '|', '+');
-        this->getWindow().drawViews();
         
-        // construct my Playable Object during initialization
-        std::unique_ptr<NonCollidable> MyPlayableRect = std::make_unique<NonCollidable>( std::make_unique<RectObject>(Point<float> {4, 4}, Point<float> {10, 10}, "#") );
-        Object &refToPlayer = bwin.addObject( std::move(MyPlayableRect) );
+        std::unique_ptr<NonCollidable> obj1 = std::make_unique<NonCollidable>( std::make_unique<RectObject>(Point<float> {4, 4}, Point<float> {6, 6}, "#") );
+        bwin.addObject( std::move(obj1) );
+
+        std::unique_ptr<NonCollidable> obj2 = std::make_unique<NonCollidable>( std::make_unique<RectObject>(Point<float> {10, 4}, Point<float> {14, 8}, "*") );
+        bwin.addObject( std::move(obj2) );
+
+        std::unique_ptr<NonCollidable> obj3 = std::make_unique<NonCollidable>( std::make_unique<RectObject>(Point<float> {30, 10}, Point<float> {40, 14}, "O") );
+        bwin.addObject( std::move(obj3) );
     }
 
     void onEachFrame(int input) override

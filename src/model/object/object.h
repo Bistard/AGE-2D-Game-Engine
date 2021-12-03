@@ -31,9 +31,7 @@ public:
     virtual ObjectView &getView() const noexcept = 0;
 };
 
-/**
- * @brief class for sorting `Object`
- */
+// class for sorting `Object`
 class ObjectCompareAltitude
 {
 public:
@@ -42,6 +40,10 @@ public:
 
 /*******************************************************************************
  * @brief Object Decorator(s)
+ *  - Movable
+ *  - Gravitational (ALSO movable)
+ *  - Collidable
+ *  - NonCollidable
  ******************************************************************************/
 
 class ObjectDecorator : public Object
