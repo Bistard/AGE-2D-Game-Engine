@@ -1,24 +1,25 @@
 /**
  * @file cameraView.h
  * @author Sihan Li (lshh1015813038@gmail.com)
- * @version 0.2
- * @date 2021-11-30
+ * @version 0.3
+ * @date 2021-12-03
  */
 
 #ifndef __AGE_BOARD_VIEW__
 #define __AGE_BOARD_VIEW__
 
 #include <memory>
+#include <queue>
+
 #include "view.h"
+#include "../model/window/windowModel.h"
 
 namespace AGE
 {
 
 namespace Ncurses {
     class Window;
-};
-
-class WindowWithCamera;
+}
 
 /*******************************************************************************
  * @brief Concrete Derived Class - for Ncurses
@@ -29,18 +30,11 @@ public:
     CameraView(WindowWithCamera &model);
     ~CameraView() override;
 public:
-    void draw() override;
-    void update() override;
-    void clear() override;
-
-    
+    void draw(Ncurses::Window &win) override;
+    void update(Ncurses::Window &win) override;
 private:
     // the reference to the `WindowWithCamera`
     const WindowWithCamera &_model;
-    
-    // the screen buffer (output)
-    std::unique_ptr<Ncurses::Window> _window;
-    // objectViews
 };
 
 } // AGE

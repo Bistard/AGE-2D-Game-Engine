@@ -16,6 +16,7 @@
 #include <ncurses.h>
 
 #include "../../common/point.h"
+#include "../../utils/math.h"
 
 #define NCURSE_ERR ERR
 #define NCURSE_OK OK

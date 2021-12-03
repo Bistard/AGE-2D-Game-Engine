@@ -22,7 +22,7 @@ WindowModel::~WindowModel() {}
 WindowModel &WindowModel::addSubWindow(std::unique_ptr<WindowModel> &&window)
 {
     WindowModel &ref = *window;
-    _subWindowModels.emplace_back( std::move(window) );
+    _subWindowModels.push_back( std::move(window) );
     return ref;
 }
 
@@ -47,19 +47,13 @@ void WindowModel::updateViews() const
     updateView();
 }
 
-void WindowModel::clearViews()
-{
-    for (auto &win : _subWindowModels) {
-        win->clearViews();
-    }
-    clearView();
-}
-
 /*******************************************************************************
  * @brief `WindowWithController` implementation
  ******************************************************************************/
 
-WindowWithController::WindowWithController(Point<int> pos, SIZE width, SIZE height): WindowModel {pos, width, height}, _controller {nullptr} {}
+WindowWithController::WindowWithController(Point<int> pos, SIZE width, SIZE height): 
+    WindowModel {pos, width, height}, _controller {nullptr} 
+{}
 
 WindowWithController::WindowWithController(Point<int> pos, SIZE width, SIZE height, std::unique_ptr<Controller> &&controller): 
     WindowModel {pos, width, height}, 
@@ -80,7 +74,9 @@ WindowWithController::getController() const { return *_controller; }
 /*******************************************************************************
  * @brief `WindowWithCamera` implementation
  ******************************************************************************/
-WindowWithCamera::WindowWithCamera(Point<int> pos, SIZE width, SIZE height): WindowModel {pos, width, height}
+WindowWithCamera::WindowWithCamera(Point<int> pos, SIZE width, SIZE height): 
+    WindowModel {pos, width, height}, 
+    _winBuffer { Ncurses::newWindow(width, height, position.X(), position.Y()) }
 {
     // construction of `WindowWithCamera` will auomatically add a `CameraView` into the vector.
     this->addView( std::make_unique<CameraView>(*this) );
@@ -104,33 +100,47 @@ WindowWithCamera::setBorder(bool show, int top, int bottom, int left, int right,
     _cornerBorder = corner;
 }
 
-CameraView &WindowWithCamera::addView(std::unique_ptr<CameraView> &&view)
+CameraView &
+WindowWithCamera::addView(std::unique_ptr<CameraView> &&view)
 {
     CameraView &ref = *view;
     _cameraview =std::move(view);
     return ref;
 }
 
-CameraView &WindowWithCamera::detechView(std::unique_ptr<CameraView> &&view)
+CameraView &
+WindowWithCamera::detechView(std::unique_ptr<CameraView> &&view)
 {
     // TODO
 }
 
 void WindowWithCamera::drawView() const
 {
-    _cameraview->draw();
+    if (_winBuffer == nullptr) throw;
+    _cameraview->draw(*_winBuffer);
 }
 
 void WindowWithCamera::updateView() const
 {
-    _cameraview->update();
+    if (_winBuffer == nullptr) throw;
+    _cameraview->update(*_winBuffer);
 }
 
-void WindowWithCamera::clearView()
+Collidable &
+WindowWithCamera::addObject(std::unique_ptr<Collidable> &&obj)
 {
-    _cameraview->clear();
+    Collidable &ref = *obj;
+    _collidables.push_back( std::move(obj) );
+    return ref;
 }
 
+NonCollidable &
+WindowWithCamera::addObject(std::unique_ptr<NonCollidable> &&obj)
+{
+    NonCollidable &ref = *obj;
+    _nonCollidables.push_back( std::move(obj) );
+    return ref;
+}
 
 } // AGE
 

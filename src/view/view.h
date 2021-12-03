@@ -1,8 +1,8 @@
 /**
  * @file view.h
  * @author Sihan Li (lshh1015813038@gmail.com)
- * @version 0.1
- * @date 2021-11-28
+ * @version 0.2
+ * @date 2021-12-03
  */
 
 #ifndef __AGE_VIEW__
@@ -10,6 +10,10 @@
 
 namespace AGE
 {
+
+namespace Ncurses {
+    class Window;
+}
 
 /*******************************************************************************
  * @brief Abstract Base Class - `View` component in MVC
@@ -20,9 +24,8 @@ public:
     View() = default;
     virtual ~View() = default;
 public:
-    virtual void draw() = 0;
-    virtual void update() = 0;
-    virtual void clear() = 0;
+    virtual void draw(Ncurses::Window &win) = 0;
+    virtual void update(Ncurses::Window &win) = 0;
 };
 
 } // AGE

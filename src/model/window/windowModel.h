@@ -11,7 +11,7 @@
 
 #include <vector>
 #include <memory>
-#include <queue>
+#include "../../utils/math.h"
 
 namespace AGE
 {
@@ -35,7 +35,7 @@ class WindowModel
 public:
     WindowModel(Point<int> pos, SIZE width, SIZE height);
     virtual ~WindowModel();
-protected:
+public:
     WindowModel &addSubWindow(std::unique_ptr<WindowModel> &&window);
     WindowModel &detachSubWindow(std::unique_ptr<WindowModel> &&window);
 
@@ -50,7 +50,6 @@ protected:
 private:
     virtual void drawView() const {}
     virtual void updateView() const {}
-    virtual void clearView() {}
 protected:
     const Point<int> position;
     const SIZE width;
@@ -87,24 +86,24 @@ public:
     WindowWithCamera(Point<int> pos, SIZE width, SIZE height);
     ~WindowWithCamera() override;
 public:
-    const Camera &getCamera() const;
-    // void addObject(std::unique_ptr<ObjectModel> &&object);
-    // void detachObject(std::unique_ptr<ObjectModel> &&object);
-
     // default value: 32 -> blanks space
     void setBorder(bool show, int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32);
-protected:
+    const Camera &getCamera() const;
+    
     CameraView &addView(std::unique_ptr<CameraView> &&view);
     CameraView &detechView(std::unique_ptr<CameraView> &&view);
 
-    
+    Collidable &addObject(std::unique_ptr<Collidable> &&obj);
+    NonCollidable &addObject(std::unique_ptr<NonCollidable> &&obj);
 private:
     void drawView() const override;
     void updateView() const override;
-    void clearView() override;
 private:
     // give data access to `CameraView` makes everything so much easier
     friend class CameraView;
+
+    // window buffer for `View` to output
+    std::unique_ptr<Ncurses::Window> _winBuffer;
 
     std::unique_ptr<Camera> _camera;
     std::unique_ptr<CameraView> _cameraview;
