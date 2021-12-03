@@ -52,14 +52,6 @@ void destroy()
     endwin();
 }
 
-std::unique_ptr<Window> newWindow(SIZE w, SIZE h, SIZE start_x, SIZE start_y)
-{
-    std::unique_ptr<Window> window { std::make_unique<Window>(w, h, start_x, start_y) };
-
-    refresh(); // let the console knows a new window is created
-    return window;
-}
-
 /*******************************************************************************
  * @brief `Window` implementation
  ******************************************************************************/
@@ -86,7 +78,6 @@ void Window::refresh()
 void Window::showBorder(int top, int bottom, int left, int right, int corner)
 {
     wborder(_win, left, right, top, bottom, corner, corner, corner, corner);
-    refresh(); // refreshes the specific WINDOW
 }
 
 void Window::print(std::string s, SIZE x, SIZE y)
@@ -100,7 +91,6 @@ void Window::print(const char *s, SIZE x, SIZE y)
         moveTo(y, x);
     }
     wprintw(_win, s);
-    refresh();
 }
 
 void Window::moveTo(SIZE x, SIZE y)

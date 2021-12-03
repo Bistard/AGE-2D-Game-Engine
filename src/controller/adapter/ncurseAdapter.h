@@ -66,9 +66,6 @@ void setInputTimeout(int timeout);
  */
 void destroy();
 
-// helper function for creating a Window.
-std::unique_ptr<Window> newWindow(SIZE width, SIZE height, SIZE start_x, SIZE start_y);
-
 /*******************************************************************************
  * @brief Adapter class for wrapping Ncurses WINDOW - C++ friendly
  ******************************************************************************/
@@ -76,7 +73,7 @@ class Window
 { 
 public:
     // you need to call `refresh()` from Ncurses libarary manually if you are 
-    //   constructing a `Window` without the helper function `newWindow()`.
+    //   constructing a `Window`.
     Window(SIZE w, SIZE h, SIZE start_x, SIZE start_y);
     ~Window();
 

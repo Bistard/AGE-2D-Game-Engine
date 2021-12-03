@@ -76,7 +76,7 @@ WindowWithController::getController() const { return *_controller; }
  ******************************************************************************/
 WindowWithCamera::WindowWithCamera(Point<int> pos, SIZE width, SIZE height): 
     WindowModel {pos, width, height}, 
-    _winBuffer { Ncurses::newWindow(width, height, position.X(), position.Y()) }
+    _winBuffer { std::make_unique<Ncurses::Window>(width, height, position.X(), position.Y()) }
 {
     // construction of `WindowWithCamera` will auomatically add a `CameraView` into the vector.
     this->addView( std::make_unique<CameraView>(*this) );
@@ -116,13 +116,11 @@ WindowWithCamera::detechView(std::unique_ptr<CameraView> &&view)
 
 void WindowWithCamera::drawView() const
 {
-    if (_winBuffer == nullptr) throw;
     _cameraview->draw(*_winBuffer);
 }
 
 void WindowWithCamera::updateView() const
 {
-    if (_winBuffer == nullptr) throw;
     _cameraview->update(*_winBuffer);
 }
 

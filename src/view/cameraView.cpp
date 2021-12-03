@@ -37,6 +37,9 @@ void CameraView::draw(Ncurses::Window &win)
         obj->getView().draw(win);
         pq.pop();
     }
+
+    // refresh this window buffer to show the actual changes
+    win.refresh();
 }
 
 void CameraView::update(Ncurses::Window &win)
