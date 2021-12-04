@@ -91,7 +91,8 @@ public:
     void moveTo(SIZE x, SIZE y);
     void refresh(); // refresh this window
     
-    void clean(); // clears this window screen
+    void erase(); // clears this window screen
+    void clear(); // clears this window screen (hard clear)
 private:
     WINDOW *_win;
     Point<SIZE> _currPos;

@@ -13,6 +13,8 @@ CameraView::~CameraView() {}
 
 void CameraView::draw(Ncurses::Window &winBuff)
 {
+    winBuff.erase();
+
     // try to draw the border on the screen
     if (_model._hasBorder) {
         winBuff.showBorder(

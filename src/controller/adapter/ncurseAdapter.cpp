@@ -103,7 +103,9 @@ void Window::moveTo(SIZE x, SIZE y)
     wmove(_win, y, x);
 }
 
-void Window::clean() { wclear(_win); }
+void Window::erase() { werase(_win); }
+
+void Window::clear() { wclear(_win); }
 
 Point<SIZE> Window::currPosition() { return _currPos; }
 
