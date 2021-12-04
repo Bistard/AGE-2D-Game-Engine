@@ -107,8 +107,10 @@ private:
 
     void __init_curses(SIZE width, SIZE height)
     {
-        // sets up memeory for ncurses
+        // sets up memory for ncurses
         Ncurses::init(Ncurses::WindowOpt::CBREAK, false);
+        // set the cursor invisible
+        Ncurses::setCursorVisibility(0);
     }
 
     virtual void init() = 0;
@@ -143,7 +145,7 @@ private:
 private:
     // the timer controls the refresh frame rate
     Timer<FPS> _timer;
-    
+
     /**
      * @brief The entire window of the engine (might be composed with subwindows)
      * 

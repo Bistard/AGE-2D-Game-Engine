@@ -46,6 +46,11 @@ void setInputTimeout(int tm)
     timeout(tm);
 }
 
+void setCursorVisibility(char visibility)
+{
+    curs_set(visibility);
+}
+
 void destroy()
 {
     // deallocates memory and ends ncurses

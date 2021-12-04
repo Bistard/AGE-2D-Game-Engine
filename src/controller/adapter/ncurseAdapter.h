@@ -45,6 +45,9 @@ enum WindowOpt
  */
 void init(WindowOpt opt = WindowOpt::CBREAK, bool echo = false);
 
+// 0, 1, 2 for invisible, normal, or very visible respectively
+void setCursorVisibility(char visibility = 0);
+
 /**
  * @brief turn instant input mode on or off.
  *        No inputs return ERR (-1).
