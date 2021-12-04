@@ -23,12 +23,17 @@ public:
     // pos1: left-top point
     // pos2: right-bottom point
     RectObject(Point<float> pos1, Point<float> pos2, std::string fill);
+    RectObject(Point<float> pos, float width, float height, std::string fill);
     ~RectObject() override;
 public:
-    void fill(std::string fill);
+    void setFill(std::string fill);
     void setPos1(Point<float> pos);
     void setPos2(Point<float> pos);
 
+    std::string &getFill() noexcept;
+    Point<float> &getPos1() noexcept;
+    Point<float> &getPos2() noexcept;
+    
     const std::string &getFill() const noexcept;
     const Point<float> &getPos1() const noexcept;
     const Point<float> &getPos2() const noexcept;
