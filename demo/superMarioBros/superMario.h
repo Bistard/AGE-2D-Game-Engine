@@ -31,7 +31,7 @@ private:
         BoardWindow &bwin = win.getBoardWindow();
         bwin.setBorder(true, '-', '-', '|', '|', '+');
         
-        playerObj = std::make_shared<NonCollidable>( std::make_shared<RectObject>(Point<float> {4, 4}, Point<float> {6, 6}, "#") );
+        playerObj = std::make_shared<NonCollidable>( std::make_shared<RectObject>(Point<float> {4, 4}, 1, 1, "#") );
         bwin.addObject( playerObj );
 
         // std::shared_ptr<NonCollidable> obj2 = std::make_shared<NonCollidable>( std::make_shared<RectObject>(Point<float> {10, 4}, Point<float> {14, 8}, "*") );

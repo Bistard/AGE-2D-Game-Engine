@@ -26,10 +26,10 @@ WindowModel &WindowModel::addSubWindow(std::unique_ptr<WindowModel> &&window)
     return ref;
 }
 
-WindowModel &detachSubWindow(std::unique_ptr<WindowModel> &&window)
-{
-    // TODO
-}
+// WindowModel &detachSubWindow(std::unique_ptr<WindowModel> &&window)
+// {
+//     // TODO
+// }
 
 void WindowModel::drawViews() const
 {
