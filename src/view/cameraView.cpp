@@ -13,6 +13,7 @@ CameraView::~CameraView() {}
 
 void CameraView::draw(Ncurses::Window &winBuff)
 {
+    // erase() only clean the window buffer
     winBuff.erase();
 
     // try to draw the border on the screen
@@ -27,22 +28,27 @@ void CameraView::draw(Ncurses::Window &winBuff)
     std::priority_queue<const Object *, std::vector<const Object *>, ObjectCompareAltitude> pq;
     std::shared_ptr<Collidable> access1;
     std::shared_ptr<NonCollidable> access2;
-    size_t i = 0;
-
-    for (i = 0; i < _model._collidables.size(); ++i) {
-        if (_model._collidables[i].expired() == true) {
-            // TODO: remove this weak_ptr from the vector
+    
+    for (auto it = _model._collidables.begin(); it != _model._collidables.end(); ++it) {
+        
+        // check validty of the object (object might got destroyed on the client side)
+        if ((*it).expired() == true) {
+            // allows me to erase during iteration without losing validty of the iterator
+            it = _model._collidables.erase(it);
             continue;
         }
-        access1 = _model._collidables[i].lock();
+        
+        access1 = (*it).lock();
         pq.push(access1.get());
     }
-    for (i = 0; i < _model._nonCollidables.size(); ++i) {
-        if (_model._nonCollidables[i].expired() == true) {
-            // TODO: remove this weak_ptr from the vector
+    for (auto it = _model._nonCollidables.begin(); it != _model._nonCollidables.end(); ++it) {
+        
+        if ((*it).expired() == true) {
+            it = _model._nonCollidables.erase(it);
             continue;
         }
-        access2 = _model._nonCollidables[i].lock();
+
+        access2 = (*it).lock();
         pq.push(access2.get());
     }
     

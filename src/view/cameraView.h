@@ -33,7 +33,7 @@ public:
     void draw(Ncurses::Window &winBuffer) override;
 private:
     // the reference to the `WindowWithCamera`
-    const WindowWithCamera &_model;
+    WindowWithCamera &_model;
 };
 
 } // AGE

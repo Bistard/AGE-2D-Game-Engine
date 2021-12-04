@@ -10,6 +10,7 @@
 #define __AGE_WINDOW_MODEL__
 
 #include <vector>
+#include <list>
 #include <memory>
 #include "../../utils/math.h"
 
@@ -40,13 +41,21 @@ public:
     WindowModel &detachSubWindow(std::unique_ptr<WindowModel> &&window);
 
     /**
-     * @brief These functions will recursively draw all the views from subwindows 
-     *  first. If the derived classes provide new `View`, they need to override
-     *  the following private virtual methods to draw that new `View`.
+     * @brief Recursively draws all the views from subwindows first. The 
+     *  derived classes controls the behaviours of drawing by overriding the 
+     *  belowing private virtual method `drawView()`.
      */
     void drawViews() const;
+
+    /**
+     * @brief Recursively updates all the game logics from subwindows first. The
+     *  derived classes controls the behaviours of updating logics by overriding
+     *  the belowing private virtual method `updateLogic()`.
+     */
+    void updateLogics();
 private:
     virtual void drawView() const {}
+    virtual void updateLogic() {}
 protected:
     const Point<int> position;
     const SIZE width;
@@ -93,8 +102,9 @@ public:
     void addObject(std::shared_ptr<NonCollidable> &obj);
 private:
     void drawView() const override;
+    void updateLogic() override;
 private:
-    // give data access to `CameraView` makes everything so much easier
+    // gives data access to `CameraView` makes everything so much easier
     friend class CameraView;
 
     // window buffer for `View` to output
@@ -107,8 +117,8 @@ private:
      * @brief `WindowWithCamera` observes these `object`s. If `Object` gets 
      *  destroyed by the client side, Window will skip it when printing.
      */
-    std::vector<std::weak_ptr<Collidable>> _collidables;
-    std::vector<std::weak_ptr<NonCollidable>> _nonCollidables;
+    std::list<std::weak_ptr<Collidable>> _collidables;
+    std::list<std::weak_ptr<NonCollidable>> _nonCollidables;
 
     bool _hasBorder;
     int _topBorder, _bottomBorder, _leftBorder, _rightBorder, _cornerBorder;

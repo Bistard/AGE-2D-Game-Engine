@@ -16,7 +16,7 @@ namespace Ncurses {
 }
 
 /*******************************************************************************
- * @brief Abstract Base Class - `View` component in MVC
+ * @brief Base Interface - `View` component in MVC
  ******************************************************************************/
 class View
 {
