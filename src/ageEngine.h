@@ -133,7 +133,7 @@ private:
 
             // TODO: this->updateGameLogic();
 
-            _mainWindow->updateViews();
+            _mainWindow->drawViews();
 
             // must be invoked at the end of the loop in order to let the program 
             //   pause utill the next frame.
@@ -143,6 +143,7 @@ private:
 private:
     // the timer controls the refresh frame rate
     Timer<FPS> _timer;
+    
     /**
      * @brief The entire window of the engine (might be composed with subwindows)
      * 

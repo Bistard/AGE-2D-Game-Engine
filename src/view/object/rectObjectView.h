@@ -41,11 +41,6 @@ public:
             }
         }
     }
-    
-    void update(Ncurses::Window &win) override
-    {
-
-    }
 };
 
 } // AGE

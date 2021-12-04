@@ -31,11 +31,6 @@ public:
     { 
         return static_cast<CameraView &>(this->addView(std::move(cameraView))); 
     }
-    
-    CameraView &detachBoardView(std::unique_ptr<CameraView> &&cameraView) 
-    { 
-        return static_cast<CameraView &>(this->detechView(std::move(cameraView))); 
-    }
 private:
     // std::unique_ptr<Grid> _grid;
     // bool _boardType;

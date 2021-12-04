@@ -39,14 +39,6 @@ void WindowModel::drawViews() const
     drawView();
 }
 
-void WindowModel::updateViews() const
-{
-    for (auto &win : _subWindowModels) {
-        win->updateViews();
-    }
-    updateView();
-}
-
 /*******************************************************************************
  * @brief `WindowWithController` implementation
  ******************************************************************************/
@@ -108,22 +100,10 @@ WindowWithCamera::addView(std::unique_ptr<CameraView> &&view)
     return ref;
 }
 
-CameraView &
-WindowWithCamera::detechView(std::unique_ptr<CameraView> &&view)
-{
-    // TODO
-}
-
 void 
 WindowWithCamera::drawView() const
 {
     _cameraview->draw(*_winBuffer);
-}
-
-void 
-WindowWithCamera::updateView() const
-{
-    _cameraview->update(*_winBuffer);
 }
 
 void

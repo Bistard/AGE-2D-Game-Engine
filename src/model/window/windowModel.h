@@ -42,14 +42,11 @@ public:
     /**
      * @brief These functions will recursively draw all the views from subwindows 
      *  first. If the derived classes provide new `View`, they need to override
-     *  the following private virtual methods.
+     *  the following private virtual methods to draw that new `View`.
      */
     void drawViews() const;
-    void updateViews() const;
-    void clearViews();
 private:
     virtual void drawView() const {}
-    virtual void updateView() const {}
 protected:
     const Point<int> position;
     const SIZE width;
@@ -91,13 +88,11 @@ public:
     const Camera &getCamera() const;
     
     CameraView &addView(std::unique_ptr<CameraView> &&view);
-    CameraView &detechView(std::unique_ptr<CameraView> &&view);
 
     void addObject(std::shared_ptr<Collidable> &obj);
     void addObject(std::shared_ptr<NonCollidable> &obj);
 private:
     void drawView() const override;
-    void updateView() const override;
 private:
     // give data access to `CameraView` makes everything so much easier
     friend class CameraView;
@@ -109,7 +104,8 @@ private:
     std::unique_ptr<CameraView> _cameraview;
     
     /**
-     * @brief Usage of std::
+     * @brief `WindowWithCamera` observes these `object`s. If `Object` gets 
+     *  destroyed by the client side, Window will skip it when printing.
      */
     std::vector<std::weak_ptr<Collidable>> _collidables;
     std::vector<std::weak_ptr<NonCollidable>> _nonCollidables;

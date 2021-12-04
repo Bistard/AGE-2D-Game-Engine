@@ -24,8 +24,10 @@ public:
     {}
     ~StatusWindow() override {}
 public:
-    // StatusView &addStatusView(std::unique_ptr<StatusView> &&statusView) {}
-    // StatusView &detachStatusView(std::unique_ptr<StatusView> &&statusView) {}
+    StatusView &addStatusView(std::unique_ptr<StatusView> &&statusView) 
+    {
+        // return static_cast<StatusView &>(this->addView(std::move(statusView))); // FIX ME
+    }
 };
 
 } // AGE

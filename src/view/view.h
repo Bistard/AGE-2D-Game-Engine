@@ -24,8 +24,11 @@ public:
     View() = default;
     virtual ~View() = default;
 public:
-    virtual void draw(Ncurses::Window &win) = 0;
-    virtual void update(Ncurses::Window &win) = 0;
+    /**
+     * @brief 
+     * @param win 
+     */
+    virtual void draw(Ncurses::Window &winBuffer) = 0;
 };
 
 } // AGE

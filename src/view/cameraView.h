@@ -30,8 +30,7 @@ public:
     CameraView(WindowWithCamera &model);
     ~CameraView() override;
 public:
-    void draw(Ncurses::Window &win) override;
-    void update(Ncurses::Window &win) override;
+    void draw(Ncurses::Window &winBuffer) override;
 private:
     // the reference to the `WindowWithCamera`
     const WindowWithCamera &_model;

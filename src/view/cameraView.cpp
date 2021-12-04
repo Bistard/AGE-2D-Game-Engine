@@ -11,11 +11,11 @@ CameraView::CameraView(WindowWithCamera &model): View {}, _model {model} {}
 
 CameraView::~CameraView() {}
 
-void CameraView::draw(Ncurses::Window &win)
+void CameraView::draw(Ncurses::Window &winBuff)
 {
     // try to draw the border on the screen
     if (_model._hasBorder) {
-        win.showBorder(
+        winBuff.showBorder(
             _model._topBorder, _model._bottomBorder, 
             _model._leftBorder, _model._rightBorder, _model._cornerBorder
         );
@@ -47,17 +47,12 @@ void CameraView::draw(Ncurses::Window &win)
     // draw each `Object` by their altitude (from the furthest to closest)
     while (!pq.empty()) {
         const Object *obj = pq.top();
-        obj->getView().draw(win);
+        obj->getView().draw(winBuff);
         pq.pop();
     }
 
     // refresh this window buffer to show the actual changes
-    win.refresh();
-}
-
-void CameraView::update(Ncurses::Window &win)
-{
-    this->draw(win);
+    winBuff.refresh();
 }
 
 } // AGE
