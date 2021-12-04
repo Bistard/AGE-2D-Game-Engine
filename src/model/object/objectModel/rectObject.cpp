@@ -1,5 +1,5 @@
 #include "rectObject.h"
-#include "../../view/object/rectObjectView.h"
+#include "../../../view/object/rectObjectView.h"
 
 namespace AGE
 {

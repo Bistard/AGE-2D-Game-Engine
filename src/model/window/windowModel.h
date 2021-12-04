@@ -2,8 +2,8 @@
  * @file windowModel.h
  * @author Sihan Li (lshh1015813038@gmail.com)
  * @brief 
- * @version 0.1
- * @date 2021-11-28
+ * @version 0.4
+ * @date 2021-12-04
  */
 
 #ifndef __AGE_WINDOW_MODEL__

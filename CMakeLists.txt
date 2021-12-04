@@ -15,6 +15,7 @@ aux_source_directory(src/controller/adapter SRC_LIST)
 aux_source_directory(src/model SRC_LIST)
 aux_source_directory(src/model/window SRC_LIST)
 aux_source_directory(src/model/object SRC_LIST)
+aux_source_directory(src/model/object/objectModel SRC_LIST)
 aux_source_directory(src/view SRC_LIST)
 aux_source_directory(src/view/object SRC_LIST)
 aux_source_directory(src/utils SRC_LIST)
@@ -35,6 +36,7 @@ include_directories(
 	src/model
 	src/model/window
 	src/model/object
+	src/model/object/objectModel
 	src/view
 	src/view/object
 	src/utils

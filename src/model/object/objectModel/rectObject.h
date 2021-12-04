@@ -9,7 +9,7 @@
 #define __AGE_RECT_OBJECT__
 
 #include <string>
-#include "objectModel.h"
+#include "../objectModel.h"
 
 namespace AGE
 {

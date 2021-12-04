@@ -9,7 +9,7 @@
 #define __AGE_RECT_OBJECT_VIEW__
 
 #include "objectView.h"
-#include "../../model/object/rectObject.h"
+#include "../../model/object/objectModel/rectObject.h"
 #include "../../utils/math.h"
 
 namespace AGE

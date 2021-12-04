@@ -24,7 +24,8 @@
 #include "model/window/boardWindow.h"
 
 #include "model/object/objectModel.h"
-#include "model/object/rectObject.h"
+#include "model/object/objectModel/rectObject.h"
+#include "model/object/objectModel/ASCIIObject.h"
 
 #include "view/view.h"
 #include "view/statusView.h"
