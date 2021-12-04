@@ -24,10 +24,7 @@ public:
     View() = default;
     virtual ~View() = default;
 public:
-    /**
-     * @brief 
-     * @param win 
-     */
+    // draws characters to the given winBuffer.
     virtual void draw(Ncurses::Window &winBuffer) = 0;
 };
 

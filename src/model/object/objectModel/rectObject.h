@@ -15,7 +15,8 @@ namespace AGE
 {
 
 /*******************************************************************************
- * @brief Concrete `ObjectModel` class
+ * @brief Concrete `ObjectModel` class - represent a rectangle object made up by 
+ *  a single character repeated.
  ******************************************************************************/
 class RectObject : public ObjectModel
 {

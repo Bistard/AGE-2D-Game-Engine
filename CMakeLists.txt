@@ -21,14 +21,6 @@ aux_source_directory(src/view/object SRC_LIST)
 aux_source_directory(src/utils SRC_LIST)
 aux_source_directory(src/common SRC_LIST)
 
-# superMarioBros
-aux_source_directory(demo/superMarioBros SRC_LIST)
-
-### recursively build the program, but this will build the whole program every time
-# file(GLOB_RECURSE SRC_LIST RELATIVE ${CMAKE_SOURCE_DIR} "src/*.cpp" "src/*/*.cpp" "src/*/*/*.cpp")
-
-add_definitions(-g -std=c++14 -Wall)
-
 include_directories(
 	src
 	src/controller
@@ -44,5 +36,10 @@ include_directories(
 	game/superMarioBros
 )
 
+add_definitions(-g -std=c++14 -Wall)
+
+# superMarioBros
+aux_source_directory(demo/superMarioBros SRC_LIST)
+
 add_executable(mario ${SRC_LIST} ${OBJ_LIST})
-target_link_libraries(mario ncurses) #  clntsh ociei occi hiredis_vip protobuf
+target_link_libraries(mario ncurses)

@@ -34,11 +34,9 @@ private:
         playerObj = std::make_shared<NonCollidable>( std::make_shared<RectObject>(Point<float> {4, 4}, 1, 1, "#") );
         bwin.addObject( playerObj );
 
-        // std::shared_ptr<NonCollidable> obj2 = std::make_shared<NonCollidable>( std::make_shared<RectObject>(Point<float> {10, 4}, Point<float> {14, 8}, "*") );
-        // bwin.addObject( obj2 );
-
-        // std::shared_ptr<NonCollidable> obj3 = std::make_shared<NonCollidable>( std::make_shared<RectObject>(Point<float> {30, 10}, Point<float> {40, 14}, "O") );
-        // bwin.addObject( obj3 );
+        /* ASCIIObject */
+        // playerObj = std::make_shared<NonCollidable>( std::make_shared<ASCIIObject>(Point<float> {4, 4}, '#') );
+        // bwin.addObject( playerObj );
     }
 
     void onEachFrame(int input) override
