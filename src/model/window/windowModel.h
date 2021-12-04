@@ -93,8 +93,8 @@ public:
     CameraView &addView(std::unique_ptr<CameraView> &&view);
     CameraView &detechView(std::unique_ptr<CameraView> &&view);
 
-    Collidable &addObject(std::unique_ptr<Collidable> &&obj);
-    NonCollidable &addObject(std::unique_ptr<NonCollidable> &&obj);
+    void addObject(std::shared_ptr<Collidable> &obj);
+    void addObject(std::shared_ptr<NonCollidable> &obj);
 private:
     void drawView() const override;
     void updateView() const override;
@@ -108,8 +108,11 @@ private:
     std::unique_ptr<Camera> _camera;
     std::unique_ptr<CameraView> _cameraview;
     
-    std::vector<std::unique_ptr<Collidable>> _collidables;
-    std::vector<std::unique_ptr<NonCollidable>> _nonCollidables;
+    /**
+     * @brief Usage of std::
+     */
+    std::vector<std::weak_ptr<Collidable>> _collidables;
+    std::vector<std::weak_ptr<NonCollidable>> _nonCollidables;
 
     bool _hasBorder;
     int _topBorder, _bottomBorder, _leftBorder, _rightBorder, _cornerBorder;

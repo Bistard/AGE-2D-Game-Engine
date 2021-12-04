@@ -114,30 +114,30 @@ WindowWithCamera::detechView(std::unique_ptr<CameraView> &&view)
     // TODO
 }
 
-void WindowWithCamera::drawView() const
+void 
+WindowWithCamera::drawView() const
 {
     _cameraview->draw(*_winBuffer);
 }
 
-void WindowWithCamera::updateView() const
+void 
+WindowWithCamera::updateView() const
 {
     _cameraview->update(*_winBuffer);
 }
 
-Collidable &
-WindowWithCamera::addObject(std::unique_ptr<Collidable> &&obj)
+void
+WindowWithCamera::addObject(std::shared_ptr<Collidable> &obj)
 {
-    Collidable &ref = *obj;
-    _collidables.push_back( std::move(obj) );
-    return ref;
+    // assigning `std::shared_ptr` to `std::weak_ptr` (copy ctor)
+    _collidables.push_back( obj );
 }
 
-NonCollidable &
-WindowWithCamera::addObject(std::unique_ptr<NonCollidable> &&obj)
+void
+WindowWithCamera::addObject(std::shared_ptr<NonCollidable> &obj)
 {
-    NonCollidable &ref = *obj;
-    _nonCollidables.push_back( std::move(obj) );
-    return ref;
+    // assigning `std::shared_ptr` to `std::weak_ptr` (copy ctor)
+    _nonCollidables.push_back( obj );
 }
 
 } // AGE

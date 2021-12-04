@@ -14,7 +14,7 @@ bool ObjectCompareAltitude::operator() (const Object *obj1, const Object *obj2)
  * @brief `ObjectDecorator` implementation
  ******************************************************************************/
 
-ObjectDecorator::ObjectDecorator(std::unique_ptr<Object> &&obj): Object {}, _obj { std::move(obj) } {}
+ObjectDecorator::ObjectDecorator(std::shared_ptr<Object> obj): Object {}, _obj { std::move(obj) } {}
 
 ObjectDecorator::~ObjectDecorator() {}
 
@@ -27,12 +27,15 @@ ObjectDecorator::setAltitude(char val) { _obj->setAltitude(val); }
 ObjectView &
 ObjectDecorator::getView() const noexcept { return _obj->getView(); }
 
+Object &
+ObjectDecorator::getObject() noexcept { return *_obj; }
+
 /*******************************************************************************
  * @brief `Movable` implementation
  ******************************************************************************/
 
-Movable::Movable(std::unique_ptr<Object> &&obj, Velocity val): 
-    ObjectDecorator { std::move(obj) }, _velocity {val} 
+Movable::Movable(std::shared_ptr<Object> obj, Velocity val): 
+    ObjectDecorator { obj }, _velocity {val} 
 {}
 
 Movable::~Movable() {}
@@ -45,8 +48,8 @@ void Movable::setVelocity(Velocity val) { _velocity = val; }
  * @brief `Gravitational` implementation
  ******************************************************************************/
 
-Gravitational::Gravitational(std::unique_ptr<Object> &&obj, Velocity val): 
-    Movable { std::move(obj) }, _gravity {val} 
+Gravitational::Gravitational(std::shared_ptr<Object> obj, Velocity val): 
+    Movable { obj }, _gravity {val} 
 {}
 
 Gravitational::~Gravitational() {}
@@ -59,7 +62,7 @@ void Gravitational::setGravity(Velocity val) { _gravity = val; }
  * @brief `Collidable` implementation
  ******************************************************************************/
 
-Collidable::Collidable(std::unique_ptr<Object> &&obj): ObjectDecorator {std::move(obj)}, _box {} {}
+Collidable::Collidable(std::shared_ptr<Object> obj): ObjectDecorator {obj}, _box {} {}
 
 Collidable::~Collidable() {}
 
@@ -67,7 +70,7 @@ Collidable::~Collidable() {}
  * @brief `NonCollidable` implementation
  ******************************************************************************/
 
-NonCollidable::NonCollidable(std::unique_ptr<Object> &&obj): ObjectDecorator {std::move(obj)} {}
+NonCollidable::NonCollidable(std::shared_ptr<Object> obj): ObjectDecorator {obj} {}
 
 NonCollidable::~NonCollidable() {}
 

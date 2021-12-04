@@ -49,20 +49,21 @@ public:
 class ObjectDecorator : public Object
 {
 public:
-    ObjectDecorator(std::unique_ptr<Object> &&obj);
+    ObjectDecorator(std::shared_ptr<Object> obj);
     virtual ~ObjectDecorator();
 public:
     SIZE getAltitude() const noexcept override;
     void setAltitude(char val) override;
     ObjectView &getView() const noexcept override;
+    Object &getObject() noexcept;
 protected:
-    std::unique_ptr<Object> _obj;
+    std::shared_ptr<Object> _obj;
 };
 
 class Movable : public ObjectDecorator
 {
 public:
-    Movable(std::unique_ptr<Object> &&obj, Velocity val = {0.0f, 0.0f});
+    Movable(std::shared_ptr<Object> obj, Velocity val = {0.0f, 0.0f});
     ~Movable() override;
 public:
     Velocity getVelocity() const noexcept;
@@ -74,7 +75,7 @@ private:
 class Gravitational : public Movable
 {
 public:
-    Gravitational(std::unique_ptr<Object> &&obj, Velocity val = {0.0f, 0.0f});
+    Gravitational(std::shared_ptr<Object> obj, Velocity val = {0.0f, 0.0f});
     ~Gravitational() override;
 public:
     Velocity getGravity() const noexcept;
@@ -86,7 +87,7 @@ private:
 class Collidable : public ObjectDecorator // FIX: unfinished
 {
 public:
-    Collidable(std::unique_ptr<Object> &&obj);
+    Collidable(std::shared_ptr<Object> obj);
     ~Collidable() override;
 private:
     Box _box;
@@ -95,7 +96,7 @@ private:
 class NonCollidable : public ObjectDecorator
 {
 public:
-    NonCollidable(std::unique_ptr<Object> &&obj);
+    NonCollidable(std::shared_ptr<Object> obj);
     ~NonCollidable() override;
 };
 

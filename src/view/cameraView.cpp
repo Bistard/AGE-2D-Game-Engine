@@ -21,17 +21,30 @@ void CameraView::draw(Ncurses::Window &win)
         );
     }
     
-    // sort every `ObjectModel` by its depth
+    // sort every `ObjectModel` by its depth (smallest altitude on the top)
     std::priority_queue<const Object *, std::vector<const Object *>, ObjectCompareAltitude> pq;
+    std::shared_ptr<Collidable> access1;
+    std::shared_ptr<NonCollidable> access2;
     size_t i = 0;
+
     for (i = 0; i < _model._collidables.size(); ++i) {
-        pq.push(_model._collidables[i].get());
+        if (_model._collidables[i].expired() == true) {
+            // TODO: remove this weak_ptr from the vector
+            continue;
+        }
+        access1 = _model._collidables[i].lock();
+        pq.push(access1.get());
     }
     for (i = 0; i < _model._nonCollidables.size(); ++i) {
-        pq.push(_model._nonCollidables[i].get());
+        if (_model._nonCollidables[i].expired() == true) {
+            // TODO: remove this weak_ptr from the vector
+            continue;
+        }
+        access2 = _model._nonCollidables[i].lock();
+        pq.push(access2.get());
     }
     
-    // draw each stored `Object`
+    // draw each `Object` by their altitude (from the furthest to closest)
     while (!pq.empty()) {
         const Object *obj = pq.top();
         obj->getView().draw(win);
@@ -44,7 +57,7 @@ void CameraView::draw(Ncurses::Window &win)
 
 void CameraView::update(Ncurses::Window &win)
 {
-
+    this->draw(win);
 }
 
 } // AGE
