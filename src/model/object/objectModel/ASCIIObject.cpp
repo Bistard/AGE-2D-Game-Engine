@@ -4,7 +4,7 @@
 namespace AGE
 {
 
-ASCIIObject::ASCIIObject(Point<float> pos, char ascii): 
+ASCIIObject::ASCIIObject(vec2d<float> pos, char ascii): 
     ObjectModel { std::make_unique<ASCIIObjectView>(*this) }, 
     _pos {pos}, _ascii {ascii}
 {}
@@ -12,12 +12,12 @@ ASCIIObject::ASCIIObject(Point<float> pos, char ascii):
 ASCIIObject::~ASCIIObject() {}
 
 void 
-ASCIIObject::setPos(Point<float> pos) { _pos = pos; }
+ASCIIObject::setPos(vec2d<float> pos) { _pos = pos; }
 
-Point<float> &
+vec2d<float> &
 ASCIIObject::getPos() noexcept { return _pos; }
 
-const Point<float> &
+const vec2d<float> &
 ASCIIObject::getPos() const noexcept { return _pos; }
 
 void 
@@ -25,6 +25,9 @@ ASCIIObject::setASCII(char ascii) noexcept { _ascii = ascii; }
 
 char
 ASCIIObject::getASCII() const noexcept { return _ascii; }
+
+vec2d<float> &
+ASCIIObject::getPosition() { return _pos; }
 
 } // AGE
 

@@ -107,7 +107,7 @@ void Window::erase() { werase(_win); }
 
 void Window::clear() { wclear(_win); }
 
-Point<SIZE> Window::currPosition() { return _currPos; }
+vec2d<SIZE> Window::currPosition() { return _currPos; }
 
 SIZE Window::width() { return _w; }
 

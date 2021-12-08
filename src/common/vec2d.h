@@ -1,12 +1,12 @@
 /*******************************************************************************
- * @file point.h
+ * @file vec2d.h
  * @author Sihan Li (lshh1015813038@gmail.com)
  * @version 0.1
  * @date 2021-11-27
  ******************************************************************************/
 
-#ifndef __AGE_POINT__
-#define __AGE_POINT__
+#ifndef __AGE_VEC_2D__
+#define __AGE_VEC_2D__
 
 #include <initializer_list>
 
@@ -17,17 +17,31 @@ namespace AGE
 {
 
 template<typename T = int> // T = float
-class Point final
+class vec2d final
 {
 public:
-    Point(T x, T y): _x {x}, _y {y} {}
-    Point(std::initializer_list<T> ls) 
+    vec2d(T x, T y): _x {x}, _y {y} {}
+    vec2d(std::initializer_list<T> ls) 
     {
         _x = *ls.begin();
         _y = *(ls.begin() + 1);
     }
-    ~Point() {};
+    ~vec2d() {};
+    
+    vec2d<T> &operator+=(vec2d<T> other) 
+    {
+        _x += other._x;
+        _y += other._y;
+        return *this;
+    }
 
+    vec2d<T> &operator-=(vec2d<T> other) 
+    {
+        _x -= other._x;
+        _y -= other._y;
+        return *this;
+    }
+public:
     T X() const noexcept { return _x; }
     T Y() const noexcept { return _y; }
 

@@ -8,7 +8,7 @@
 #ifndef __AGE_BOX__
 #define __AGE_BOX__
 
-#include "point.h"
+#include "vec2d.h"
 #include <initializer_list>
 
 namespace AGE
@@ -17,13 +17,13 @@ namespace AGE
 class Box final
 {
 public:
-    Box(Point<int> leftTop, Point<int> rightBottom): _leftTop {leftTop}, _rightBottom {rightBottom} {}
+    Box(vec2d<int> leftTop, vec2d<int> rightBottom): _leftTop {leftTop}, _rightBottom {rightBottom} {}
     ~Box() = default;
 
-    Box(std::initializer_list<Point<int>> ls): _leftTop {*ls.begin()}, _rightBottom {*(ls.begin() + 1)}
+    Box(std::initializer_list<vec2d<int>> ls): _leftTop {*ls.begin()}, _rightBottom {*(ls.begin() + 1)}
     {}
 
-    bool contains(const Point<int> &p) const noexcept
+    bool contains(const vec2d<int> &p) const noexcept
     {
         if ((_leftTop.X() <= p.X()) && (p.X() <= _rightBottom.X()) && 
             (_leftTop.Y() <= p.Y()) && (p.Y() <= _rightBottom.Y())) 
@@ -38,16 +38,16 @@ public:
         return contains(b._leftTop) || contains(b._rightBottom);
     }
 
-    void setLeftTop(Point<int> p) { _leftTop = p; }
-    void setRightBottom(Point<int> p) { _rightBottom = p; }
+    void setLeftTop(vec2d<int> p) { _leftTop = p; }
+    void setRightBottom(vec2d<int> p) { _rightBottom = p; }
 
-    Point<int> &getLeftTop() noexcept { return _leftTop; }
-    Point<int> &getRightBottom() noexcept { return _rightBottom; }
-    const Point<int> &getLeftTop() const noexcept { return _leftTop; }
-    const Point<int> &getRightBottom() const noexcept { return _rightBottom; }
+    vec2d<int> &getLeftTop() noexcept { return _leftTop; }
+    vec2d<int> &getRightBottom() noexcept { return _rightBottom; }
+    const vec2d<int> &getLeftTop() const noexcept { return _leftTop; }
+    const vec2d<int> &getRightBottom() const noexcept { return _rightBottom; }
 private:
-    Point<int> _leftTop;
-    Point<int> _rightBottom;
+    vec2d<int> _leftTop;
+    vec2d<int> _rightBottom;
 };
 
 } // AGE

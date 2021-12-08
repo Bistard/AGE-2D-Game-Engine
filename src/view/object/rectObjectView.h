@@ -28,8 +28,8 @@ public:
         
         RectObject &obj = static_cast<RectObject &>(_obj);
         
-        Point<int> pos1 = roundPoint(obj.getPos1());
-        Point<int> pos2 = roundPoint(obj.getPos2());
+        vec2d<int> pos1 = roundvec2d(obj.getPos1());
+        vec2d<int> pos2 = roundvec2d(obj.getPos2());
         const std::string &fill = obj.getFill();
         
         for (SIZE x = pos1.X(); x < pos2.X(); ++x) {

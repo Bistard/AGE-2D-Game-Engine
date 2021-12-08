@@ -8,7 +8,7 @@
 #ifndef __AGE_MATH__
 #define __AGE_MATH__
 
-#include "../common/point.h"
+#include "../common/vec2d.h"
 
 namespace AGE
 {
@@ -17,7 +17,7 @@ typedef unsigned char  SIZE; // 0 ~ 255
 typedef unsigned short SSIZE; // 0 ~ 65,535
 
 // round to the nearest integer position
-Point<int> roundPoint(const Point<float> &p);
+vec2d<int> roundvec2d(const vec2d<float> &p);
 
 } // AGE
 

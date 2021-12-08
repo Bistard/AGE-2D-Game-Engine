@@ -16,7 +16,7 @@ namespace AGE
 class ObjectView;
 
 /*******************************************************************************
- * @brief Concrete `Object` class
+ * @brief Abstract `Object` class
  * 
  * Each concrete `ObjectModel` class should constructs its own `ObjectView` type. 
  *  Such an `ObjectView` determines HOW to draw the object onto the window buffer.
@@ -30,6 +30,7 @@ public:
     SIZE getAltitude() const noexcept override;
     void setAltitude(char val) override;
     ObjectView &getView() const noexcept override; 
+    /* virtual vec2d<float> &getPosition() = 0; */
 private:
     SIZE _altitude = 0; // 0 ~ 255
     std::unique_ptr<ObjectView> _view;

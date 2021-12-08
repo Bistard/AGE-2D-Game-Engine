@@ -15,7 +15,7 @@
 
 #include <ncurses.h>
 
-#include "../../common/point.h"
+#include "../../common/vec2d.h"
 #include "../../utils/math.h"
 
 #define NCURSE_ERR ERR
@@ -81,7 +81,7 @@ public:
     ~Window();
 
     WINDOW *getWin() const;
-    Point<SIZE> currPosition();
+    vec2d<SIZE> currPosition();
     SIZE width();
     SIZE height();
 
@@ -95,7 +95,7 @@ public:
     void clear(); // clears this window screen (hard clear)
 private:
     WINDOW *_win;
-    Point<SIZE> _currPos;
+    vec2d<SIZE> _currPos;
     SIZE _w;
     SIZE _h;
 };

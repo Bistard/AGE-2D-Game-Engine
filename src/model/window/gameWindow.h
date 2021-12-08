@@ -18,21 +18,21 @@ class StatusWindow;
 class BoardWindow;
 class GameWindow;
 template<typename T> 
-class Point;
+class vec2d;
 
 /**
  * @brief A helper function to create a GameWindow (the default AGE engine game layout).
  * This is the ONLY valid way to construct a GameWindow type.
  */
 std::unique_ptr<GameWindow> makeGameWindow(int FPS, 
-    Point<int> pos, SIZE width, SIZE height, 
-    Point<int> pos1, SIZE width1, SIZE height1, 
-    Point<int> pos2, SIZE width2, SIZE height2);
+    vec2d<int> pos, SIZE width, SIZE height, 
+    vec2d<int> pos1, SIZE width1, SIZE height1, 
+    vec2d<int> pos2, SIZE width2, SIZE height2);
 
 class GameWindow : public WindowWithController
 {
 public:
-    GameWindow(int FPS, Point<int> pos, SIZE width, SIZE height, 
+    GameWindow(int FPS, vec2d<int> pos, SIZE width, SIZE height, 
         std::unique_ptr<StatusWindow> &&statusWin, 
         std::unique_ptr<BoardWindow> &&boardWin);
     ~GameWindow() override;

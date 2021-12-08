@@ -20,17 +20,20 @@ namespace AGE
 class ASCIIObject : public ObjectModel
 {
 public:
-    ASCIIObject(Point<float> pos, char ascii);
+    ASCIIObject(vec2d<float> pos, char ascii);
     ~ASCIIObject() override;
 public:
-    void setPos(Point<float> pos);
-    Point<float> &getPos() noexcept;
-    const Point<float> &getPos() const noexcept;
+    void setPos(vec2d<float> pos);
+    vec2d<float> &getPos() noexcept;
+    const vec2d<float> &getPos() const noexcept;
 
     void setASCII(char ascii) noexcept;
     char getASCII() const noexcept;
+
+    // returns the position of the ascii character
+    vec2d<float> &getPosition() override;
 private:
-    Point<float> _pos;
+    vec2d<float> _pos;
     char _ascii;
 };
 

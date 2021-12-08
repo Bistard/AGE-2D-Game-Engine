@@ -18,7 +18,7 @@ namespace AGE
 class StatusWindow : public WindowWithCamera
 {
 public:
-    StatusWindow(Point<int> pos, SIZE width, SIZE height): 
+    StatusWindow(vec2d<int> pos, SIZE width, SIZE height): 
         WindowModel {pos, width, height},
         WindowWithCamera {pos, width, height}
     {}

@@ -1,7 +1,6 @@
 #include "objectModel.h"
 #include "../../common/box.h"
-#include "../../common/point.h"
-#include "../../common/velocity.h"
+#include "../../common/vec2d.h"
 #include "../../view/object/objectView.h"
 
 namespace AGE

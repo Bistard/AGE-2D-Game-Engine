@@ -16,12 +16,12 @@ namespace AGE
 {
 
 template<typename T>
-class Point;
+class vec2d;
 
 class BoardWindow : public WindowWithCamera
 {
 public:
-    BoardWindow(Point<int> pos, SIZE width, SIZE height): 
+    BoardWindow(vec2d<int> pos, SIZE width, SIZE height): 
         WindowModel {pos, width, height},
         WindowWithCamera {pos, width, height}
     {}

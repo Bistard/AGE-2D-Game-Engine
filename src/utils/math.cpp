@@ -3,11 +3,11 @@
 namespace AGE
 {
 
-Point<int> roundPoint(const Point<float> &p)
+vec2d<int> roundvec2d(const vec2d<float> &p)
 {
     int x = static_cast<int>(p.X() + 0.5f);
     int y = static_cast<int>(p.Y() + 0.5f);
-    return Point<int> {x, y};
+    return vec2d<int> {x, y};
 }
 
 } // AGE

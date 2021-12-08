@@ -8,7 +8,7 @@
 #ifndef __AGE_CAMERA__
 #define __AGE_CAMERA__
 
-#include "../common/point.h"
+#include "../common/vec2d.h"
 
 namespace AGE
 {
@@ -16,7 +16,7 @@ namespace AGE
 class Camera
 {
 public:
-    Camera(Point<int> pos, int width, int height): position {pos}, width {width}, height {height} {}
+    Camera(vec2d<int> pos, int width, int height): position {pos}, width {width}, height {height} {}
     ~Camera() = default;
 public:
     // positive: move right  
@@ -26,7 +26,7 @@ public:
     // negative: move down
     void moveV(int steps) { position.getY() -= steps; }
 public:
-    Point<int> position;
+    vec2d<int> position;
     const int width;
     const int height;
 };

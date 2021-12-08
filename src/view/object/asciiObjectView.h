@@ -28,7 +28,7 @@ public:
         
         ASCIIObject &obj = static_cast<ASCIIObject &>(_obj);
         
-        Point<int> pos = roundPoint(obj.getPos());
+        vec2d<int> pos = roundvec2d(obj.getPos());
         std::string ascii { static_cast<char>(obj.getASCII()) };
         
         if (0 <= pos.X() && pos.X() < winWidth && 0 <= pos.Y() && pos.Y() <= winHeight) {
