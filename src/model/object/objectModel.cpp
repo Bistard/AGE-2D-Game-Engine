@@ -14,11 +14,17 @@ ObjectModel::ObjectModel(std::unique_ptr<ObjectView> &&view): _view {std::move(v
 
 ObjectModel::~ObjectModel() {}
 
-SIZE ObjectModel::getAltitude() const noexcept { return _altitude; }
+SIZE 
+ObjectModel::getAltitude() const noexcept { return _altitude; }
 
-void ObjectModel::setAltitude(char val) { _altitude = val; }
+void 
+ObjectModel::setAltitude(char val) { _altitude = val; }
 
-ObjectView &ObjectModel::getView() const noexcept { return *_view; }
+ObjectView &
+ObjectModel::getView() const noexcept { return *_view; }
+
+void 
+ObjectModel::updateData() {}
 
 } // AGE
 

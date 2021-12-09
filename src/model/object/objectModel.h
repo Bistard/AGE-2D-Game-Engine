@@ -31,6 +31,7 @@ public:
     void setAltitude(char val) override;
     ObjectView &getView() const noexcept override; 
     /* virtual vec2d<float> &getPosition() = 0; */
+    void updateData() override;
 private:
     SIZE _altitude = 0; // 0 ~ 255
     std::unique_ptr<ObjectView> _view;

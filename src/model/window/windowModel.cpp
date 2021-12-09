@@ -1,4 +1,4 @@
-#include "../../common/point.h"
+#include "../../common/vec2d.h"
 #include "windowModel.h"
 #include "../../controller/controller.h"
 #include "../../view/view.h"
@@ -13,7 +13,7 @@ namespace AGE
  * @brief `WindowModel` implementation
  ******************************************************************************/
 
-WindowModel::WindowModel(Point<int> pos, SIZE width, SIZE height): 
+WindowModel::WindowModel(vec2d<int> pos, SIZE width, SIZE height): 
     position {pos}, width {width}, height {height} 
 {}
 
@@ -36,18 +36,26 @@ void WindowModel::drawViews() const
     for (auto &win : _subWindowModels) {
         win->drawViews();
     }
-    drawView();
+    this->drawView();
+}
+
+void WindowModel::updateLogics()
+{
+    for (auto &win : _subWindowModels) {
+        win->updateLogics();
+    }
+    this->updateLogic();
 }
 
 /*******************************************************************************
  * @brief `WindowWithController` implementation
  ******************************************************************************/
 
-WindowWithController::WindowWithController(Point<int> pos, SIZE width, SIZE height): 
+WindowWithController::WindowWithController(vec2d<int> pos, SIZE width, SIZE height): 
     WindowModel {pos, width, height}, _controller {nullptr} 
 {}
 
-WindowWithController::WindowWithController(Point<int> pos, SIZE width, SIZE height, std::unique_ptr<Controller> &&controller): 
+WindowWithController::WindowWithController(vec2d<int> pos, SIZE width, SIZE height, std::unique_ptr<Controller> &&controller): 
     WindowModel {pos, width, height}, 
     _controller {std::move(controller)} 
 {}
@@ -66,7 +74,7 @@ WindowWithController::getController() const { return *_controller; }
 /*******************************************************************************
  * @brief `WindowWithCamera` implementation
  ******************************************************************************/
-WindowWithCamera::WindowWithCamera(Point<int> pos, SIZE width, SIZE height): 
+WindowWithCamera::WindowWithCamera(vec2d<int> pos, SIZE width, SIZE height): 
     WindowModel {pos, width, height}, 
     _winBuffer { std::make_unique<Ncurses::Window>(width, height, position.X(), position.Y()) }
 {
@@ -106,17 +114,56 @@ WindowWithCamera::drawView() const
     _cameraview->draw(*_winBuffer);
 }
 
-void
-WindowWithCamera::addObject(std::shared_ptr<Collidable> &obj)
+void 
+WindowWithCamera::updateLogic()
 {
-    // assigning `std::shared_ptr` to `std::weak_ptr` (copy ctor)
-    _collidables.push_back( obj );
+    // detect collision for each `Collidable` object
+    // time complexcity: O(n^2) -> O( [n(n + 1)]/2 )
+    if (! _collidables.empty()) {
+        
+        std::shared_ptr<Collidable> obj1, obj2;
+
+        for (auto first = _collidables.begin(); first != std::prev(_collidables.end()); ++first) {
+
+            for (auto second = std::next(first); second != _collidables.end(); ++second) {
+                
+                // TODO: check validty of the pointer
+
+                // obj1 = (*first).lock();
+                // obj2 = (*second).lock();
+                
+                // TODO: collision detection
+                
+            }
+
+        }
+
+    } 
+    
+    // update each non-collidable object's data
+    for (auto it = _nonCollidables.begin(); it != _nonCollidables.end(); ++it) {
+        
+        // check validty of the pointer
+        if ((*it).unique() == true) {
+            it = _nonCollidables.erase(it);
+            continue;
+        }
+        
+        // call `Object` updateData()
+        (*it)->updateData();
+    }
 }
 
+// void
+// WindowWithCamera::addCollidable(std::shared_ptr<ObjectDecorator> obj)
+// {
+//     // assigning `std::shared_ptr` to `std::weak_ptr` (copy ctor)
+//     _collidables.push_back( std::make_shared<Collidable>(obj) );
+// }
+
 void
-WindowWithCamera::addObject(std::shared_ptr<NonCollidable> &obj)
+WindowWithCamera::addNonCollidable(std::shared_ptr<Object> obj)
 {
-    // assigning `std::shared_ptr` to `std::weak_ptr` (copy ctor)
     _nonCollidables.push_back( obj );
 }
 

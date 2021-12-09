@@ -11,8 +11,7 @@
 
 #include <memory>
 #include "common/box.h"
-#include "common/point.h"
-#include "common/velocity.h"
+#include "common/vec2d.h"
 
 #include "controller/adapter/ncurseAdapter.h"
 #include "controller/controller.h"
@@ -127,14 +126,14 @@ private:
 
         _mainWindow->drawViews();
 
-        while (true) {
+        while (true) { // TODO: consider using do...while
 
             int input = _mainWindow->getInput();
             
             // game logic function, overrides by the user.
             this->onEachFrame(input);
 
-            // TODO: this->updateGameLogic();
+            _mainWindow->updateLogics();
 
             _mainWindow->drawViews();
 

@@ -31,11 +31,16 @@ private:
         BoardWindow &bwin = win.getBoardWindow();
         bwin.setBorder(true, '-', '-', '|', '|', '+');
         
-        playerObj = std::make_shared<NonCollidable>( std::make_shared<RectObject>(Point<float> {4, 4}, 1, 1, "#") );
-        bwin.addObject( playerObj );
+        playerObj = std::make_shared<NonCollidable>( std::make_shared<RectObject>(vec2d<float> {4, 4}, 1, 1, "#") );
+        bwin.addNonCollidable( playerObj );
 
+        obj1 =  std::make_shared<Movable>( std::make_shared<NonCollidable>( std::make_shared<RectObject>(vec2d<float> {20, 5}, 5, 5, "O") ) );
+        bwin.addNonCollidable( obj1 );
+        obj1->setAltitude(5);
+        obj1->setVelocity(vec2d<float> {0.12f, 0.0f});
+        
         /* ASCIIObject */
-        // playerObj = std::make_shared<NonCollidable>( std::make_shared<ASCIIObject>(Point<float> {4, 4}, '#') );
+        // playerObj = std::make_shared<NonCollidable>( std::make_shared<ASCIIObject>(vec2d<float> {4, 4}, '#') );
         // bwin.addObject( playerObj );
     }
 
@@ -44,20 +49,16 @@ private:
         RectObject &player = static_cast<RectObject &>((*playerObj).getObject());
         switch (input) {
             case 'a':
-                player.getPos1().getX() -= 1;
-                player.getPos2().getX() -= 1;
+                player.getPosition().getX() -= 1;
                 break;
             case 'w':
-                player.getPos1().getY() -= 1;
-                player.getPos2().getY() -= 1;
+                player.getPosition().getY() -= 1;
                 break;
             case 's':
-                player.getPos1().getY() += 1;
-                player.getPos2().getY() += 1;
+                player.getPosition().getY() += 1;
                 break;
             case 'd':
-                player.getPos1().getX() += 1;
-                player.getPos2().getX() += 1;
+                player.getPosition().getX() += 1;
                 break;
             default:
                 break;
@@ -65,6 +66,7 @@ private:
     }
 private:
     std::shared_ptr<NonCollidable> playerObj;
+    std::shared_ptr<Movable> obj1;
 };
 
 } // AGE

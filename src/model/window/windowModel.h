@@ -2,8 +2,8 @@
  * @file windowModel.h
  * @author Sihan Li (lshh1015813038@gmail.com)
  * @brief 
- * @version 0.4
- * @date 2021-12-04
+ * @version 0.5
+ * @date 2021-12-08
  */
 
 #ifndef __AGE_WINDOW_MODEL__
@@ -20,13 +20,13 @@ namespace AGE
 namespace Ncurses { 
     class Window; 
 }
-template<typename T> class Point;
+template<typename T> class vec2d;
 class Controller;
 class Camera;
 class CameraView;
 
-class Collidable;
-class NonCollidable;
+class Object;
+class ObjectDecorator;
 
 /*******************************************************************************
  * @brief Base Class - `Model` component in MVC which controls window's logic.
@@ -34,7 +34,7 @@ class NonCollidable;
 class WindowModel
 {
 public:
-    WindowModel(Point<int> pos, SIZE width, SIZE height);
+    WindowModel(vec2d<int> pos, SIZE width, SIZE height);
     virtual ~WindowModel();
 public:
     WindowModel &addSubWindow(std::unique_ptr<WindowModel> &&window);
@@ -55,9 +55,9 @@ public:
     void updateLogics();
 private:
     virtual void drawView() const {}
-    virtual void updateLogic() {}
+virtual void updateLogic() {}
 protected:
-    const Point<int> position;
+    const vec2d<int> position;
     const SIZE width;
     const SIZE height;
 private:
@@ -70,8 +70,8 @@ private:
 class WindowWithController: virtual public WindowModel
 {
 public:
-    WindowWithController(Point<int> pos, SIZE width, SIZE height);
-    WindowWithController(Point<int> pos, SIZE width, SIZE height, std::unique_ptr<Controller> &&controller);
+    WindowWithController(vec2d<int> pos, SIZE width, SIZE height);
+    WindowWithController(vec2d<int> pos, SIZE width, SIZE height, std::unique_ptr<Controller> &&controller);
     ~WindowWithController() override;
 public:
     // get users input directly from the built-in controller
@@ -89,7 +89,7 @@ private:
 class WindowWithCamera: virtual public WindowModel
 {
 public:
-    WindowWithCamera(Point<int> pos, SIZE width, SIZE height);
+    WindowWithCamera(vec2d<int> pos, SIZE width, SIZE height);
     ~WindowWithCamera() override;
 public:
     // default value: 32 -> blanks space
@@ -98,8 +98,9 @@ public:
     
     CameraView &addView(std::unique_ptr<CameraView> &&view);
 
-    void addObject(std::shared_ptr<Collidable> &obj);
-    void addObject(std::shared_ptr<NonCollidable> &obj);
+    // void addCollidable(std::shared_ptr<Object> obj);
+    void addNonCollidable(std::shared_ptr<Object> obj);
+
 private:
     void drawView() const override;
     void updateLogic() override;
@@ -112,13 +113,15 @@ private:
 
     std::unique_ptr<Camera> _camera;
     std::unique_ptr<CameraView> _cameraview;
+
+    // entt::registry reg;
     
     /**
      * @brief `WindowWithCamera` observes these `object`s. If `Object` gets 
      *  destroyed by the client side, Window will skip it when printing.
      */
-    std::list<std::weak_ptr<Collidable>> _collidables;
-    std::list<std::weak_ptr<NonCollidable>> _nonCollidables;
+    std::list<std::shared_ptr<Object>> _collidables;
+    std::list<std::shared_ptr<Object>> _nonCollidables;
 
     bool _hasBorder;
     int _topBorder, _bottomBorder, _leftBorder, _rightBorder, _cornerBorder;
