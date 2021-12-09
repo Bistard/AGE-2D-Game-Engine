@@ -28,22 +28,20 @@ public:
     ~RectObject() override;
 public:
     void setFill(std::string fill);
-    void setPos1(vec2d<float> pos);
-    void setPos2(vec2d<float> pos);
-
-    std::string &getFill() noexcept;
-    vec2d<float> &getPos1() noexcept;
-    vec2d<float> &getPos2() noexcept;
+    void setPosition(vec2d<float> pos);
+    void setWidth(float width);
+    void setHeight(float width);
     
-    const std::string &getFill() const noexcept;
-    const vec2d<float> &getPos1() const noexcept;
-    const vec2d<float> &getPos2() const noexcept;
-
     // returns the left-top vec2d of the rectangle.
     vec2d<float> &getPosition() override;
+    float getWidth() const noexcept;
+    float getHeight() const noexcept;
+    std::string &getFill() noexcept;
+    const std::string &getFill() const noexcept;
 private:
-    vec2d<float> _pos1;
-    vec2d<float> _pos2;
+    vec2d<float> _pos;
+    float _w;
+    float _h;
     std::string _fill;
 };
 
