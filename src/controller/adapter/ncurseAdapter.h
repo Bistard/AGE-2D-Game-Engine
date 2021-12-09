@@ -37,6 +37,13 @@ enum WindowOpt
     RAW
 };
 
+enum CurseVisibility
+{
+    INVISIBLE = 0,
+    NORMAL    = 1, 
+    VISIBLE   = 2
+};
+
 /**
  * @brief Initializes the screen and sets up memory. Must be called before using 
  *   Ncurses.

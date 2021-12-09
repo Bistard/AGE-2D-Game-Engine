@@ -110,7 +110,7 @@ private:
         // sets up memory for ncurses
         Ncurses::init(Ncurses::WindowOpt::CBREAK, false);
         // set the cursor invisible
-        Ncurses::setCursorVisibility(0);
+        Ncurses::setCursorVisibility(Ncurses::CurseVisibility::INVISIBLE);
     }
 
     virtual void init() = 0;
