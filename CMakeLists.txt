@@ -36,7 +36,7 @@ include_directories(
 	game/superMarioBros
 )
 
-add_definitions(-g -std=c++14 -Wall)
+add_definitions(-g -std=c++17 -Wall)
 
 # superMarioBros
 aux_source_directory(demo/superMarioBros SRC_LIST)
