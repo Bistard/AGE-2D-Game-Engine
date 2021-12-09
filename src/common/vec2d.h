@@ -35,11 +35,21 @@ public:
         return *this;
     }
 
+    vec2d<T> operator+(const vec2d<T> &other) const
+    {
+        return vec2d<T> { _x + other._x, _y + other._y };
+    }
+
     vec2d<T> &operator-=(vec2d<T> other) 
     {
         _x -= other._x;
         _y -= other._y;
         return *this;
+    }
+
+    vec2d<T> operator-(const vec2d<T> &other) const
+    {
+        return vec2d<T> { _x - other._x, _y - other._y };
     }
 public:
     T X() const noexcept { return _x; }
