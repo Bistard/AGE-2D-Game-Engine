@@ -1,5 +1,5 @@
 /**
- * @file velocityComponent.h
+ * @file velocity.h
  * @author Sihan Li (lshh1015813038@gmail.com)
  * @version 0.1
  * @date 2021-12-10
