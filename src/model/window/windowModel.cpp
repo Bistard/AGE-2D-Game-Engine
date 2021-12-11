@@ -28,7 +28,7 @@ WindowModel &WindowModel::addSubWindow(std::unique_ptr<WindowModel> &&window)
 //     // TODO
 // }
 
-void WindowModel::drawViews() const
+void WindowModel::drawViews()
 {
     for (auto &win : _subWindowModels) {
         win->drawViews();
@@ -91,15 +91,15 @@ Ncurses::Window &
 WindowWithCamera::getWindowBuffer() noexcept { return *_winBuffer; }
 
 void 
-WindowWithCamera::onDrawView() const
+WindowWithCamera::onDrawView()
 {
-    // _cameraview->draw(*_winBuffer);
+    _scene.updateViewSystems();
 }
 
 void 
 WindowWithCamera::onUpdateLogic()
 {
-    
+    _scene.updateLogicSystems();
 }
 
 } // AGE

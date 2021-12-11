@@ -27,8 +27,9 @@ private:
     void init() override
     {
         GameWindow &win = static_cast<GameWindow &>(this->getWindow());
-        
         BoardWindow &bwin = win.getBoardWindow();
+        Registry &registry = bwin.getScene().getRegistry();
+
         bwin.setBorder(true, '-', '-', '|', '|', '+');
         
         

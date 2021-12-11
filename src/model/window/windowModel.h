@@ -43,7 +43,7 @@ public:
      *  derived classes controls the behaviours of drawing by overriding the 
      *  belowing private virtual method `onDrawView()`.
      */
-    void drawViews() const;
+    void drawViews();
 
     /**
      * @brief Recursively updates all the game logics from subwindows first. The
@@ -52,7 +52,7 @@ public:
      */
     void updateLogics();
 private:
-    virtual void onDrawView() const {}
+    virtual void onDrawView() {}
     virtual void onUpdateLogic() {}
 protected:
     const vec2d<int> position;
@@ -94,7 +94,7 @@ public:
     Scene &getScene() noexcept;
     Ncurses::Window &getWindowBuffer() noexcept;
 private:
-    void onDrawView() const override;
+    void onDrawView() override;
     void onUpdateLogic() override;
 private:
     /** @brief gives data access to `CameraView` makes everything so much easier */

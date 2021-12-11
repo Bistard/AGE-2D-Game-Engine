@@ -32,9 +32,9 @@ public:
         // Constructing `System`s
         Registry &registry = getScene().getRegistry();
         
-        getScene().emplaceSystem<MotionSystem>(registry);
-        getScene().emplaceSystem<CollisionSystem>(registry);
-        getScene().emplaceSystem<RenderSystem>(registry, getWindowBuffer());
+        getScene().emplaceLogicSystem<MotionSystem>(registry);
+        getScene().emplaceLogicSystem<CollisionSystem>(registry);
+        getScene().emplaceViewSystem<RenderSystem>(registry, getWindowBuffer());
     }
 
     ~BoardWindow() override {}

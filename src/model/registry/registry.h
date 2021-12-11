@@ -43,10 +43,10 @@ namespace AGE
  * - marks the `Entity` as disabled by calling Entity::disable(), then calls
  *   Registry::refresh() to clean all the disabled entities.
  * 
- * Registry provide `GlobalComponent` which does not bind to any `Entity`. 
- * Instead, its lifetime binds to the `Registry` and can only exist one at
- * all the time.
- * - calss Registry::emplaceGlobal() to construct a new global component.
+ * Registry provide `GlobalComponent` which does not bind to any `Entity` instance. 
+ * Instead, its lifetime binds to the `Registry` and can only exist one at all 
+ * the time.
+ * - calls Registry::emplaceGlobal() to construct a new global component.
  * - calls Registry::queryGlobal() to get the GlobalComponent. Exception throws
  *   when no such component.
  * - calls Registry::hasGlobal() to check if the requiring component existed. If
