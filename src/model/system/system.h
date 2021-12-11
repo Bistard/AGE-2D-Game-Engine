@@ -11,17 +11,24 @@
 namespace AGE
 {
 
+class Registry;
+
 /**
- * @brief An interface for all the systems in the ECS.
+ * @brief Abstract Base Class - for all the systems in the ECS.
  * 
- * A `System` only handles all the logics in the ECS. It queries all the 
- * `Component` from ECS where the data is stored. And perform some certain 
- * logic based or to the data itself.
+ * A `System` handles all the logics in the ECS. It queries all the `Component` 
+ * from ECS where the data is stored. And performs some certain logic based or 
+ * to the data itself.
  */
-class ISystem
+class System
 {
 public:
+    System(Registry &registry): _registry {registry} {}
+    virtual ~System() {}
+public:
     virtual void onUpdate() = 0;
+protected:
+    Registry &_registry;
 };
 
 } // AGE

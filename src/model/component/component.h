@@ -20,18 +20,6 @@ class Entity;
 
 using ComponentID = int;
 
-// static inline ComponentID getComponentUUID()
-// {
-//     return static_cast<ComponentID>(UUID {});
-// }
-
-// template<typename T>
-// inline ComponentID getComponentUUID() noexcept
-// {
-//     static ComponentID componentTypeID = getComponentUUID();
-//     return componentTypeID;
-// }
-
 inline int getComponentSequenceID()
 {
     static int componentSequenceID = 0;
@@ -51,6 +39,11 @@ inline int getComponentSequenceID() noexcept
  * 
  * `Component` only stores data (logicless). Logic is handled using `System`.
  * `Component` cannot be re-assigned to another `Entity`.
+ * 
+ * @note `Component` may have reference to the other `Component`s. For instance, 
+ * when rendering, we query all `Entity`s which obtain `CPosition` and `CRender`. 
+ * Instead, we may only querying for `CRender` which has a reference to a 
+ * `CPosition` to slightly increase query speed.
  */
 class Component
 {
@@ -65,10 +58,6 @@ public:
     Component(Component &&other) = default;
 
     virtual ~Component() = default;
-public:
-    virtual void init() {}
-    virtual void update() {}
-    virtual void draw() {}
 public:
     Entity &entity;
 };
