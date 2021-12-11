@@ -150,7 +150,12 @@ public:
     }
 
     /**
-     * @brief Destroys the given `Entity` and releases its `Component`s as well.
+     * @brief Destroys the given `Entity` immediately and releases its 
+     * `Component`s as well.
+     * 
+     * @warning If instant destruction is not required, please marks the 
+     * `Entity` is disabled and calls Registry::refresh().
+     * 
      * @param entity Provide an `Entity` for destroying.
      */
     void destroy(Entity &entity)
@@ -164,6 +169,28 @@ public:
 
         // destroy the `Entity` at last
         _entities.erase(entity.getUUID());
+    }
+
+    /**
+     * @brief Loops all the `Entity` and destroys all the inactive ones.
+     * 
+     * @warning From a internal perspective, after calling this function, the
+     * order of the stored `Entity` does not retain.
+     * 
+     * @return std::size_t The number of destroyed `Entities`
+     */
+    std::size_t refresh()
+    {
+        std::size_t cnt = 0;
+        for (auto &[id, entity] : _entities) {
+
+            if (entity->isActive() == false) {
+                destroy(*entity);
+                ++cnt;
+            }
+            
+        }
+        return cnt;
     }
 
     /** @brief  */
@@ -192,10 +219,10 @@ public:
      * @tparam ComponentTypes The list of required `Component`s
      */
     template<typename... ComponentTypes>
-    [[nodiscard]] decltype(auto) query()
+    [[nodiscard]] std::vector<EntitieQueryGroup *> query()
     {
         static_assert(sizeof...(ComponentTypes) > 0, "must provide at least one Component type for querying");
-        return std::vector<EntitieQueryGroup> { __queryForEachComponent<ComponentTypes>()... };
+        return std::vector<EntitieQueryGroup *> { __queryForEachComponent<ComponentTypes>()... };
     }
 
 private:
@@ -212,10 +239,10 @@ private:
     }
 
     template<typename ComponentType>
-    [[nodiscard]] EntitieQueryGroup &__queryForEachComponent()
+    [[nodiscard]] EntitieQueryGroup *__queryForEachComponent()
     {
         auto &entities = _groups[ getComponentSequenceID<ComponentType>() ];
-        return entities;
+        return &entities;
     }
 
 private:
