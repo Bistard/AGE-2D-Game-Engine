@@ -14,7 +14,7 @@ const EntityID
 Entity::getUUID() const noexcept { return _uuid; }
 
 void 
-Entity::destroy() noexcept { _active = false; }
+Entity::disable() noexcept { _active = false; }
 
 bool 
 Entity::isActive() const noexcept { return _active; }

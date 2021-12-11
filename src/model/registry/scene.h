@@ -16,7 +16,7 @@ namespace AGE
 {
 
 /**
- * @brief 
+ * @brief Scene is essentially a wrapper class for ECS.
  */
 class Scene final
 {

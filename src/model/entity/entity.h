@@ -62,11 +62,11 @@ public:
     /** @brief returns the EntityID (UUID) */
     const EntityID getUUID() const noexcept;
     
-    /** @brief determines whether the `Entity` is invalid or not (destroyed) */
+    /** @brief determines whether the `Entity` is active or not */
     bool isActive() const noexcept;
     
-    /** @brief marks this `Entity` as destroyed */
-    void destroy() noexcept;
+    /** @brief marks this `Entity` as disabled, will be destroyed when Registry::refresh() is invoked. */
+    void disable() noexcept;
     
     /** @brief returns the reference to where this `Entity` is registered. */
     Registry &getRegistry();

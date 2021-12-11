@@ -27,7 +27,7 @@ class CRender : public Component
 public:
     CRender(Entity &entity, AltitudeType altitude, bool visible, 
             CTexture &texture, CPosition &position
-    ) : Component {entity}, altitude {altitude}, visible {visible}, 
+    ) : Component {entity}, visible {visible}, altitude {altitude}, 
         texture {texture}, position {position} 
     {}
     ~CRender() override {}
