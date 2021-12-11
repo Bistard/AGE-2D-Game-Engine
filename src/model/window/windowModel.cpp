@@ -4,7 +4,6 @@
 #include "../../view/view.h"
 #include "../../view/cameraView.h"
 #include "../../utils/camera.h"
-#include "../object/objectModel.h"
 
 namespace AGE
 {
@@ -36,7 +35,7 @@ void WindowModel::drawViews() const
     for (auto &win : _subWindowModels) {
         win->drawViews();
     }
-    this->drawView();
+    this->onDrawView();
 }
 
 void WindowModel::updateLogics()
@@ -44,7 +43,7 @@ void WindowModel::updateLogics()
     for (auto &win : _subWindowModels) {
         win->updateLogics();
     }
-    this->updateLogic();
+    this->onUpdateLogic();
 }
 
 /*******************************************************************************
@@ -76,10 +75,11 @@ WindowWithController::getController() const { return *_controller; }
  ******************************************************************************/
 WindowWithCamera::WindowWithCamera(vec2d<int> pos, SIZE width, SIZE height): 
     WindowModel {pos, width, height}, 
-    _winBuffer { std::make_unique<Ncurses::Window>(width, height, position.X(), position.Y()) }
+    _winBuffer { std::make_unique<Ncurses::Window>(width, height, position.X(), position.Y()) },
+    _scene {}
 {
     // construction of `WindowWithCamera` will auomatically add a `CameraView` into the vector.
-    this->addView( std::make_unique<CameraView>(*this) );
+    // this->addView( std::make_unique<CameraView>(*this) );
     _camera = std::make_unique<Camera>(pos, width, height);
 }
 
@@ -100,71 +100,30 @@ WindowWithCamera::setBorder(bool show, int top, int bottom, int left, int right,
     _cornerBorder = corner;
 }
 
-CameraView &
-WindowWithCamera::addView(std::unique_ptr<CameraView> &&view)
-{
-    CameraView &ref = *view;
-    _cameraview =std::move(view);
-    return ref;
-}
-
-void 
-WindowWithCamera::drawView() const
-{
-    _cameraview->draw(*_winBuffer);
-}
-
-void 
-WindowWithCamera::updateLogic()
-{
-    // detect collision for each `Collidable` object
-    // time complexcity: O(n^2) -> O( [n(n + 1)]/2 )
-    if (! _collidables.empty()) {
-        
-        std::shared_ptr<Collidable> obj1, obj2;
-
-        for (auto first = _collidables.begin(); first != std::prev(_collidables.end()); ++first) {
-
-            for (auto second = std::next(first); second != _collidables.end(); ++second) {
-                
-                // TODO: check validty of the pointer
-
-                // obj1 = (*first).lock();
-                // obj2 = (*second).lock();
-                
-                // TODO: collision detection
-                
-            }
-
-        }
-
-    } 
-    
-    // update each non-collidable object's data
-    for (auto it = _nonCollidables.begin(); it != _nonCollidables.end(); ++it) {
-        
-        // check validty of the pointer
-        if ((*it).unique() == true) {
-            it = _nonCollidables.erase(it);
-            continue;
-        }
-        
-        // call `Object` updateData()
-        (*it)->updateData();
-    }
-}
-
-// void
-// WindowWithCamera::addCollidable(std::shared_ptr<ObjectDecorator> obj)
+// CameraView &
+// WindowWithCamera::addView(std::unique_ptr<CameraView> &&view)
 // {
-//     // assigning `std::shared_ptr` to `std::weak_ptr` (copy ctor)
-//     _collidables.push_back( std::make_shared<Collidable>(obj) );
+//     CameraView &ref = *view;
+//     _cameraview =std::move(view);
+//     return ref;
 // }
 
-void
-WindowWithCamera::addNonCollidable(std::shared_ptr<Object> obj)
+Registry &
+WindowWithCamera::getRegistry() noexcept
 {
-    _nonCollidables.push_back( obj );
+    return _scene.getRegistry();
+}
+
+void 
+WindowWithCamera::onDrawView() const
+{
+    // _cameraview->draw(*_winBuffer);
+}
+
+void 
+WindowWithCamera::onUpdateLogic()
+{
+    
 }
 
 } // AGE

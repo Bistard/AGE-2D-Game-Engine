@@ -22,9 +22,15 @@
 #include "model/window/statusWindow.h"
 #include "model/window/boardWindow.h"
 
-#include "model/object/objectModel.h"
-#include "model/object/objectModel/rectObject.h"
-#include "model/object/objectModel/ASCIIObject.h"
+#include "model/registry/registry.h"
+#include "model/registry/scene.h"
+
+#include "model/component/component.h"
+#include "model/component/velocityComponent.h"
+#include "model/component/positionComponent.h"
+#include "model/component/gravitationalComponent.h"
+
+#include "model/entity/entity.h"
 
 #include "view/view.h"
 #include "view/statusView.h"
@@ -33,6 +39,7 @@
 #include "utils/timer.h"
 #include "utils/camera.h"
 #include "utils/math.h"
+#include "utils/uuid.h"
 
 namespace AGE
 {

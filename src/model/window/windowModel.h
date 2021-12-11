@@ -12,7 +12,9 @@
 #include <vector>
 #include <list>
 #include <memory>
+
 #include "../../utils/math.h"
+#include "../registry/scene.h"
 
 namespace AGE
 {
@@ -23,10 +25,6 @@ namespace Ncurses {
 template<typename T> class vec2d;
 class Controller;
 class Camera;
-class CameraView;
-
-class Object;
-class ObjectDecorator;
 
 /*******************************************************************************
  * @brief Base Class - `Model` component in MVC which controls window's logic.
@@ -43,19 +41,19 @@ public:
     /**
      * @brief Recursively draws all the views from subwindows first. The 
      *  derived classes controls the behaviours of drawing by overriding the 
-     *  belowing private virtual method `drawView()`.
+     *  belowing private virtual method `onDrawView()`.
      */
     void drawViews() const;
 
     /**
      * @brief Recursively updates all the game logics from subwindows first. The
      *  derived classes controls the behaviours of updating logics by overriding
-     *  the belowing private virtual method `updateLogic()`.
+     *  the belowing private virtual method `onUpdateLogic()`.
      */
     void updateLogics();
 private:
-    virtual void drawView() const {}
-virtual void updateLogic() {}
+    virtual void onDrawView() const {}
+    virtual void onUpdateLogic() {}
 protected:
     const vec2d<int> position;
     const SIZE width;
@@ -96,33 +94,27 @@ public:
     void setBorder(bool show, int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32);
     const Camera &getCamera() const;
     
-    CameraView &addView(std::unique_ptr<CameraView> &&view);
+    // CameraView &addView(std::unique_ptr<CameraView> &&view);
 
-    // void addCollidable(std::shared_ptr<Object> obj);
-    void addNonCollidable(std::shared_ptr<Object> obj);
-
+    /** @brief give access to the `Registry` for creating `Entity` */
+    Registry &getRegistry() noexcept;
 private:
-    void drawView() const override;
-    void updateLogic() override;
+    void onDrawView() const override;
+    void onUpdateLogic() override;
 private:
-    // gives data access to `CameraView` makes everything so much easier
+    /** @brief gives data access to `CameraView` makes everything so much easier */
     friend class CameraView;
 
-    // window buffer for `View` to output
+    /** @brief window buffer for `View` to output */
     std::unique_ptr<Ncurses::Window> _winBuffer;
 
     std::unique_ptr<Camera> _camera;
-    std::unique_ptr<CameraView> _cameraview;
+    // std::unique_ptr<CameraView> _cameraview;
 
-    // entt::registry reg;
-    
-    /**
-     * @brief `WindowWithCamera` observes these `object`s. If `Object` gets 
-     *  destroyed by the client side, Window will skip it when printing.
-     */
-    std::list<std::shared_ptr<Object>> _collidables;
-    std::list<std::shared_ptr<Object>> _nonCollidables;
+    /** @brief maintains the main functionality of the window content */
+    Scene _scene;
 
+    /** @brief display borders */
     bool _hasBorder;
     int _topBorder, _bottomBorder, _leftBorder, _rightBorder, _cornerBorder;
 };
