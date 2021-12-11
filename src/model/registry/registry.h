@@ -144,6 +144,7 @@ public:
         // releases the actual component
         auto it = entity._components.begin() + id;
         entity._components.erase(it);
+        entity._componentBitset[id] = false;
         
         return true;
     }
@@ -194,7 +195,7 @@ public:
     [[nodiscard]] decltype(auto) query()
     {
         static_assert(sizeof...(ComponentTypes) > 0, "must provide at least one Component type for querying");
-        return std::vector<EntitieQueryGroup> { __queryForEachComponent<ComponentTypes...>() };
+        return std::vector<EntitieQueryGroup> { __queryForEachComponent<ComponentTypes>()... };
     }
 
 private:

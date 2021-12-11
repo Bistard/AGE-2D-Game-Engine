@@ -18,7 +18,7 @@ namespace AGE
 
 class Entity;
 
-using ComponentID = UUID;
+using ComponentID = int;
 
 // static inline ComponentID getComponentUUID()
 // {
