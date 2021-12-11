@@ -76,8 +76,6 @@ WindowWithCamera::WindowWithCamera(vec2d<int> pos, SIZE width, SIZE height):
     _winBuffer { std::make_unique<Ncurses::Window>(width, height, position.X(), position.Y()) },
     _scene {}
 {
-    // construction of `WindowWithCamera` will auomatically add a `CameraView` into the vector.
-    // this->addView( std::make_unique<CameraView>(*this) );
     _camera = std::make_unique<Camera>(pos, width, height);
 }
 
@@ -85,18 +83,6 @@ WindowWithCamera::~WindowWithCamera() {}
 
 Camera &
 WindowWithCamera::getCamera() noexcept { return *_camera; }
-
-void 
-WindowWithCamera::setBorder(bool show, int top, int bottom, int left, int right, int corner)
-{
-    _hasBorder = show;
-
-    _topBorder = top;
-    _bottomBorder = bottom;
-    _leftBorder = left;
-    _rightBorder = right;
-    _cornerBorder = corner;
-}
 
 Scene &
 WindowWithCamera::getScene() noexcept { return _scene; }

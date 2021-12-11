@@ -14,6 +14,8 @@
 #include "../system/collisionSystem.h"
 #include "../system/renderSystem.h"
 
+#include "../component/border.h"
+
 namespace AGE
 {
 
@@ -37,13 +39,11 @@ public:
 
     ~BoardWindow() override {}
 public:
-    // CameraView &addBoardView(std::unique_ptr<CameraView> &&cameraView) 
-    // { 
-    //     return static_cast<CameraView &>(this->addView(std::move(cameraView))); 
-    // }
-private:
-    // std::unique_ptr<Grid> _grid;
-    // bool _boardType;
+    void setBorder(bool visible, int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32)
+    {
+        Registry &registry = getScene().getRegistry();
+        registry.emplaceGlobal<CGlobalBorder>(visible, top, bottom, left, right, corner);
+    }
 };
 
 } // AGE

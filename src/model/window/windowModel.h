@@ -90,15 +90,8 @@ public:
     WindowWithCamera(vec2d<int> pos, SIZE width, SIZE height);
     ~WindowWithCamera() override;
 public:
-    // default value: 32 -> blanks space
-    void setBorder(bool show, int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32);
     Camera &getCamera() noexcept;
-    
-    // CameraView &addView(std::unique_ptr<CameraView> &&view);
-
-    /** @brief give access to the `Scene` */
     Scene &getScene() noexcept;
-    /** @brief give access to the `Ncurses::Window` */
     Ncurses::Window &getWindowBuffer() noexcept;
 private:
     void onDrawView() const override;
@@ -109,16 +102,10 @@ private:
 
     /** @brief window buffer for `View` to output */
     std::unique_ptr<Ncurses::Window> _winBuffer;
-
     std::unique_ptr<Camera> _camera;
-    // std::unique_ptr<CameraView> _cameraview;
 
     /** @brief maintains the main functionality of the window content */
     Scene _scene;
-
-    /** @brief display borders */
-    bool _hasBorder;
-    int _topBorder, _bottomBorder, _leftBorder, _rightBorder, _cornerBorder;
 };
 
 } // AGE
