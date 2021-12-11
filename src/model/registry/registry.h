@@ -188,15 +188,16 @@ public:
                 destroy(*entity);
                 ++cnt;
             }
-            
+
         }
         return cnt;
     }
 
-    /** @brief  */
+    /** @brief clears all the stored `Entity` and its corresponding `Component`. */
     void clear() 
     {
-        // TODO
+        _entities.clear();
+        _groups.clear();
     }
 
     /** @brief Check is the given `Entity` has the provided `Component` */
