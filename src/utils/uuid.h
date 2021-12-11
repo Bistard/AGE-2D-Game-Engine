@@ -32,9 +32,10 @@ public:
     UUID(const UUID &uuid) = default;
 
     /** @brief make UUID hashable */
-    operator uint64_t() const { return _UUID; }
+    operator uint64_t() const;
 private:
-    /* tranditionally, should use 128-bit label. But, 64-bits works total fine for this tiny AGE engine :) */
+    /* tranditionally, should use 128-bit label. But, 64-bits works total fine 
+    for this tiny AGE engine :) */
     uint64_t _UUID;
 };
 
@@ -43,7 +44,8 @@ private:
 namespace std
 {
 
-/** @brief template specialization */
+/** @brief template specialization - make UUID hashable so that it can be placed 
+ * into `std::map`  */
 template<>
 struct hash<AGE::UUID>
 {

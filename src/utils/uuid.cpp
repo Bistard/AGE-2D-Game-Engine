@@ -16,5 +16,7 @@ UUID::UUID(): _UUID { s_uniformDistribution(s_engine) }
 UUID::UUID(uint64_t uuid): _UUID {0}
 {}
 
+UUID::operator uint64_t() const { return _UUID; }
+
 } // AGE
 
