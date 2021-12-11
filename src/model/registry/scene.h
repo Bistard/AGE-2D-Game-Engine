@@ -35,16 +35,32 @@ public:
      * @param args The actual arguments for constructing the new `System`.
      */
     template<typename SystemType, typename... Args>
-    void emplaceSystem(Args &&...args)
+    void emplaceLogicSystem(Args &&...args)
     {
-        static_assert(std::is_base_of<System, SystemType>::value);
-        _systems.emplace_back( std::make_unique<SystemType>(std::forward<Args>(args)...) );
+        static_assert(std::is_base_of<LogicSystem, SystemType>::value);
+        _logicSystems.emplace_back( std::make_unique<SystemType>(std::forward<Args>(args)...) );
     }
 
-    /** @brief calls System::onUpdate() for each `System`. */
-    void onUpdate() 
+    /** @brief same as `emplaceLogicSystem`. */
+    template<typename SystemType, typename... Args>
+    void emplaceViewSystem(Args &&...args)
     {
-        for (auto &sys : _systems) {
+        static_assert(std::is_base_of<ViewSystem, SystemType>::value);
+        _viewSystems.emplace_back( std::make_unique<SystemType>(std::forward<Args>(args)...) );
+    }
+
+    /** @brief calls System::onUpdate() for each `LogicSystem`. */
+    void updateLogicSystems() 
+    {
+        for (auto &sys : _logicSystems) {
+            sys->onUpdate();
+        }
+    }
+
+    /** @brief calls System::onUpdate() for each `ViewSystem`. */
+    void updateViewSystems() 
+    {
+        for (auto &sys : _viewSystems) {
             sys->onUpdate();
         }
     }
@@ -52,7 +68,8 @@ private:
     /** @brief the core component of the ECS */
     Registry _registry;
     /** @brief stores all the systems */
-    std::vector<std::unique_ptr<System>> _systems;
+    std::vector<std::unique_ptr<LogicSystem>> _logicSystems;
+    std::vector<std::unique_ptr<ViewSystem>> _viewSystems;
 };
 
 } // AGE

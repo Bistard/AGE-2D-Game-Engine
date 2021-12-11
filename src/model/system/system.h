@@ -31,6 +31,20 @@ protected:
     Registry &_registry;
 };
 
+class LogicSystem: public System
+{
+public:
+    LogicSystem(Registry &registry): System {registry} {}
+    ~LogicSystem() override {}
+};
+
+class ViewSystem: public System
+{
+public:
+    ViewSystem(Registry &registry): System {registry} {}
+    ~ViewSystem() override {}
+};
+
 } // AGE
 
 
