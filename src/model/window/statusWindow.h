@@ -10,7 +10,6 @@
 #define __AGE_STATUS_WINDOW__
 
 #include "windowModel.h"
-#include "../../view/statusView.h"
 
 namespace AGE
 {

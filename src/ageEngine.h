@@ -26,15 +26,18 @@
 #include "model/registry/scene.h"
 
 #include "model/component/component.h"
-#include "model/component/velocityComponent.h"
-#include "model/component/positionComponent.h"
-#include "model/component/gravitationalComponent.h"
+#include "model/component/gravity.h"
+#include "model/component/position.h"
+#include "model/component/render.h"
+#include "model/component/texture.h"
+#include "model/component/velocity.h"
 
 #include "model/entity/entity.h"
 
-#include "view/view.h"
-#include "view/statusView.h"
-#include "view/cameraView.h"
+#include "model/system/system.h"
+#include "model/system/motionSystem.h"
+#include "model/system/collisionSystem.h"
+#include "model/system/renderSystem.h"
 
 #include "utils/timer.h"
 #include "utils/camera.h"
