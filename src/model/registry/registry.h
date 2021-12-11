@@ -215,9 +215,15 @@ public:
     }
 
     /**
-     * @brief Returns a list of `Entities` which has the provided `ComponentTypes`
+     * @brief Returns a list of `Entities` which has the provided `ComponentTypes`.
      * 
-     * @tparam ComponentTypes The list of required `Component`s
+     * Function querys for each `ComponentTypes` seperately, each query returns
+     * a pointer to the required `Entity` list. The result will be a vector of
+     * all the pointers to each required `Entity` list. Essentially, a vector of 
+     * list is returned.
+     * 
+     * @tparam ComponentTypes ComponentTypes The list of required `Component`s.
+     * @return std::vector<EntitieQueryGroup *> A vector of the required `Entity`s.
      */
     template<typename... ComponentTypes>
     [[nodiscard]] std::vector<EntitieQueryGroup *> query()
