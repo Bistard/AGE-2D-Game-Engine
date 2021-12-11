@@ -92,12 +92,14 @@ public:
 public:
     // default value: 32 -> blanks space
     void setBorder(bool show, int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32);
-    const Camera &getCamera() const;
+    Camera &getCamera() noexcept;
     
     // CameraView &addView(std::unique_ptr<CameraView> &&view);
 
-    /** @brief give access to the `Registry` for creating `Entity` */
-    Registry &getRegistry() noexcept;
+    /** @brief give access to the `Scene` */
+    Scene &getScene() noexcept;
+    /** @brief give access to the `Ncurses::Window` */
+    Ncurses::Window &getWindowBuffer() noexcept;
 private:
     void onDrawView() const override;
     void onUpdateLogic() override;

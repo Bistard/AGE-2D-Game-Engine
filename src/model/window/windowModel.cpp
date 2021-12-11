@@ -1,8 +1,6 @@
 #include "../../common/vec2d.h"
 #include "windowModel.h"
 #include "../../controller/controller.h"
-#include "../../view/view.h"
-#include "../../view/cameraView.h"
 #include "../../utils/camera.h"
 
 namespace AGE
@@ -85,8 +83,8 @@ WindowWithCamera::WindowWithCamera(vec2d<int> pos, SIZE width, SIZE height):
 
 WindowWithCamera::~WindowWithCamera() {}
 
-const Camera &
-WindowWithCamera::getCamera() const { return *_camera; }
+Camera &
+WindowWithCamera::getCamera() noexcept { return *_camera; }
 
 void 
 WindowWithCamera::setBorder(bool show, int top, int bottom, int left, int right, int corner)
@@ -100,19 +98,11 @@ WindowWithCamera::setBorder(bool show, int top, int bottom, int left, int right,
     _cornerBorder = corner;
 }
 
-// CameraView &
-// WindowWithCamera::addView(std::unique_ptr<CameraView> &&view)
-// {
-//     CameraView &ref = *view;
-//     _cameraview =std::move(view);
-//     return ref;
-// }
+Scene &
+WindowWithCamera::getScene() noexcept { return _scene; }
 
-Registry &
-WindowWithCamera::getRegistry() noexcept
-{
-    return _scene.getRegistry();
-}
+Ncurses::Window &
+WindowWithCamera::getWindowBuffer() noexcept { return *_winBuffer; }
 
 void 
 WindowWithCamera::onDrawView() const

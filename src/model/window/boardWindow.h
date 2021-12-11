@@ -10,7 +10,9 @@
 #define __AGE_BOARD_WINDOW__
 
 #include "windowModel.h"
-// #include "../../view/cameraView.h"
+#include "../system/motionSystem.h"
+#include "../system/collisionSystem.h"
+#include "../system/renderSystem.h"
 
 namespace AGE
 {
@@ -24,7 +26,15 @@ public:
     BoardWindow(vec2d<int> pos, SIZE width, SIZE height): 
         WindowModel {pos, width, height},
         WindowWithCamera {pos, width, height}
-    {}
+    {
+        // Constructing `System`s
+        Registry &registry = getScene().getRegistry();
+        
+        getScene().emplaceSystem<MotionSystem>(registry);
+        getScene().emplaceSystem<CollisionSystem>(registry);
+        getScene().emplaceSystem<RenderSystem>(registry, getWindowBuffer());
+    }
+
     ~BoardWindow() override {}
 public:
     // CameraView &addBoardView(std::unique_ptr<CameraView> &&cameraView) 

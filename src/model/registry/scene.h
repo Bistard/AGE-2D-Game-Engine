@@ -24,19 +24,35 @@ public:
     Scene() = default;
     ~Scene() = default;
 public:
-    Registry &getRegistry() { return _entityManager; }
+    Registry &getRegistry() { return _registry; }
     
+    /**
+     * @brief Emplaces a new `System` inside the `Scene`. The new system shares
+     * the same lifetime with the `Scene`.
+     * 
+     * @tparam SystemType The type of the `System`.
+     * @tparam Args The list of argument types to construct a new `System`.
+     * @param args The actual arguments for constructing the new `System`.
+     */
+    template<typename SystemType, typename... Args>
+    void emplaceSystem(Args &&...args)
+    {
+        static_assert(std::is_base_of<System, SystemType>::value);
+        _systems.emplace_back( std::make_unique<SystemType>(std::forward<Args>(args)...) );
+    }
+
+    /** @brief calls System::onUpdate() for each `System`. */
     void onUpdate() 
     {
         for (auto &sys : _systems) {
-            sys.onUpdate();
+            sys->onUpdate();
         }
     }
 private:
     /** @brief the core component of the ECS */
-    Registry _entityManager;
+    Registry _registry;
     /** @brief stores all the systems */
-    std::vector<ISystem> _systems;
+    std::vector<std::unique_ptr<System>> _systems;
 };
 
 } // AGE
