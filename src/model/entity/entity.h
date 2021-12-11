@@ -42,7 +42,6 @@ class Entity final
 {
 
 private:
-
     friend class Registry;
 
     /** @brief constructors */
@@ -62,10 +61,6 @@ public:
 
     /** @brief returns the EntityID (UUID) */
     const EntityID getUUID() const noexcept;
-    
-    // REVIEW 
-    /** @brief */
-    void update();
     
     /** @brief determines whether the `Entity` is invalid or not (destroyed) */
     bool isActive() const noexcept;
