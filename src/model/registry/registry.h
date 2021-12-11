@@ -22,10 +22,37 @@ namespace AGE
 {
 
 /**
- * @brief Entity-Component System (ECS)
+ * @brief Core framework of the Entity-Component System (ECS)
  * 
  * The `Registry` is the core class of the ECS framework. It stores `Entity`s 
  * and arranges pools of `Component`s for fast querying.
+ * 
+ * The only valid way to create `Entity` is by calling Registry::create(). 
+ * 
+ * To add a new component to the `Entity`, we either 
+ * - calls Entity::addComponent() or
+ * - calls Registry::emplace().
+ * 
+ * To remove a component from an `Entity`, either 
+ * - calls Entity::removeComponent() or
+ * - calls Registry::remove().
+ * 
+ * To destroy an `Entity`, either 
+ * - calls Registry::destroy() or 
+ * - calls Entity::destroy() or
+ * - marks the `Entity` as disabled by calling Entity::disable(), then calls
+ *   Registry::refresh() to clean all the disabled entities.
+ * 
+ * Registry provide `GlobalComponent` which does not bind to any `Entity`. 
+ * Instead, its lifetime binds to the `Registry` and can only exist one at
+ * all the time.
+ * - calss Registry::emplaceGlobal() to construct a new global component.
+ * - calls Registry::queryGlobal() to get the GlobalComponent. Exception throws
+ *   when no such component.
+ * - calls Registry::hasGlobal() to check if the requiring component existed. If
+ *   existed, returns a hint and passes into Registry::queryGlobal() to get the
+ *   correct global component.
+ * - calls Registry::destroyGlobal() for destruction.
  */
 class Registry 
 {
@@ -97,14 +124,14 @@ public:
      * @return The newly constructed `Component`
      */
     template<typename ComponentType, typename... Args>
-    [[maybe_unused]] auto &emplace(Entity &entity, Args &&...args)
+    [[maybe_unused]] auto emplace(Entity &entity, Args &&...args) -> ComponentType &
     {
         auto id = getComponentSequenceID<ComponentType>();
 
         // Check if `Entity` already has one same `Component`, if so, return the 
         // existed one.
         if (entity._componentBitset[id] == true) {
-            return *(entity._components[id]);
+            return static_cast<ComponentType &>( *(entity._components[id]) );
         }
 
         // constructing `Component`
@@ -118,7 +145,7 @@ public:
         entity._componentBitset[id] = true;
         _groups[id].emplace_back( &entity );
 
-        return *(entity._components.back());
+        return static_cast<ComponentType &>( *(entity._components.back()) );
     }
 
     /**
@@ -200,18 +227,18 @@ public:
         _groups.clear();
     }
 
-    /** @brief Check is the given `Entity` has the provided `Component` */
+    /** @brief Check if the given `Entity` has the provided `Component` */
     template<typename ComponentType>
-    bool has(const Entity &entity) const
+    [[nodiscard]] bool has(const Entity &entity) const
     {
         return entity._componentBitset[ getComponentSequenceID<ComponentType>() ];
     }
 
     /** @brief Return a reference of the required `Component` in the provide `Component` */
     template<typename ComponentType> 
-    [[nodiscard]] ComponentType &get(Entity entity) const
+    [[nodiscard]] auto get(Entity entity) const -> ComponentType &
     {
-        return entity._components[ getComponentSequenceID<ComponentType>() ];
+        return static_cast<ComponentType &>( entity._components[ getComponentSequenceID<ComponentType>() ] );
     }
 
     /**
@@ -230,6 +257,56 @@ public:
     {
         static_assert(sizeof...(ComponentTypes) > 0, "must provide at least one Component type for querying");
         return std::vector<EntitieQueryGroup *> { __queryForEachComponent<ComponentTypes>()... };
+    }
+
+    /**
+     * @brief Constructs a new global component.
+     * 
+     * @warning If such global component already existed, an exception throws.
+     * 
+     * @tparam GlobalComponentType The component type.
+     * @param args The argument for constructing.
+     * @return auto& Returns the reference to the newly constructed component.
+     */
+    template<typename GlobalComponentType, typename... Args>
+    [[maybe_unused]] auto emplaceGlobal(Args &&...args) -> GlobalComponentType &
+    {
+        static_assert(std::is_base_of<GlobalComponent, GlobalComponentType>::value);
+
+        ComponentUUID id = getComponentUUID<GlobalComponentType>();
+        _globals.emplace( std::make_pair( id, GlobalComponentType {std::forward<Args>(args)...} ) );
+        return static_cast<GlobalComponentType &>(_globals[id]);
+    }
+
+    /**
+     * @brief Returns the requested global component.
+     * 
+     * @warning If no such global components, an exception throws.
+     * 
+     * @tparam GlobalComponentType The type of the global component.
+     * @return auto& The reference to the required global component.
+     */
+    template<typename GlobalComponentType>
+    [[nodiscard]] auto queryGlobal() -> GlobalComponentType &
+    {
+        static_assert(std::is_base_of<GlobalComponent, GlobalComponentType>::value);
+        return static_cast<GlobalComponentType &>( _globals.at(getComponentUUID<GlobalComponentType>()) );
+    }
+
+    /** @brief Check if the provided global component type is registered. */
+    template<typename GlobalComponentType>
+    [[nodiscard]] bool hasGlobal()
+    {
+        static_assert(std::is_base_of<GlobalComponent, GlobalComponentType>::value);
+        return( _globals.find( getComponentUUID<GlobalComponentType>() ) != _globals.end() );
+    }
+
+    /** @brief Destroys the given global component type. */
+    template<typename GlobalComponentType>
+    void destroyGlobal()
+    {
+        static_assert(std::is_base_of<GlobalComponent, GlobalComponentType>::value);
+        _globals.erase( getComponentUUID<GlobalComponentType>() );
     }
 
 private:
@@ -258,6 +335,8 @@ private:
     std::map<EntityID, std::unique_ptr<Entity>> _entities;
     /** @brief grouping entities by their component type, easy for querying */
     std::unordered_map<ComponentID, EntitieQueryGroup> _groups;
+    /** @brief stores the global components */
+    std::unordered_map<ComponentUUID, GlobalComponent> _globals;
 };
 
 } // AGE

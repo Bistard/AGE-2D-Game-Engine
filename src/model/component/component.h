@@ -18,7 +18,20 @@ namespace AGE
 
 class Entity;
 
+using ComponentUUID = UUID;
 using ComponentID = int;
+
+static inline ComponentUUID getComponentUUID()
+{
+    return static_cast<ComponentUUID>(UUID {});
+}
+
+template<typename T>
+inline ComponentUUID getComponentUUID() noexcept
+{
+    static ComponentUUID componentTypeID = getComponentUUID();
+    return componentTypeID;
+}
 
 inline int getComponentSequenceID()
 {
@@ -60,6 +73,15 @@ public:
     virtual ~Component() = default;
 public:
     Entity &entity;
+};
+
+
+/** @brief Base Class - see `Registry` document for further informations. */
+class GlobalComponent
+{
+public:
+    GlobalComponent() = default;
+    virtual ~GlobalComponent() = default;
 };
 
 } // AGE
