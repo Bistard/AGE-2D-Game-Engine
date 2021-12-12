@@ -27,10 +27,10 @@ void MotionSystem::onUpdate()
     // updates gravitational value onto its position
     for (auto e : *gravities) {
         CGravity &gravity = _registry.get<CGravity>(*e);
-        CPosition &position = _registry.get<CPosition>(*e);
+        CVelocity &velocity = _registry.get<CVelocity>(*e);
         
-        position.pos.getX() += gravity.val.X();
-        position.pos.getY() += gravity.val.Y();
+        velocity.val.getX() += gravity.acceleration.X();
+        velocity.val.getY() += gravity.acceleration.Y();
     }
 }
 
