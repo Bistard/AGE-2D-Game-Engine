@@ -134,18 +134,14 @@ public:
             return static_cast<ComponentType &>( *(entity._components[id]) );
         }
 
-        // constructing `Component`
-        try {
-            entity._components.emplace_back( std::make_unique<ComponentType>(entity, std::forward<Args>(args)...) );
-        } catch (...) {
-            throw;
-        }
+        // constructing the new `Component`
+        auto [it, res] = entity._components.emplace( std::make_pair( id, std::make_unique<ComponentType>(entity, std::forward<Args>(args)...) ) );
         
         // mapping `Entity` with the new `Component`
         entity._componentBitset[id] = true;
         _groups[id].emplace_back( &entity );
 
-        return static_cast<ComponentType &>( *(entity._components.back()) );
+        return static_cast<ComponentType &>( *((*it).second) );
     }
 
     /** 
@@ -156,7 +152,7 @@ public:
     template<typename ComponentType, typename... Args>
     [[maybe_unused]] ComponentType &emplace(EntityID id, Args &&...args)
     {
-        return emplace<ComponentType>(*_entities[id], std::forward<Args>(args)...);
+        return emplace<ComponentType>(*_entities.at(id), std::forward<Args>(args)...);
     }
 
     /**
@@ -180,8 +176,7 @@ public:
         __removeEntityFromGrouping(id, entity);
 
         // releases the actual component
-        auto it = entity._components.begin() + id;
-        entity._components.erase(it);
+        entity._components.erase(id);
         entity._componentBitset[id] = false;
         
         return true;
@@ -195,7 +190,7 @@ public:
     template<typename ComponentType>
     bool remove(EntityID id)
     {
-        return remove<ComponentType>(*_entities[id]);
+        return remove<ComponentType>(*_entities.at(id));
     }
 
     /**
@@ -227,7 +222,7 @@ public:
      */
     void destroy(EntityID id)
     {
-        destroy(*_entities[id]);
+        destroy(*_entities.at(id));
     }
 
     /**
@@ -266,11 +261,14 @@ public:
         return entity._componentBitset[ getComponentSequenceID<ComponentType>() ];
     }
 
-    /** @brief Return a reference of the required `Component` in the provide `Entity` */
+    /** 
+     * @brief Return a reference of the required `Component` in the provide `Entity` 
+     * @warning If the `Entity` does not obtain such `Component`, an exception throws;
+    */
     template<typename ComponentType> 
     [[nodiscard]] ComponentType &get(Entity &entity) const
     {
-        return static_cast<ComponentType &>( *entity._components[ getComponentSequenceID<ComponentType>() ] );
+        return static_cast<ComponentType &>( *entity._components.at( getComponentSequenceID<ComponentType>() ) );
     }
 
     /** 
@@ -280,17 +278,20 @@ public:
     template<typename ComponentType>
     [[nodiscard]] bool has(EntityID id)
     {
-        return _entities[id]->_componentBitset[ getComponentSequenceID<ComponentType>() ];
+        return _entities.at(id)->_componentBitset[ getComponentSequenceID<ComponentType>() ];
     }
 
     /** 
      * @brief Return a reference of the required `Component` in the provide `EntityID` 
-     * @warning If the given EntityID does not existed, an exception throws.
+     * 
+     * @warning If the given EntityID does not existed, an exception throws. If 
+     * the `Entity` does not obtain the given `Component` type, an exception
+     * throws.         
      */
     template<typename ComponentType> 
     [[nodiscard]] ComponentType &get(EntityID id)
     {
-        return static_cast<ComponentType &>( _entities[id]->_components[ getComponentSequenceID<ComponentType>() ] );
+        return static_cast<ComponentType &>( _entities.at(id)->_components.at( getComponentSequenceID<ComponentType>() ) );
     }
 
     /**
@@ -365,7 +366,7 @@ private:
 
     void __removeEntityFromGrouping(ComponentID id, Entity &entity)
     {
-        auto &group = _groups[id];
+        auto &group = _groups.at(id);
         for (auto it = group.begin(); it != group.end(); ++it) {
             if (&entity == *it) {
                 it = group.erase(it);

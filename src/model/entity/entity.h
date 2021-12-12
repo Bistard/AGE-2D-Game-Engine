@@ -8,11 +8,12 @@
 #ifndef __AGE_ENTITY__
 #define __AGE_ENTITY__
 
-#include <vector>
+#include <map>
 #include <bitset>
 #include <memory>
 
 #include "../../utils/uuid.h"
+#include "../component/component.h"
 
 namespace AGE
 {
@@ -21,7 +22,6 @@ namespace AGE
 constexpr const std::size_t MAX_COMPONENTS = 32;
 
 class Registry;
-class Component;
 using EntityID = UUID;
 
 /**
@@ -111,7 +111,7 @@ private:
     /** @brief tells which `Component` this `Entity` obtains */
     std::bitset<MAX_COMPONENTS> _componentBitset;
     /** @brief stores the actual `Component` Data */
-    std::vector<std::unique_ptr<Component>> _components;
+    std::map<ComponentID, std::unique_ptr<Component>> _components;
 };
 
 } // AGE
