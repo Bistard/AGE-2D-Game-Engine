@@ -17,10 +17,10 @@ namespace AGE
 class CGravity : public Component
 {
 public:
-    CGravity(Entity &entity, float x, float y): Component {entity}, velocity {x, y} {}
+    CGravity(Entity &entity, float x, float y): Component {entity}, val {x, y} {}
     ~CGravity() override {}
 public:
-    vec2d<float> velocity;
+    vec2d<float> val;
 };
 
 } // AGE

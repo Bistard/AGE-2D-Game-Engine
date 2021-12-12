@@ -25,10 +25,7 @@ public:
     ~RenderSystem() override;
 public:
     /**
-     * @brief Querys all `CRenderer` components and draws its `CTexture` onto the
-     * window buffer by coressponding `CPosition`.
-     * 
-     * @note RenderSystem is rendering based on the Painter's Algorithm. It sorts
+     * @brief RenderSystem is rendering based on the Painter's Algorithm. It sorts
      * every `Entity` based on their altitude and renders things from the furthest 
      * to the close most.
      */

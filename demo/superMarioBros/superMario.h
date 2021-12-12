@@ -31,6 +31,7 @@ private:
         bwin.setBorder(true, '-', '-', '|', '|', '+');
         
         __test_renderer_system();
+        __test_motion_system();
         
     }
 
@@ -62,33 +63,47 @@ private:
         Registry &registry = bwin.getScene().getRegistry();
 
         /** @brief testing - ascii rendering */
-        Entity &player = registry.create();
+        Entity &e1 = registry.create();
         
-        CASCII &texture1 = registry.emplace<CASCII>(player, "X");
-        CPosition &position1 = registry.emplace<CPosition>(player, 2.3f, 4.5f, 0);
+        CASCII &texture1 = registry.emplace<CASCII>(e1, "X");
+        CPosition &position1 = registry.emplace<CPosition>(e1, 2.3f, 4.5f, 0);
 
-        registry.emplace<CRenderer>(player, texture1, position1);
+        registry.emplace<CRenderer>(e1, texture1, position1);
 
         /** @brief testing - rectangle rendering */
-        Entity &entity2 = registry.create();
+        Entity &e2 = registry.create();
         
-        CRectangle &texture2 = registry.emplace<CRectangle>(entity2, 5, 3, "#");
-        CPosition &position2 = registry.emplace<CPosition>(entity2, 10.3f, 7.5f, 0);
+        CRectangle &texture2 = registry.emplace<CRectangle>(e2, 5, 3, "#");
+        CPosition &position2 = registry.emplace<CPosition>(e2, 10.3f, 7.5f, 0);
 
-        registry.emplace<CRenderer>(entity2, texture2, position2);
+        registry.emplace<CRenderer>(e2, texture2, position2);
 
         /** @brief testing - Bitmap rendering */
-        Entity &entity3 = registry.create();
+        Entity &e3 = registry.create();
         
         std::vector<triple> bitmap;
         bitmap.emplace_back(0, 1, "a");
         bitmap.emplace_back(1, 0, "b");
         bitmap.emplace_back(1, 2, "c");
         bitmap.emplace_back(2, 1, "d");
-        CBitmap &texture3 = registry.emplace<CBitmap>(entity3, std::move(bitmap));
-        CPosition &position3 = registry.emplace<CPosition>(entity3, 20.7f, 1.5f, 0);
+        CBitmap &texture3 = registry.emplace<CBitmap>(e3, std::move(bitmap));
+        CPosition &position3 = registry.emplace<CPosition>(e3, 20.7f, 1.5f, 0);
 
-        registry.emplace<CRenderer>(entity3, texture3, position3);
+        registry.emplace<CRenderer>(e3, texture3, position3);
+    }
+
+    void __test_motion_system()
+    {
+        GameWindow &win = static_cast<GameWindow &>(this->getWindow());
+        BoardWindow &bwin = win.getBoardWindow();
+        Registry &registry = bwin.getScene().getRegistry();
+
+        Entity &e1 = registry.create();
+        
+        CBitmap &texture1 = registry.emplace<CBitmap>(e1, std::vector<triple> { {0, 0, "-"}, {1, 0, "-"}, {2, 0, ">"} } );
+        CPosition &position1 = registry.emplace<CPosition>(e1, 2.3f, 4.5f, 1);
+        CRenderer &renderer1 = registry.emplace<CRenderer>(e1, texture1, position1);
+        CVelocity &velocity1 = registry.emplace<CVelocity>(e1, 0.03f, 0.0f);
     }
 
 };

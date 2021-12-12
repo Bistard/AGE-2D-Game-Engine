@@ -17,10 +17,10 @@ namespace AGE
 class CVelocity : public Component
 {
 public:
-    CVelocity(Entity &entity, float x, float y): Component {entity}, velocity {x, y} {}
+    CVelocity(Entity &entity, float x, float y): Component {entity}, val {x, y} {}
     ~CVelocity() override {}
 public:
-    vec2d<float> velocity;
+    vec2d<float> val;
 };
 
 } // AGE
