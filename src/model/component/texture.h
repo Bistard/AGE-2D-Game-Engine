@@ -53,10 +53,16 @@ public:
 public:
     void paint(Ncurses::WindowBuffer &buffer, CPosition &position) override
     {
+        int winWidth = buffer.width();
+        int winHeight = buffer.height();
+
         vec2d<int> pos = roundvec2d(position.pos);
-        for (SIZE x = pos.X(); x < pos.X() + width; ++x) {
-            for (SIZE y = pos.Y(); y < pos.Y() + height; ++y) {
-                buffer.print(fill, x, y);
+        for (int x = pos.X(); x < pos.X() + width; ++x) {
+            for (int y = pos.Y(); y < pos.Y() + height; ++y) {
+                
+                if (0 <= x && x < winWidth && 0 <= y && y <= winHeight) {
+                    buffer.print(fill, x, y);
+                }
             }
         }
     }
@@ -77,8 +83,14 @@ public:
 public:
     void paint(Ncurses::WindowBuffer &buffer, CPosition &position) override
     {
+        int winWidth = buffer.width();
+        int winHeight = buffer.height();
+
         vec2d<int> pos = roundvec2d(position.pos);
-        buffer.print(ascii, pos.X(), pos.Y());
+
+        if (0 <= pos.X() && pos.X() < winWidth && 0 <= pos.Y() && pos.Y() <= winHeight) {
+            buffer.print(ascii, pos.X(), pos.Y());
+        }
     }
 public:
     std::string ascii;
@@ -99,9 +111,20 @@ public:
 public:
     void paint(Ncurses::WindowBuffer &buffer, CPosition &position) override
     {
+        int winWidth = buffer.width();
+        int winHeight = buffer.height();
+
         vec2d<int> pos = roundvec2d(position.pos);
+        int actualX = 0, actualY = 0;
         for (auto &[x, y, c] : bitmap) {
-            buffer.print(c, pos.X() + x, pos.Y() + y);
+            
+            actualX = pos.X() + x;
+            actualY = pos.Y() + y;
+
+            if (0 <= actualX && actualX < winWidth && 0 <= actualY && actualY <= winHeight) {
+                buffer.print(c, actualX, actualY);
+            }
+            
         }
     }
 public:
