@@ -236,9 +236,29 @@ public:
 
     /** @brief Return a reference of the required `Component` in the provide `Component` */
     template<typename ComponentType> 
-    [[nodiscard]] auto get(Entity entity) const -> ComponentType &
+    [[nodiscard]] auto get(Entity &entity) const -> ComponentType &
     {
         return static_cast<ComponentType &>( entity._components[ getComponentSequenceID<ComponentType>() ] );
+    }
+
+    /** 
+     * @brief Check if the given `Entity` has the provided `Component` 
+     * @warning If the given EntityID does not existed, an exception throws.
+     */
+    template<typename ComponentType>
+    [[nodiscard]] bool has(const EntityID id) const
+    {
+        return _entities[id]->_componentBitset[ getComponentSequenceID<ComponentType>() ];
+    }
+
+    /** 
+     * @brief Return a reference of the required `Component` in the provide `Component` 
+     * @warning If the given EntityID does not existed, an exception throws.
+     */
+    template<typename ComponentType> 
+    [[nodiscard]] auto get(EntityID id) const -> ComponentType &
+    {
+        return static_cast<ComponentType &>( _entities[id]->_components[ getComponentSequenceID<ComponentType>() ] );
     }
 
     /**
