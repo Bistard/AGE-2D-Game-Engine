@@ -236,7 +236,7 @@ public:
 
     /** @brief Return a reference of the required `Component` in the provide `Entity` */
     template<typename ComponentType> 
-    [[nodiscard]] auto get(Entity &entity) const -> ComponentType &
+    [[nodiscard]] ComponentType &get(Entity &entity) const
     {
         return static_cast<ComponentType &>( *entity._components[ getComponentSequenceID<ComponentType>() ] );
     }
@@ -256,7 +256,7 @@ public:
      * @warning If the given EntityID does not existed, an exception throws.
      */
     template<typename ComponentType> 
-    [[nodiscard]] auto get(EntityID id) -> ComponentType &
+    [[nodiscard]] ComponentType &get(EntityID id)
     {
         return static_cast<ComponentType &>( _entities[id]->_components[ getComponentSequenceID<ComponentType>() ] );
     }
@@ -270,13 +270,13 @@ public:
      * list is returned.
      * 
      * @tparam ComponentTypes ComponentTypes The list of required `Component`s.
-     * @return std::vector<EntitieQueryGroup *> A vector of the required `Entity`s.
+     * @return A tuple of list of the required `Entity`s.
      */
     template<typename... ComponentTypes>
-    [[nodiscard]] std::vector<EntitieQueryGroup *> query()
+    [[nodiscard]] decltype(auto) query()
     {
         static_assert(sizeof...(ComponentTypes) > 0, "must provide at least one Component type for querying");
-        return std::vector<EntitieQueryGroup *> { __queryForEachComponent<ComponentTypes>()... };
+        return std::make_tuple(__queryForEachComponent<ComponentTypes>()...);
     }
 
     /**
@@ -289,7 +289,7 @@ public:
      * @return auto& Returns the reference to the newly constructed component.
      */
     template<typename GlobalComponentType, typename... Args>
-    [[maybe_unused]] auto emplaceGlobal(Args &&...args) -> GlobalComponentType &
+    [[maybe_unused]] GlobalComponentType &emplaceGlobal(Args &&...args)
     {
         static_assert(std::is_base_of<GlobalComponent, GlobalComponentType>::value);
 
@@ -307,7 +307,7 @@ public:
      * @return auto& The reference to the required global component.
      */
     template<typename GlobalComponentType>
-    [[nodiscard]] auto queryGlobal() -> GlobalComponentType &
+    [[nodiscard]] GlobalComponentType &queryGlobal()
     {
         static_assert(std::is_base_of<GlobalComponent, GlobalComponentType>::value);
         return static_cast<GlobalComponentType &>( *_globals.at(getComponentUUID<GlobalComponentType>()) );

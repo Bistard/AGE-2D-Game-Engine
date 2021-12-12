@@ -30,7 +30,7 @@ private:
         BoardWindow &bwin = win.getBoardWindow();
         bwin.setBorder(true, '-', '-', '|', '|', '+');
         
-        __test_registry();
+        __test_renderer_system();
         
     }
 
@@ -55,13 +55,13 @@ private:
         // }
     }
 private:
-    void __test_registry()
+    void __test_renderer_system()
     {
         GameWindow &win = static_cast<GameWindow &>(this->getWindow());
         BoardWindow &bwin = win.getBoardWindow();
         Registry &registry = bwin.getScene().getRegistry();
 
-        /** @brief create our PLAYER entity. */
+        /** @brief testing - ascii rendering */
         Entity &player = registry.create();
         
         CASCII &texture1 = registry.emplace<CASCII>(player, "X");
@@ -69,8 +69,7 @@ private:
 
         registry.emplace<CRenderer>(player, texture1, position1);
 
-
-        /** @brief create our #2 entity. */
+        /** @brief testing - rectangle rendering */
         Entity &entity2 = registry.create();
         
         CRectangle &texture2 = registry.emplace<CRectangle>(entity2, 5, 3, "#");
@@ -78,7 +77,7 @@ private:
 
         registry.emplace<CRenderer>(entity2, texture2, position2);
 
-        /** @brief create our #3 entity. */
+        /** @brief testing - Bitmap rendering */
         Entity &entity3 = registry.create();
         
         std::vector<triple> bitmap;
@@ -86,7 +85,7 @@ private:
         bitmap.emplace_back(1, 0, "b");
         bitmap.emplace_back(1, 2, "c");
         bitmap.emplace_back(2, 1, "d");
-        CBitmap &texture3 = registry.emplace<CBitmap>(entity3, bitmap);
+        CBitmap &texture3 = registry.emplace<CBitmap>(entity3, std::move(bitmap));
         CPosition &position3 = registry.emplace<CPosition>(entity3, 20.7f, 1.5f, 0);
 
         registry.emplace<CRenderer>(entity3, texture3, position3);

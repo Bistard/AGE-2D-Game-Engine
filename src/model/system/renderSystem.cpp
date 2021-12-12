@@ -28,7 +28,7 @@ void RenderSystem::onUpdate()
 
     // sorts each `CRenderer` based on its altitude.
     std::priority_queue<CRenderer *, std::vector< CRenderer *>, CRendererCompare> pq;
-    auto entities = _registry.query<CRenderer>()[0];
+    auto [entities] = _registry.query<CRenderer>();
 
     for (auto &entity : *entities)  {
         auto &renderer = _registry.get<CRenderer>(*entity);
