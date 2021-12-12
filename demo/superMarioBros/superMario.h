@@ -81,12 +81,7 @@ private:
         /** @brief testing - Bitmap rendering */
         Entity &e3 = registry.create();
         
-        std::vector<triple> bitmap;
-        bitmap.emplace_back(0, 1, "a");
-        bitmap.emplace_back(1, 0, "b");
-        bitmap.emplace_back(1, 2, "c");
-        bitmap.emplace_back(2, 1, "d");
-        CBitmap &texture3 = registry.emplace<CBitmap>(e3, std::move(bitmap));
+        CBitmap &texture3 = registry.emplace<CBitmap>(e3, std::vector<triple> { {0, 1, "a"}, {1, 0, "b"}, {1, 2, "c"}, {2, 1, "d"} } );
         CPosition &position3 = registry.emplace<CPosition>(e3, 20.7f, 1.5f, 0);
 
         registry.emplace<CRenderer>(e3, texture3, position3);
@@ -98,12 +93,22 @@ private:
         BoardWindow &bwin = win.getBoardWindow();
         Registry &registry = bwin.getScene().getRegistry();
 
+        /** @brief testing - constant velocity */
         Entity &e1 = registry.create();
         
         CBitmap &texture1 = registry.emplace<CBitmap>(e1, std::vector<triple> { {0, 0, "-"}, {1, 0, "-"}, {2, 0, ">"} } );
         CPosition &position1 = registry.emplace<CPosition>(e1, 2.3f, 4.5f, 1);
         CRenderer &renderer1 = registry.emplace<CRenderer>(e1, texture1, position1);
-        CVelocity &velocity1 = registry.emplace<CVelocity>(e1, 0.03f, 0.0f);
+        CVelocity &velocity1 = registry.emplace<CVelocity>(e1, 0.5f, 0.0f);
+
+        /** @brief testing - gravity */
+        Entity &e2 = registry.create();
+        
+        CBitmap &texture2 = registry.emplace<CBitmap>(e2, std::vector<triple> { {0, 0, "|"}, {0, 1, "|"}, {0, 2, "O"} } );
+        CPosition &position2 = registry.emplace<CPosition>(e2, 40.0f, 20.0f, 1);
+        CRenderer &renderer2 = registry.emplace<CRenderer>(e2, texture2, position2);
+        CVelocity &velocity2 = registry.emplace<CVelocity>(e2, 0.0f, -0.20f);
+        CGravity &gravity2 = registry.emplace<CGravity>(e2, 0.0f, 0.001f);
     }
 
 };
