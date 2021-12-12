@@ -54,8 +54,8 @@ inline int getComponentSequenceID() noexcept
  * `Component` cannot be re-assigned to another `Entity`.
  * 
  * @note `Component` may have reference to the other `Component`s. For instance, 
- * when rendering, we query all `Entity`s which obtain `CPosition` and `CRender`. 
- * Instead, we may only querying for `CRender` which has a reference to a 
+ * when rendering, we query all `Entity`s which obtain `CPosition` and `CRenderer`. 
+ * Instead, we may only querying for `CRenderer` which has a reference to a 
  * `CPosition` to slightly increase query speed.
  */
 class Component

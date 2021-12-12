@@ -1,5 +1,5 @@
 /**
- * @file render.h
+ * @file renderer.h
  * @author Sihan Li (lshh1015813038@gmail.com)
  * @version 0.1
  * @date 2021-12-12
@@ -22,15 +22,15 @@ using AltitudeType = uint8_t;
  * - CTexture
  * - CPosition
  */
-class CRender : public Component
+class CRenderer : public Component
 {
 public:
-    CRender(Entity &entity, AltitudeType altitude, bool visible, 
+    CRenderer(Entity &entity, AltitudeType altitude, bool visible, 
             CTexture &texture, CPosition &position
     ) : Component {entity}, visible {visible}, altitude {altitude}, 
         texture {texture}, position {position} 
     {}
-    ~CRender() override {}
+    ~CRenderer() override {}
 public:
     /** @brief determine whether to render */
     bool visible;

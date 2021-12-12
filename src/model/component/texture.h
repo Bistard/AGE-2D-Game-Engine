@@ -16,7 +16,7 @@ namespace AGE
 {
 
 /** 
- * @brief A base class component for texture. A `CTexture` is required by `CRender`.
+ * @brief A base class component for texture. A `CTexture` is required by `CRenderer`.
  * 
  * The angine provide three types of texture:
  * - CRectangle

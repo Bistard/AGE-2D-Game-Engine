@@ -28,9 +28,10 @@
 #include "model/component/component.h"
 #include "model/component/gravity.h"
 #include "model/component/position.h"
-#include "model/component/render.h"
+#include "model/component/renderer.h"
 #include "model/component/texture.h"
 #include "model/component/velocity.h"
+#include "model/component/collidable.h"
 
 #include "model/entity/entity.h"
 
