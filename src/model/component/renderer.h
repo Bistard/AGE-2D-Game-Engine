@@ -15,8 +15,6 @@
 namespace AGE
 {
 
-using AltitudeType = uint8_t;
-
 /** 
  * @brief A composite component for rendering usage.
  * - CTexture
@@ -25,21 +23,27 @@ using AltitudeType = uint8_t;
 class CRenderer : public Component
 {
 public:
-    CRenderer(Entity &entity, AltitudeType altitude, bool visible, 
-            CTexture &texture, CPosition &position
-    ) : Component {entity}, visible {visible}, altitude {altitude}, 
-        texture {texture}, position {position} 
+    CRenderer(Entity &entity, CTexture &texture, CPosition &position, bool visible = true)
+     : Component {entity}, texture {texture}, position {position}, visible {visible}
     {}
     ~CRenderer() override {}
 public:
-    /** @brief determine whether to render */
-    bool visible;
-    /** @brief altitude in the drawing */
-    AltitudeType altitude;
     /** @brief texture data for drawing */
     CTexture &texture;
     /** @brief position for drawing */
     CPosition &position;
+    /** @brief determine whether to render */
+    bool visible;
+};
+
+/** @brief Class for comparing between `CRenderer` */
+class CRendererCompare
+{
+public:
+    bool operator() (CRenderer *r1, CRenderer *r2)
+    {
+        return r1->position.altitude >= r2->position.altitude;
+    }
 };
 
 } // AGE
