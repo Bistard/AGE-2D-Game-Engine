@@ -274,8 +274,8 @@ public:
         static_assert(std::is_base_of<GlobalComponent, GlobalComponentType>::value);
 
         ComponentUUID id = getComponentUUID<GlobalComponentType>();
-        _globals.emplace( std::make_pair( id, GlobalComponentType {std::forward<Args>(args)...} ) );
-        return static_cast<GlobalComponentType &>(_globals[id]);
+        _globals.emplace( std::make_pair( id, std::make_unique<GlobalComponentType>(std::forward<Args>(args)...) ) );
+        return static_cast<GlobalComponentType &>(*_globals[id]);
     }
 
     /**
@@ -290,7 +290,7 @@ public:
     [[nodiscard]] auto queryGlobal() -> GlobalComponentType &
     {
         static_assert(std::is_base_of<GlobalComponent, GlobalComponentType>::value);
-        return static_cast<GlobalComponentType &>( _globals.at(getComponentUUID<GlobalComponentType>()) );
+        return static_cast<GlobalComponentType &>( *_globals.at(getComponentUUID<GlobalComponentType>()) );
     }
 
     /** @brief Check if the provided global component type is registered. */
@@ -336,7 +336,7 @@ private:
     /** @brief grouping entities by their component type, easy for querying */
     std::unordered_map<ComponentID, EntitieQueryGroup> _groups;
     /** @brief stores the global components */
-    std::unordered_map<ComponentUUID, GlobalComponent> _globals;
+    std::unordered_map<ComponentUUID, std::unique_ptr<GlobalComponent>> _globals;
 };
 
 } // AGE
