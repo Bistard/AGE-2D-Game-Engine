@@ -10,15 +10,19 @@
 
 #include <vector>
 #include <tuple>
+#include <string>
 #include "component.h"
+
+#include "../../controller/adapter/ncurseAdapter.h"
 
 namespace AGE
 {
 
 /** 
- * @brief A base class component for texture. A `CTexture` is required by `CRenderer`.
+ * @brief An abstract base class component for texture. A `CTexture` is required 
+ * by a `CRenderer`.
  * 
- * The angine provide three types of texture:
+ * The AGE angine provide three types of texture:
  * - CRectangle
  * - CASCII
  * - CBitmap
@@ -28,6 +32,12 @@ class CTexture : public Component
 public:
     CTexture(Entity &entity): Component {entity} {}
     ~CTexture() override {}
+public:
+    /** 
+     * @brief describes how to paint the texture onto the window buffer.
+     * @warning Note that, this function does not refresh the buffer.
+     */
+    virtual void paint(Ncurses::Window &buffer, CPosition &position) = 0;
 };
 
 
@@ -36,11 +46,24 @@ public:
 class CRectangle : public CTexture
 {
 public:
-    CRectangle(Entity &entity, int width, int height): CTexture {entity}, width {width}, height {height} {}
+    CRectangle(Entity &entity, int width, int height, std::string fill)
+        : CTexture {entity}, width {width}, height {height}, fill {fill} 
+    {}
     ~CRectangle() override {}
+public:
+    void paint(Ncurses::Window &buffer, CPosition &position) override
+    {
+        vec2d<int> pos = roundvec2d(position.pos);
+        for (SIZE x = pos.X(); x < pos.X() + width; ++x) {
+            for (SIZE y = pos.Y(); y < pos.Y() + height; ++y) {
+                buffer.print(fill, x, y);
+            }
+        }
+    }
 public:
     int width;
     int height;
+    std::string fill;
 };
 
 
@@ -49,24 +72,38 @@ public:
 class CASCII : public CTexture
 {
 public:
-    CASCII(Entity &entity, char ascii): CTexture {entity}, ascii {ascii} {}
+    CASCII(Entity &entity, std::string ascii): CTexture {entity}, ascii {ascii} {}
     ~CASCII() override {}
 public:
-    char ascii;
+    void paint(Ncurses::Window &buffer, CPosition &position) override
+    {
+        vec2d<int> pos = roundvec2d(position.pos);
+        buffer.print(ascii, pos.X(), pos.Y());
+    }
+public:
+    std::string ascii;
 };
 
 
 
-/** @brief Data type representing each pixel */
-using triple = std::tuple<int, int, char>;
+/** @brief Data type representing each pixel (x, y, char) */
+using triple = std::tuple<int, int, const char *>;
 
 /** @brief Texture representing a bitmap. */
 class CBitmap : public CTexture
 {
 public:
-    CBitmap(Entity &entity, char ascii, const std::vector<triple> &bitmap): CTexture {entity}, bitmap {bitmap} {}
-    CBitmap(Entity &entity, char ascii, std::vector<triple> &&bitmap): CTexture {entity}, bitmap {std::move(bitmap)} {}
+    CBitmap(Entity &entity, const std::vector<triple> &bitmap): CTexture {entity}, bitmap {bitmap} {}
+    CBitmap(Entity &entity, std::vector<triple> &&bitmap): CTexture {entity}, bitmap { std::move(bitmap) } {}
     ~CBitmap() override {}
+public:
+    void paint(Ncurses::Window &buffer, CPosition &position) override
+    {
+        vec2d<int> pos = roundvec2d(position.pos);
+        for (auto &[x, y, c] : bitmap) {
+            buffer.print(c, pos.X() + x, pos.Y() + y);
+        }
+    }
 public:
     std::vector<triple> bitmap;
 };

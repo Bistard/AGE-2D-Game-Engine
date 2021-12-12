@@ -18,8 +18,6 @@ aux_source_directory(src/model/registry SRC_LIST)
 aux_source_directory(src/model/entity SRC_LIST)
 aux_source_directory(src/model/component SRC_LIST)
 aux_source_directory(src/model/system SRC_LIST)
-# aux_source_directory(src/view SRC_LIST)
-# aux_source_directory(src/view/object SRC_LIST)
 aux_source_directory(src/utils SRC_LIST)
 aux_source_directory(src/common SRC_LIST)
 
@@ -33,8 +31,6 @@ include_directories(
 	src/model/entity
 	src/model/component
 	src/model/system
-# 	src/view
-#	src/view/object
 	src/utils
 	src/common
 	game/superMarioBros

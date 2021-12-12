@@ -1,9 +1,10 @@
 #include "renderSystem.h"
 #include "../../controller/adapter/ncurseAdapter.h"
 #include "../registry/registry.h"
-#include "../component/render.h"
+#include "../component/renderer.h"
 #include "../component/border.h"
 
+#include <queue>
 
 namespace AGE
 {
@@ -22,11 +23,29 @@ void RenderSystem::onUpdate()
         auto &border = _registry.queryGlobal<CGlobalBorder>();
         _winBuffer.showBorder(border.top, border.bottom, border.left, border.right, border.corner);
     } catch (...) {
-
+        // no border
     }
 
-    auto entities = _registry.query<CRender>()[0];
-    // TODO: this is where the `CameraView` does the job
+    // sorts each `CRenderer` based on its altitude.
+    std::priority_queue<CRenderer *, std::vector< CRenderer *>, CRendererCompare> pq;
+    auto entities = _registry.query<CRenderer>()[0];
+
+    for (auto &entity : *entities)  {
+        auto &renderer = _registry.get<CRenderer>(*entity);
+        
+        if (renderer.visible == true) {
+            pq.push(&renderer);
+        }
+    }
+
+    // iterate all the `CRenderer` components and draws them on the window buffer.
+    CRenderer *renderer = nullptr;
+    
+    while (pq.empty() == false) {
+        renderer = pq.top();
+        renderer->texture.paint(_winBuffer, renderer->position);
+        pq.pop();
+    }
 
     // refresh the window buffer to show the actual frame
     _winBuffer.refresh();

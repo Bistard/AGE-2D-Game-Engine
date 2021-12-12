@@ -28,9 +28,6 @@ public:
     /** @brief ctor with a given specific UUID value */
     UUID(uint64_t uuid);
     
-    /** @brief default copy constructor */
-    UUID(const UUID &uuid) = default;
-
     /** @brief make UUID hashable */
     operator uint64_t() const;
 private:

@@ -2,7 +2,6 @@
 #include "gameWindow.h"
 #include "statusWindow.h"
 #include "boardWindow.h"
-// #include "../../common/vec2d.h"
 
 namespace AGE
 {
