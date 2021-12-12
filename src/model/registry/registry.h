@@ -124,7 +124,7 @@ public:
      * @return The newly constructed `Component`
      */
     template<typename ComponentType, typename... Args>
-    [[maybe_unused]] auto emplace(Entity &entity, Args &&...args) -> ComponentType &
+    [[maybe_unused]] ComponentType &emplace(Entity &entity, Args &&...args)
     {
         auto id = getComponentSequenceID<ComponentType>();
 
@@ -146,6 +146,17 @@ public:
         _groups[id].emplace_back( &entity );
 
         return static_cast<ComponentType &>( *(entity._components.back()) );
+    }
+
+    /** 
+     * @brief Consturcts and assigns a new `Component` to the `Entity` which
+     * corresponds to the given EntityID.
+     * @warning If the given EntityID does not existed, an exception throws.
+     */
+    template<typename ComponentType, typename... Args>
+    [[maybe_unused]] ComponentType &emplace(EntityID id, Args &&...args)
+    {
+        return emplace<ComponentType>(*_entities[id], std::forward<Args>(args)...);
     }
 
     /**
@@ -176,6 +187,17 @@ public:
         return true;
     }
 
+    /** 
+     * @brief Removes the provided `Component` from the `Entity` which corresponds 
+     * with the id.
+     * @warning If the given EntityID does not existed, an exception throws.
+     */
+    template<typename ComponentType>
+    bool remove(EntityID id)
+    {
+        return remove<ComponentType>(*_entities[id]);
+    }
+
     /**
      * @brief Destroys the given `Entity` immediately and releases its 
      * `Component`s as well.
@@ -196,6 +218,16 @@ public:
 
         // destroy the `Entity` at last
         _entities.erase(entity.getUUID());
+    }
+
+    /** 
+     * @brief Destroys the `Entity` immediately which corresponds to the given
+     * EntityID.
+     * @warning If the given EntityID does not existed, an exception throws.
+     */
+    void destroy(EntityID id)
+    {
+        destroy(*_entities[id]);
     }
 
     /**
