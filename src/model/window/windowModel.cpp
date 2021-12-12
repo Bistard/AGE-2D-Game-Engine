@@ -73,7 +73,7 @@ WindowWithController::getController() const { return *_controller; }
  ******************************************************************************/
 WindowWithCamera::WindowWithCamera(vec2d<int> pos, SIZE width, SIZE height): 
     WindowModel {pos, width, height}, 
-    _winBuffer { std::make_unique<Ncurses::Window>(width, height, position.X(), position.Y()) },
+    _winBuffer { std::make_unique<Ncurses::WindowBuffer>(width, height, position.X(), position.Y()) },
     _scene {}
 {
     _camera = std::make_unique<Camera>(pos, width, height);
@@ -87,7 +87,7 @@ WindowWithCamera::getCamera() noexcept { return *_camera; }
 Scene &
 WindowWithCamera::getScene() noexcept { return _scene; }
 
-Ncurses::Window &
+Ncurses::WindowBuffer &
 WindowWithCamera::getWindowBuffer() noexcept { return *_winBuffer; }
 
 void 

@@ -14,14 +14,14 @@ namespace AGE
 {
 
 namespace Ncurses {
-    class Window;
+    class WindowBuffer;
 }
 class Registry;
 
 class RenderSystem final : public ViewSystem
 {
 public:
-    RenderSystem(Registry &registry, Ncurses::Window &winBuffer);
+    RenderSystem(Registry &registry, Ncurses::WindowBuffer &winBuffer);
     ~RenderSystem() override;
 public:
     /**
@@ -34,7 +34,7 @@ public:
      */
     void onUpdate() override;
 private:
-    Ncurses::Window &_winBuffer;
+    Ncurses::WindowBuffer &_winBuffer;
 };
 
 } // AGE

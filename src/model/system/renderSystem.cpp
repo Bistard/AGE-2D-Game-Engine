@@ -9,7 +9,7 @@
 namespace AGE
 {
 
-RenderSystem::RenderSystem(Registry &registry, Ncurses::Window &winBuffer): ViewSystem {registry}, _winBuffer {winBuffer} {}
+RenderSystem::RenderSystem(Registry &registry, Ncurses::WindowBuffer &winBuffer): ViewSystem {registry}, _winBuffer {winBuffer} {}
 
 RenderSystem::~RenderSystem() {}
 

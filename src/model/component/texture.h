@@ -37,7 +37,7 @@ public:
      * @brief describes how to paint the texture onto the window buffer.
      * @warning Note that, this function does not refresh the buffer.
      */
-    virtual void paint(Ncurses::Window &buffer, CPosition &position) = 0;
+    virtual void paint(Ncurses::WindowBuffer &buffer, CPosition &position) = 0;
 };
 
 
@@ -51,7 +51,7 @@ public:
     {}
     ~CRectangle() override {}
 public:
-    void paint(Ncurses::Window &buffer, CPosition &position) override
+    void paint(Ncurses::WindowBuffer &buffer, CPosition &position) override
     {
         vec2d<int> pos = roundvec2d(position.pos);
         for (SIZE x = pos.X(); x < pos.X() + width; ++x) {
@@ -75,7 +75,7 @@ public:
     CASCII(Entity &entity, std::string ascii): CTexture {entity}, ascii {ascii} {}
     ~CASCII() override {}
 public:
-    void paint(Ncurses::Window &buffer, CPosition &position) override
+    void paint(Ncurses::WindowBuffer &buffer, CPosition &position) override
     {
         vec2d<int> pos = roundvec2d(position.pos);
         buffer.print(ascii, pos.X(), pos.Y());
@@ -97,7 +97,7 @@ public:
     CBitmap(Entity &entity, std::vector<triple> &&bitmap): CTexture {entity}, bitmap { std::move(bitmap) } {}
     ~CBitmap() override {}
 public:
-    void paint(Ncurses::Window &buffer, CPosition &position) override
+    void paint(Ncurses::WindowBuffer &buffer, CPosition &position) override
     {
         vec2d<int> pos = roundvec2d(position.pos);
         for (auto &[x, y, c] : bitmap) {

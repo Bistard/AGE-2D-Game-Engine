@@ -36,7 +36,7 @@ void init(WindowOpt opt, bool echo)
     refresh();
 }
 
-void setInsantInput(const Window &win, bool on)
+void setInsantInput(const WindowBuffer &win, bool on)
 {
     nodelay(win.getWin(), on);
 }
@@ -58,39 +58,39 @@ void destroy()
 }
 
 /*******************************************************************************
- * @brief `Window` implementation
+ * @brief `WindowBuffer` implementation
  ******************************************************************************/
 
-Window::Window(SIZE w, SIZE h, SIZE start_x, SIZE start_y)
+WindowBuffer::WindowBuffer(SIZE w, SIZE h, SIZE start_x, SIZE start_y)
     : _win { newwin(h, w, start_y, start_x) }, 
       _currPos {start_x, start_y},
       _w {static_cast<SIZE>(w)}, _h {static_cast<SIZE>(h)}
 {}
 
-Window::~Window() 
+WindowBuffer::~WindowBuffer() 
 {
     // note: Ncurses::destory() will automatically destorys all all the WINDOWs
     // we do nothing here
 }
 
-WINDOW *Window::getWin() const { return _win; }
+WINDOW *WindowBuffer::getWin() const { return _win; }
 
-void Window::refresh()
+void WindowBuffer::refresh()
 {
     wrefresh(_win);
 }
 
-void Window::showBorder(int top, int bottom, int left, int right, int corner)
+void WindowBuffer::showBorder(int top, int bottom, int left, int right, int corner)
 {
     wborder(_win, left, right, top, bottom, corner, corner, corner, corner);
 }
 
-void Window::print(std::string s, SIZE x, SIZE y)
+void WindowBuffer::print(std::string s, SIZE x, SIZE y)
 {
     print(s.c_str(), x, y);
 }
 
-void Window::print(const char *s, SIZE x, SIZE y)
+void WindowBuffer::print(const char *s, SIZE x, SIZE y)
 {
     if ((x != -1) && (y != -1)) {
         moveTo(x, y);
@@ -98,20 +98,20 @@ void Window::print(const char *s, SIZE x, SIZE y)
     wprintw(_win, s);
 }
 
-void Window::moveTo(SIZE x, SIZE y)
+void WindowBuffer::moveTo(SIZE x, SIZE y)
 {
     wmove(_win, y, x);
 }
 
-void Window::erase() { werase(_win); }
+void WindowBuffer::erase() { werase(_win); }
 
-void Window::clear() { wclear(_win); }
+void WindowBuffer::clear() { wclear(_win); }
 
-vec2d<SIZE> Window::currPosition() { return _currPos; }
+vec2d<SIZE> WindowBuffer::currPosition() { return _currPos; }
 
-SIZE Window::width() { return _w; }
+SIZE WindowBuffer::width() { return _w; }
 
-SIZE Window::height() { return _h; }
+SIZE WindowBuffer::height() { return _h; }
 
 } // Ncurses
 

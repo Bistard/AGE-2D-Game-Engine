@@ -7,8 +7,6 @@ int main(int argc, char **argv)
     SuperMarioEngine<AGE_ENHANCED_FPS> mario {AGE_ENHANCED_FPS, AGE_DEFAULT_WIN_WIDTH, AGE_DEFAULT_WIN_HEIGHT};
     mario.run();
 
-    // Registry registry;
-    // Entity &e0 = registry.create();
     
     // std::cout << registry.has<CVelocity>(e0) << std::endl;
     // registry.emplace<CVelocity>(e0, 2.3f, -4.5f);

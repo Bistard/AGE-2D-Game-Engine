@@ -65,7 +65,7 @@ class AgeEngine
 public:
 
     /**
-     * @brief default AGE engine layout with default Window Settings.
+     * @brief default AGE engine layout with default WindowBuffer Settings.
      *              GameWindow
      *            ↙          ↘
      *      BoardWindow    StatusWindow

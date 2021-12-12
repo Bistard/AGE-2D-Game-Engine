@@ -20,7 +20,7 @@ namespace AGE
 {
 
 namespace Ncurses { 
-    class Window; 
+    class WindowBuffer; 
 }
 template<typename T> class vec2d;
 class Controller;
@@ -92,7 +92,7 @@ public:
 public:
     Camera &getCamera() noexcept;
     Scene &getScene() noexcept;
-    Ncurses::Window &getWindowBuffer() noexcept;
+    Ncurses::WindowBuffer &getWindowBuffer() noexcept;
 private:
     void onDrawView() override;
     void onUpdateLogic() override;
@@ -101,7 +101,7 @@ private:
     friend class CameraView;
 
     /** @brief window buffer for `View` to output */
-    std::unique_ptr<Ncurses::Window> _winBuffer;
+    std::unique_ptr<Ncurses::WindowBuffer> _winBuffer;
     std::unique_ptr<Camera> _camera;
 
     /** @brief maintains the main functionality of the window content */

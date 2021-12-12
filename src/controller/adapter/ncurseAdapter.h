@@ -30,7 +30,7 @@ namespace AGE
 namespace Ncurses
 {
 
-class Window;
+class WindowBuffer;
 enum WindowOpt
 {
     CBREAK = 0, // NO BUFFERING. User hits is returned immediately
@@ -61,7 +61,7 @@ void setCursorVisibility(char visibility = 0);
  * @param win the target window
  * @param on true -> instant input
  */
-void setInsantInput(const Window &win, bool on);
+void setInsantInput(const WindowBuffer &win, bool on);
 
 /**
  * @brief Set input mode with a timeout.
@@ -79,13 +79,13 @@ void destroy();
 /*******************************************************************************
  * @brief Adapter class for wrapping Ncurses WINDOW - C++ friendly
  ******************************************************************************/
-class Window
+class WindowBuffer
 { 
 public:
     // you need to call `refresh()` from Ncurses libarary manually if you are 
-    //   constructing a `Window`.
-    Window(SIZE w, SIZE h, SIZE start_x, SIZE start_y);
-    ~Window();
+    //   constructing a `WindowBuffer`.
+    WindowBuffer(SIZE w, SIZE h, SIZE start_x, SIZE start_y);
+    ~WindowBuffer();
 
     WINDOW *getWin() const;
     vec2d<SIZE> currPosition();
