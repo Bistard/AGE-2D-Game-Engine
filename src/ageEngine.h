@@ -135,7 +135,7 @@ private:
     {
         this->init();
 
-        _mainWindow->drawViews();
+        _mainWindow->renderViews();
 
         while (true) {
 
@@ -146,7 +146,7 @@ private:
 
             _mainWindow->updateLogics( _timer.elapse() );
 
-            _mainWindow->drawViews();
+            _mainWindow->renderViews();
 
             // must be invoked at the end of the loop in order to let the program 
             //   pause utill the next frame.

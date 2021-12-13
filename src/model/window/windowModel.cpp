@@ -29,10 +29,10 @@ WindowModel &WindowModel::addSubWindow(std::unique_ptr<WindowModel> &&window)
 //     // TODO
 // }
 
-void WindowModel::drawViews()
+void WindowModel::renderViews()
 {
     for (auto &win : _subWindowModels) {
-        win->drawViews();
+        win->renderViews();
     }
     this->onDrawView();
 }

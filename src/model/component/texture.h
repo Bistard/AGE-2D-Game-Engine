@@ -144,7 +144,9 @@ public:
         int winHeight = buffer.height();
 
         vec2d<int> pos = roundvec2d(position.pos);
-        buffer.print(text, pos.X(), pos.Y());
+        if (0 <= pos.X() && pos.X() < winWidth && 0 <= pos.Y() && pos.Y() <= winHeight) {
+            buffer.print(text, pos.X(), pos.Y());
+        }
     }
 public:
     std::string text;

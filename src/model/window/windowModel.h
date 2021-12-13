@@ -43,7 +43,7 @@ public:
      *  derived classes controls the behaviours of drawing by overriding the 
      *  belowing private virtual method `onDrawView()`.
      */
-    void drawViews();
+    void renderViews();
 
     /**
      * @brief Recursively updates all the game logics from subwindows first. The
