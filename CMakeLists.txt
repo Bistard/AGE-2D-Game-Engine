@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project(mario)
+project(demo)
 
 set(CMAKE_C_COMPILER "g++")
 set(CMAKE_SUPPRESS_REGENERATION 1)
@@ -39,7 +39,8 @@ include_directories(
 add_definitions(-g -std=c++17 -Wall)
 
 # superMarioBros
-aux_source_directory(demo/superMarioBros SRC_LIST)
+# aux_source_directory(demo/superMarioBros SRC_LIST)
+aux_source_directory(demo/testDemo SRC_LIST)
 
-add_executable(mario ${SRC_LIST} ${OBJ_LIST})
-target_link_libraries(mario ncurses)
+add_executable(demo ${SRC_LIST} ${OBJ_LIST})
+target_link_libraries(demo ncurses)
