@@ -104,11 +104,11 @@ WindowWithCamera::onUpdateLogic(float elapse)
 }
 
 void 
-WindowWithCamera::setBorder(bool visible, int top, int bottom, int left, int right, int corner)
+WindowWithCamera::setBorderView(bool visible, int top, int bottom, int left, int right, int corner)
 {
     Registry &registry = getScene().getRegistry();
-    if (registry.hasGlobal<CGlobalBorder>() == false) {
-        registry.emplaceGlobal<CGlobalBorder>(visible, top, bottom, left, right, corner);
+    if (registry.hasGlobal<CBorderView>() == false) {
+        registry.emplaceGlobal<CBorderView>(visible, top, bottom, left, right, corner);
     }
 }
 
