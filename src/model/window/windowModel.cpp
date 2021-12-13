@@ -2,6 +2,7 @@
 #include "windowModel.h"
 #include "../../controller/controller.h"
 #include "../../utils/camera.h"
+#include "../component/border.h"
 
 namespace AGE
 {
@@ -100,6 +101,15 @@ void
 WindowWithCamera::onUpdateLogic(float elapse)
 {
     _scene.updateLogicSystems(elapse);
+}
+
+void 
+WindowWithCamera::setBorder(bool visible, int top, int bottom, int left, int right, int corner)
+{
+    Registry &registry = getScene().getRegistry();
+    if (registry.hasGlobal<CGlobalBorder>() == false) {
+        registry.emplaceGlobal<CGlobalBorder>(visible, top, bottom, left, right, corner);
+    }
 }
 
 } // AGE

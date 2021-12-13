@@ -10,6 +10,7 @@
 #define __AGE_STATUS_WINDOW__
 
 #include "windowModel.h"
+#include "../system/renderSystem.h"
 
 namespace AGE
 {
@@ -20,13 +21,12 @@ public:
     StatusWindow(vec2d<int> pos, SIZE width, SIZE height): 
         WindowModel {pos, width, height},
         WindowWithCamera {pos, width, height}
-    {}
+    {
+        // Constructing `System`s
+        Registry &registry = getScene().getRegistry();
+        getScene().emplaceViewSystem<RenderSystem>(registry, getWindowBuffer());
+    }
     ~StatusWindow() override {}
-public:
-    // StatusView &addStatusView(std::unique_ptr<StatusView> &&statusView) 
-    // {
-    //     return static_cast<StatusView &>(this->addView(std::move(statusView))); // FIX ME
-    // }
 };
 
 } // AGE
