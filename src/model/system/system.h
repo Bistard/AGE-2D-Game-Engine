@@ -36,6 +36,10 @@ class LogicSystem: public System
 public:
     LogicSystem(Registry &registry): System {registry} {}
     ~LogicSystem() override {}
+public:
+    void setElapse(float elapse) { _elapse = elapse; }
+protected:
+    float _elapse;
 };
 
 class ViewSystem: public System

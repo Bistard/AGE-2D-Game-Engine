@@ -36,12 +36,12 @@ void WindowModel::drawViews()
     this->onDrawView();
 }
 
-void WindowModel::updateLogics()
+void WindowModel::updateLogics(float elapse)
 {
     for (auto &win : _subWindowModels) {
-        win->updateLogics();
+        win->updateLogics(elapse);
     }
-    this->onUpdateLogic();
+    this->onUpdateLogic(elapse);
 }
 
 /*******************************************************************************
@@ -97,9 +97,9 @@ WindowWithCamera::onDrawView()
 }
 
 void 
-WindowWithCamera::onUpdateLogic()
+WindowWithCamera::onUpdateLogic(float elapse)
 {
-    _scene.updateLogicSystems();
+    _scene.updateLogicSystems(elapse);
 }
 
 } // AGE

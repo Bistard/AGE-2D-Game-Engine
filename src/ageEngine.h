@@ -137,14 +137,14 @@ private:
 
         _mainWindow->drawViews();
 
-        while (true) { // TODO: consider using do...while
+        while (true) {
 
             int input = _mainWindow->getInput();
             
             // game logic function, overrides by the user.
             this->onEachFrame(input);
 
-            _mainWindow->updateLogics();
+            _mainWindow->updateLogics( _timer.elapse() );
 
             _mainWindow->drawViews();
 

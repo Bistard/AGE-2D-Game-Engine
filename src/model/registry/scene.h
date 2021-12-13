@@ -50,9 +50,10 @@ public:
     }
 
     /** @brief calls System::onUpdate() for each `LogicSystem`. */
-    void updateLogicSystems() 
+    void updateLogicSystems(float elapse) 
     {
         for (auto &sys : _logicSystems) {
+            sys->setElapse(elapse);
             sys->onUpdate();
         }
     }

@@ -45,6 +45,20 @@ public:
         _prev += _duration;
         std::this_thread::sleep_until(_prev);
     }
+
+    /** 
+     * @brief Returns the time elapsed between now and the previous frame. 
+     * @return The time elapsed in seconds.
+     */
+    float elapse()
+    {
+        if (!_first) {
+            return 0;
+        }
+
+        auto elapse = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _prev);
+        return elapse.count() / 1000.0f;
+    }
 private:
     bool _first;
     // duration between each frame

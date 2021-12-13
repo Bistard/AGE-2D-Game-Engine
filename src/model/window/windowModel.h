@@ -49,11 +49,13 @@ public:
      * @brief Recursively updates all the game logics from subwindows first. The
      *  derived classes controls the behaviours of updating logics by overriding
      *  the belowing private virtual method `onUpdateLogic()`.
+     * 
+     * @param elapse The time elapsed since the last frame.
      */
-    void updateLogics();
+    void updateLogics(float elapse);
 private:
     virtual void onDrawView() {}
-    virtual void onUpdateLogic() {}
+    virtual void onUpdateLogic(float elapse) {}
 protected:
     const vec2d<int> position;
     const SIZE width;
@@ -95,7 +97,7 @@ public:
     Ncurses::WindowBuffer &getWindowBuffer() noexcept;
 private:
     void onDrawView() override;
-    void onUpdateLogic() override;
+    void onUpdateLogic(float elapse) override;
 private:
     /** @brief gives data access to `CameraView` makes everything so much easier */
     friend class CameraView;
