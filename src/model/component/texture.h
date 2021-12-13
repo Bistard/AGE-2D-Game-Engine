@@ -131,6 +131,25 @@ public:
     std::vector<triple> bitmap;
 };
 
+/** @brief Texture representing a sequence of characters. */
+class CText : public CTexture
+{
+public:
+    CText(Entity &entity, std::string text): CTexture {entity}, text {text} {}
+    ~CText() override {}
+public:
+    void paint(Ncurses::WindowBuffer &buffer, CPosition &position) override
+    {
+        int winWidth = buffer.width();
+        int winHeight = buffer.height();
+
+        vec2d<int> pos = roundvec2d(position.pos);
+        buffer.print(text, pos.X(), pos.Y());
+    }
+public:
+    std::string text;
+};
+
 } // AGE
 
 #endif

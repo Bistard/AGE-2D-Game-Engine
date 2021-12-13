@@ -29,7 +29,7 @@ private:
         GameWindow &win = static_cast<GameWindow &>(this->getWindow());
         BoardWindow &bwin = win.getBoardWindow();
         bwin.setBorder(true, '-', '-', '|', '|', '+');
-        
+
         __test_renderer_system();
         __test_motion_system();
         
@@ -59,32 +59,45 @@ private:
     void __test_renderer_system()
     {
         GameWindow &win = static_cast<GameWindow &>(this->getWindow());
+     
+        /** @brief BoardWindow */
+     
         BoardWindow &bwin = win.getBoardWindow();
-        Registry &registry = bwin.getScene().getRegistry();
+        Registry &registry1 = bwin.getScene().getRegistry();
 
         /** @brief testing - ascii rendering */
-        Entity &e1 = registry.create();
+        Entity &e1 = registry1.create();
         
-        CASCII &texture1 = registry.emplace<CASCII>(e1, "X");
-        CPosition &position1 = registry.emplace<CPosition>(e1, 2.3f, 4.5f, 0);
-
-        registry.emplace<CRenderer>(e1, texture1, position1);
+        CASCII &texture1 = registry1.emplace<CASCII>(e1, "X");
+        CPosition &position1 = registry1.emplace<CPosition>(e1, 2.3f, 4.5f, 0);
+        registry1.emplace<CRenderer>(e1, texture1, position1);
 
         /** @brief testing - rectangle rendering */
-        Entity &e2 = registry.create();
+        Entity &e2 = registry1.create();
         
-        CRectangle &texture2 = registry.emplace<CRectangle>(e2, 5, 3, "#");
-        CPosition &position2 = registry.emplace<CPosition>(e2, 10.3f, 7.5f, 0);
-
-        registry.emplace<CRenderer>(e2, texture2, position2);
+        CRectangle &texture2 = registry1.emplace<CRectangle>(e2, 5, 3, "#");
+        CPosition &position2 = registry1.emplace<CPosition>(e2, 10.3f, 7.5f, 0);
+        registry1.emplace<CRenderer>(e2, texture2, position2);
 
         /** @brief testing - Bitmap rendering */
-        Entity &e3 = registry.create();
+        Entity &e3 = registry1.create();
         
-        CBitmap &texture3 = registry.emplace<CBitmap>(e3, std::vector<triple> { {0, 1, "a"}, {1, 0, "b"}, {1, 2, "c"}, {2, 1, "d"} } );
-        CPosition &position3 = registry.emplace<CPosition>(e3, 20.7f, 1.5f, 0);
+        CBitmap &texture3 = registry1.emplace<CBitmap>(e3, std::vector<triple> { {0, 1, "a"}, {1, 0, "b"}, {1, 2, "c"}, {2, 1, "d"} } );
+        CPosition &position3 = registry1.emplace<CPosition>(e3, 20.7f, 1.5f, 0);
+        registry1.emplace<CRenderer>(e3, texture3, position3);
 
-        registry.emplace<CRenderer>(e3, texture3, position3);
+        /** @brief StatusWindow */
+
+        StatusWindow &swin = win.getStatusWindow();
+        Registry &registry2 = swin.getScene().getRegistry();
+
+        /** @brief testing - Text rendering */
+        Entity &e4 = registry2.create();
+
+        CText &texture4 = registry2.emplace<CText>(e4, "fps displays here" );
+        CPosition &position4 = registry2.emplace<CPosition>(e4, 1.0f, 1.0f, 10);
+        registry2.emplace<CRenderer>(e4, texture4, position4);
+        
     }
 
     void __test_motion_system()
@@ -98,17 +111,17 @@ private:
         
         CBitmap &texture1 = registry.emplace<CBitmap>(e1, std::vector<triple> { {0, 0, "-"}, {1, 0, "-"}, {2, 0, ">"} } );
         CPosition &position1 = registry.emplace<CPosition>(e1, 2.3f, 4.5f, 1);
-        CRenderer &renderer1 = registry.emplace<CRenderer>(e1, texture1, position1);
-        CVelocity &velocity1 = registry.emplace<CVelocity>(e1, 0.5f, 0.0f);
+        registry.emplace<CRenderer>(e1, texture1, position1);
+        registry.emplace<CVelocity>(e1, 1.0f, 0.0f);
 
         /** @brief testing - gravity */
         Entity &e2 = registry.create();
         
         CBitmap &texture2 = registry.emplace<CBitmap>(e2, std::vector<triple> { {0, 0, "|"}, {0, 1, "|"}, {0, 2, "O"} } );
         CPosition &position2 = registry.emplace<CPosition>(e2, 40.0f, 20.0f, 1);
-        CRenderer &renderer2 = registry.emplace<CRenderer>(e2, texture2, position2);
-        CVelocity &velocity2 = registry.emplace<CVelocity>(e2, 0.0f, -0.20f);
-        CGravity &gravity2 = registry.emplace<CGravity>(e2, 0.0f, 0.001f);
+        registry.emplace<CRenderer>(e2, texture2, position2);
+        registry.emplace<CVelocity>(e2, 0.0f, -3.0f);
+        registry.emplace<CGravity>(e2, 0.0f, 0.25f);
     }
 
 };
