@@ -94,8 +94,8 @@ private:
         /** @brief testing - Text rendering */
         Entity &e4 = registry2.create();
 
-        CText &texture4 = registry2.emplace<CText>(e4, "fps displays here" );
-        CPosition &position4 = registry2.emplace<CPosition>(e4, 1.0f, 1.0f, 10);
+        CText &texture4 = registry2.emplace<CText>(e4, "FPS: " + std::to_string(this->getFPS()) );
+        CPosition &position4 = registry2.emplace<CPosition>(e4, 0.0f, 0.0f, 10);
         registry2.emplace<CRenderer>(e4, texture4, position4);
         
     }

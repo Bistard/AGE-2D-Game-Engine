@@ -32,6 +32,7 @@
 #include "model/component/texture.h"
 #include "model/component/velocity.h"
 #include "model/component/collidable.h"
+#include "model/component/border.h"
 
 #include "model/entity/entity.h"
 
@@ -71,6 +72,7 @@ public:
      *      BoardWindow    StatusWindow
      */
     AgeEngine(int fps, SIZE width = AGE_DEFAULT_WIN_WIDTH, SIZE height = AGE_DEFAULT_WIN_HEIGHT)
+        : _timer {fps}
     {
         __init_curses(width, height);
         
@@ -90,6 +92,7 @@ public:
      *     ...    ...         ...  ...
      */
     AgeEngine(int fps, SIZE width, SIZE height, std::unique_ptr<WindowWithController> &&win)
+        : _timer {fps}
     {
         __init_curses(width, height);
         _mainWindow = std::move(win);
@@ -113,6 +116,8 @@ public:
 
     /* runs the game loop. */
     void run() { __game_loop(); }
+
+    int getFPS() { return _timer.getFPS(); }
 
 private:
 
@@ -139,17 +144,24 @@ private:
 
         while (true) {
 
+            // get the raw input from the user.
             int input = _mainWindow->getInput();
-            
+
+            _timer.start();
+
             // game logic function, overrides by the user.
             this->onEachFrame(input);
 
+            // update all the logics system inside the engine.
             _mainWindow->updateLogics( _timer.elapse() );
 
+            // render each frame.
             _mainWindow->renderViews();
 
-            // must be invoked at the end of the loop in order to let the program 
-            //   pause utill the next frame.
+            _timer.end();
+
+            // must be invoked at the end of the loop in order to let the 
+            // program pause utill the next frame.
             _timer.tick();
         }
     }

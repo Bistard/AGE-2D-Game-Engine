@@ -135,7 +135,8 @@ public:
 class CText : public CTexture
 {
 public:
-    CText(Entity &entity, std::string text): CTexture {entity}, text {text} {}
+    CText(Entity &entity, const std::string &text): CTexture {entity}, text {text} {}
+    CText(Entity &entity, std::string &&text): CTexture {entity}, text {std::move(text)} {}
     ~CText() override {}
 public:
     void paint(Ncurses::WindowBuffer &buffer, CPosition &position) override
