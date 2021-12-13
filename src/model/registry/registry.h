@@ -13,6 +13,7 @@
 #include <map>
 #include <list>
 #include <vector>
+#include <functional>
 
 #include "../entity/entity.h"
 #include "../component/component.h"
@@ -313,7 +314,7 @@ public:
     [[nodiscard]] decltype(auto) query()
     {
         static_assert(sizeof...(ComponentTypes) > 0, "must provide at least one Component type for querying");
-        return std::make_tuple(__queryForEachComponent<ComponentTypes>()...);
+        return std::make_tuple(std::ref(__queryForEachComponent<ComponentTypes>())...);
     }
 
     /**
@@ -380,10 +381,10 @@ private:
     }
 
     template<typename ComponentType>
-    [[nodiscard]] EntitieQueryGroup *__queryForEachComponent()
+    [[nodiscard]] auto __queryForEachComponent() -> EntitieQueryGroup &
     {
         auto &entities = _groups[ getComponentSequenceID<ComponentType>() ];
-        return &entities;
+        return entities;
     }
 
 private:

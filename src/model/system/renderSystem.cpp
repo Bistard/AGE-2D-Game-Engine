@@ -30,7 +30,7 @@ void RenderSystem::onUpdate()
     std::priority_queue<CRenderer *, std::vector< CRenderer *>, CRendererCompare> pq;
     auto [entities] = _registry.query<CRenderer>();
 
-    for (auto &entity : *entities)  {
+    for (auto &entity : entities)  {
         auto &renderer = _registry.get<CRenderer>(*entity);
         
         if (renderer.visible == true) {

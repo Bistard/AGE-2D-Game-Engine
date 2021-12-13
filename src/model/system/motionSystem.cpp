@@ -16,7 +16,7 @@ void MotionSystem::onUpdate()
     auto [velocities, gravities] = _registry.query<CVelocity, CGravity>();
     
     // updates velocity value onto its position
-    for (auto e : *velocities) {
+    for (auto e : velocities) {
         CVelocity &velocity = _registry.get<CVelocity>(*e);
         CPosition &position = _registry.get<CPosition>(*e);
         
@@ -25,7 +25,7 @@ void MotionSystem::onUpdate()
     }
     
     // updates gravitational acceleration onto its velocity
-    for (auto e : *gravities) {
+    for (auto e : gravities) {
         CGravity &gravity = _registry.get<CGravity>(*e);
         CVelocity &velocity = _registry.get<CVelocity>(*e);
         
