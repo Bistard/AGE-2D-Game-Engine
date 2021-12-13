@@ -10,18 +10,21 @@
 #define __AGE_COLLIDABLE_COMPONENT__
 
 #include "component.h"
+#include "boundingBox.h"
 
 namespace AGE
 {
 
+using onCollisionFunc = void (*)(Entity &);
+
 class CCollidable : public Component
 {
 public:
-    CCollidable(Entity &entity): Component {entity} {}
+    CCollidable(Entity &entity, CBoundingBox &box): Component {entity}, box {box} {}
     ~CCollidable() override {}
 public:
-    // BoundingBox box;
-    void (*onCollision)(Entity &);
+    CBoundingBox &box;
+    onCollisionFunc onCollision;
 };
 
 } // AGE

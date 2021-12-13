@@ -43,6 +43,10 @@ namespace AGE
  * - marks the `Entity` as disabled by calling Entity::disable(), then calls
  *   Registry::refresh() to clean all the disabled entities.
  * 
+ * To query mutiple `Entity`s, must calls Registry::query(). Be careful with this, 
+ * if a component B inherits component A, when querying for A, registry  will not 
+ * look up for B.
+ * 
  * Registry provide `GlobalComponent` which does not bind to any `Entity` instance. 
  * Instead, its lifetime binds to the `Registry` and can only exist one at all 
  * the time.
