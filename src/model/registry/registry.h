@@ -45,7 +45,7 @@ namespace AGE
  *   Registry::refresh() to clean all the disabled entities.
  * 
  * To query mutiple `Entity`s, must calls Registry::query(). Be careful with this, 
- * if a component B inherits component A, when querying for A, registry  will not 
+ * if a component B inherits component A, when querying for A, registry will not 
  * look up for B.
  * 
  * Registry provide `GlobalComponent` which does not bind to any `Entity` instance. 
@@ -300,7 +300,8 @@ public:
     }
 
     /**
-     * @brief Returns a list of `Entities` which has the provided `ComponentTypes`.
+     * @brief Returns a list of `Entities` which has the provided `ComponentTypes` 
+     * respectively.
      * 
      * Function querys for each `ComponentTypes` seperately, each query returns
      * a pointer to the required `Entity` list. The result will be a vector of
@@ -308,7 +309,7 @@ public:
      * list is returned.
      * 
      * @tparam ComponentTypes ComponentTypes The list of required `Component`s.
-     * @return A tuple of list of the required `Entity`s.
+     * @return A tuple of references to the list of the required `Entity`s.
      */
     template<typename... ComponentTypes>
     [[nodiscard]] decltype(auto) query()
@@ -324,7 +325,7 @@ public:
      * 
      * @tparam GlobalComponentType The component type.
      * @param args The argument for constructing.
-     * @return auto& Returns the reference to the newly constructed component.
+     * @return Returns the reference to the newly constructed component.
      */
     template<typename GlobalComponentType, typename... Args>
     [[maybe_unused]] GlobalComponentType &emplaceGlobal(Args &&...args)
@@ -342,7 +343,7 @@ public:
      * @warning If no such global components, an exception throws.
      * 
      * @tparam GlobalComponentType The type of the global component.
-     * @return auto& The reference to the required global component.
+     * @return The reference to the required global component.
      */
     template<typename GlobalComponentType>
     [[nodiscard]] GlobalComponentType &queryGlobal()

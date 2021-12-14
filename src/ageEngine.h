@@ -10,7 +10,6 @@
 #define __AGE_AGE_ENGINE__
 
 #include <memory>
-#include "common/box.h"
 #include "common/vec2d.h"
 
 #include "controller/adapter/ncurseAdapter.h"
@@ -31,6 +30,7 @@
 #include "model/component/renderer.h"
 #include "model/component/texture.h"
 #include "model/component/velocity.h"
+#include "model/component/boundingBox.h"
 #include "model/component/collidable.h"
 #include "model/component/border.h"
 

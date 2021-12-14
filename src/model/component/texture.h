@@ -56,7 +56,7 @@ public:
         int winWidth = buffer.width();
         int winHeight = buffer.height();
 
-        vec2d<int> pos = roundvec2d(position.pos);
+        vec2d<int> pos = roundvec2d(position.val);
         for (int x = pos.X(); x < pos.X() + width; ++x) {
             for (int y = pos.Y(); y < pos.Y() + height; ++y) {
                 
@@ -86,7 +86,7 @@ public:
         int winWidth = buffer.width();
         int winHeight = buffer.height();
 
-        vec2d<int> pos = roundvec2d(position.pos);
+        vec2d<int> pos = roundvec2d(position.val);
 
         if (0 <= pos.X() && pos.X() < winWidth && 0 <= pos.Y() && pos.Y() <= winHeight) {
             buffer.print(ascii, pos.X(), pos.Y());
@@ -114,7 +114,7 @@ public:
         int winWidth = buffer.width();
         int winHeight = buffer.height();
 
-        vec2d<int> pos = roundvec2d(position.pos);
+        vec2d<int> pos = roundvec2d(position.val);
         int actualX = 0, actualY = 0;
         for (auto &[x, y, c] : bitmap) {
             
@@ -144,7 +144,7 @@ public:
         int winWidth = buffer.width();
         int winHeight = buffer.height();
 
-        vec2d<int> pos = roundvec2d(position.pos);
+        vec2d<int> pos = roundvec2d(position.val);
         if (0 <= pos.X() && pos.X() < winWidth && 0 <= pos.Y() && pos.Y() <= winHeight) {
             buffer.print(text, pos.X(), pos.Y());
         }

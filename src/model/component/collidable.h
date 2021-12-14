@@ -20,7 +20,9 @@ using onCollisionFunc = void (*)(Entity &);
 class CCollidable : public Component
 {
 public:
-    CCollidable(Entity &entity, CBoundingBox &box): Component {entity}, box {box} {}
+    CCollidable(Entity &entity, CBoundingBox &box, onCollisionFunc onCollision = [](Entity &e) {})
+        : Component {entity}, box {box}, onCollision {onCollision} 
+    {}
     ~CCollidable() override {}
 public:
     CBoundingBox &box;

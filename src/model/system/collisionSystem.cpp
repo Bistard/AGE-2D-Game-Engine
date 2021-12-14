@@ -14,23 +14,29 @@ CollisionSystem::~CollisionSystem() {}
 
 void CollisionSystem::onUpdate()
 {
-    auto collidables = _registry.query<CCollidable>();
+    auto [collidables] = _registry.query<CCollidable>();
 
-    // for (e1) {
+    // time complexity: O( [n(n+1)]/2 ) -> O(n^2)
+    for (auto it1 = collidables.begin(); it1 != std::prev(collidables.end()); ++it1) {
+        Entity &e1 = **it1;
+        CCollidable &c1 = _registry.get<CCollidable>(e1);
 
-    //     for (e2) {
+        for (auto it2 = std::next(it1); it2 != collidables.end(); ++it2) {
+            Entity &e2 = **it2;
+            CCollidable &c2 = _registry.get<CCollidable>(e2);
 
-    //         if CollisionHappens(e1, e2) {
-                
-    //             CCollidable &c1 = e1._components[ getComponentSequenceID<CCollidable>() ];
-    //             CCollidable &c2 = e2._components[ getComponentSequenceID<CCollidable>() ];
+            CBoundingBox &b1 = c1.box;
+            CBoundingBox &b2 = c2.box;
 
-    //             // handle logic
-    //             c1.onCollision(e2);
-    //             c2.onCollision(e1); // callable
-    //         }
-    //     }
-    // }
+            // FIXME: this is a terrible design, fix this later
+            if (b1.collideWith(static_cast<CRectBox &>(b2))) {
+                c1.onCollision(e2);
+                c2.onCollision(e1);
+            }
+
+        }
+
+    }
 }
 
 } // AGE

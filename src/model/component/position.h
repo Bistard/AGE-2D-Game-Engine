@@ -15,16 +15,17 @@ namespace AGE
 {
 
 using AltitudeType = uint8_t;
+#define TOP_ALTITUDE 255
 
 class CPosition : public Component
 {
 public:
     CPosition(Entity &entity, float x, float y, AltitudeType altitude)
-        : Component {entity}, pos {x, y}, altitude {altitude} 
+        : Component {entity}, val {x, y}, altitude {altitude} 
     {}
     ~CPosition() override {}
 public:
-    vec2d<float> pos;
+    vec2d<float> val;
     /** @brief altitude in the drawing */
     AltitudeType altitude;
 };

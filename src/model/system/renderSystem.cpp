@@ -21,7 +21,9 @@ void RenderSystem::onUpdate()
     // displays border
     try {
         auto &border = _registry.queryGlobal<CBorderView>();
-        _winBuffer.showBorder(border.top, border.bottom, border.left, border.right, border.corner);
+        if (border.visible == true) {
+            _winBuffer.showBorder(border.top, border.bottom, border.left, border.right, border.corner);
+        }
     } catch (...) {
         // no border
     }

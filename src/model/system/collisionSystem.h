@@ -21,6 +21,8 @@ public:
     CollisionSystem(Registry &registry);
     ~CollisionSystem() override;
 public:
+    /** @brief Detects colllisions between entities and calls onCollisionFunction
+     * for each entity. */
     void onUpdate() override;
 };
 

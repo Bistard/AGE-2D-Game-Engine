@@ -20,8 +20,8 @@ void MotionSystem::onUpdate()
         CVelocity &velocity = _registry.get<CVelocity>(*e);
         CPosition &position = _registry.get<CPosition>(*e);
         
-        position.pos.getX() += velocity.val.X() * _elapse;
-        position.pos.getY() += velocity.val.Y() * _elapse;
+        position.val.getX() += velocity.val.X() * _elapse;
+        position.val.getY() += velocity.val.Y() * _elapse;
     }
     
     // updates gravitational acceleration onto its velocity

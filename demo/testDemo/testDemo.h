@@ -23,10 +23,6 @@ public:
 private:
     void init() override
     {
-        GameWindow &win = static_cast<GameWindow &>(this->getWindow());
-        BoardWindow &bwin = win.getBoardWindow();
-        bwin.setBorder(true, '-', '-', '|', '|', '+');
-
         __test_renderer_system();
         __test_motion_system();
         __test_collision_system();
@@ -60,6 +56,8 @@ private:
         /** @brief BoardWindow */
      
         BoardWindow &bwin = win.getBoardWindow();
+        bwin.setBorderView(true, '-', '-', '|', '|', '+');
+
         Registry &registry1 = bwin.getScene().getRegistry();
 
         /** @brief testing - ascii rendering */
@@ -123,7 +121,24 @@ private:
 
     void __test_collision_system()
     {
+        GameWindow &win = static_cast<GameWindow &>(this->getWindow());
+        BoardWindow &bwin = win.getBoardWindow();
+        bwin.setSolidBorder(true, true, true, true);
         
+        Registry &registry = bwin.getScene().getRegistry();
+        
+        Entity &e1 = registry.create();
+        CBitmap &texture1 = registry.emplace<CBitmap>(e1, std::vector<triple> { {0, 0, "O"} } );
+        CPosition &position1 = registry.emplace<CPosition>(e1, 10.0f, 10.0f, 10);
+        CRectBox &box1 = registry.emplace<CRectBox>(e1, position1, 1, 1);
+        registry.emplace<CRenderer>(e1, texture1, position1);
+        registry.emplace<CVelocity>(e1, 0.25f, 0.25f);
+        registry.emplace<CCollidable>(e1, box1, [](Entity &other) {
+            // FIXME: Entity should obtain such API's for convinence purpose
+            // CVelocity &velocity = registry.get<CVelocity>(e1);
+            // velocity.val.getX() *= -1;
+            // velocity.val.getY() *= -1;
+        });
     }
 };
 
