@@ -56,9 +56,10 @@ private:
         /** @brief BoardWindow */
      
         BoardWindow &bwin = win.getBoardWindow();
-        bwin.setBorderView(true, '-', '-', '|', '|', '+');
-
+        
         Registry &registry1 = bwin.getScene().getRegistry();
+
+        utils::setBorderView(registry1, true, '-', '-', '|', '|', '+');
 
         /** @brief testing - ascii rendering */
         Entity &e1 = registry1.create();
@@ -77,7 +78,7 @@ private:
         /** @brief testing - Bitmap rendering */
         Entity &e3 = registry1.create();
         
-        CBitmap &texture3 = registry1.emplace<CBitmap>(e3, std::vector<triple> { {0, 1, "a"}, {1, 0, "b"}, {1, 2, "c"}, {2, 1, "d"} } );
+        CBitmap &texture3 = registry1.emplace<CBitmap>(e3, std::vector<triple> { {0, 1, "a"}, {1, 0, "b"}, {1, 2, "c"}, {2, 1, "d"}, {1, 1, "e"} } );
         CPosition &position3 = registry1.emplace<CPosition>(e3, 20.7f, 1.5f, 0);
         registry1.emplace<CRenderer>(e3, texture3, position3);
 
@@ -123,22 +124,26 @@ private:
     {
         GameWindow &win = static_cast<GameWindow &>(this->getWindow());
         BoardWindow &bwin = win.getBoardWindow();
-        bwin.setSolidBorder(true, true, true, true);
-        
         Registry &registry = bwin.getScene().getRegistry();
+
+        utils::setSolidBorder(registry, bwin.getWidth(), bwin.getHeight(), true, true, true, true);
+        utils::setSolidBorderCollisionResponse(registry, true);
         
         Entity &e1 = registry.create();
         CBitmap &texture1 = registry.emplace<CBitmap>(e1, std::vector<triple> { {0, 0, "O"} } );
-        CPosition &position1 = registry.emplace<CPosition>(e1, 10.0f, 10.0f, 10);
+        CPosition &position1 = registry.emplace<CPosition>(e1, 50.0f, 10.0f, 10);
         CRectBox &box1 = registry.emplace<CRectBox>(e1, position1, 1, 1);
         registry.emplace<CRenderer>(e1, texture1, position1);
-        registry.emplace<CVelocity>(e1, 0.25f, 0.25f);
-        registry.emplace<CCollidable>(e1, box1, [](Entity &other) {
-            // FIXME: Entity should obtain such API's for convinence purpose
-            // CVelocity &velocity = registry.get<CVelocity>(e1);
-            // velocity.val.getX() *= -1;
-            // velocity.val.getY() *= -1;
-        });
+        registry.emplace<CVelocity>(e1, 0.5f, 0.5f);
+        registry.emplace<CCollidable>(e1, box1);
+
+        Entity &e2 = registry.create();
+        CBitmap &texture2 = registry.emplace<CBitmap>(e2, std::vector<triple> { {0, 0, "X"} } );
+        CPosition &position2 = registry.emplace<CPosition>(e2, 60.0f, 10.0f, 10);
+        CRectBox &box2 = registry.emplace<CRectBox>(e2, position2, 1, 1);
+        registry.emplace<CRenderer>(e2, texture2, position2);
+        registry.emplace<CVelocity>(e2, -0.5f, -0.5f);
+        registry.emplace<CCollidable>(e2, box2);
     }
 };
 

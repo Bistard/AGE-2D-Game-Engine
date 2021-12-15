@@ -15,7 +15,7 @@ CollisionSystem::~CollisionSystem() {}
 void CollisionSystem::onUpdate()
 {
     auto [collidables] = _registry.query<CCollidable>();
-
+    
     // time complexity: O( [n(n+1)]/2 ) -> O(n^2)
     for (auto it1 = collidables.begin(); it1 != std::prev(collidables.end()); ++it1) {
         Entity &e1 = **it1;
@@ -30,8 +30,8 @@ void CollisionSystem::onUpdate()
 
             // FIXME: this is a terrible design, fix this later
             if (b1.collideWith(static_cast<CRectBox &>(b2))) {
-                c1.onCollision(e2);
-                c2.onCollision(e1);
+                c1.onCollision(e1, e2);
+                c2.onCollision(e2, e1);
             }
 
         }

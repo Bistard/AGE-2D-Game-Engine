@@ -45,6 +45,7 @@
 #include "utils/camera.h"
 #include "utils/math.h"
 #include "utils/uuid.h"
+#include "utils/utility.h"
 
 namespace AGE
 {

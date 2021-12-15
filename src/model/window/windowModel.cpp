@@ -7,7 +7,6 @@
 #include "../component/collidable.h"
 #include "../component/position.h"
 
-
 namespace AGE
 {
 
@@ -48,6 +47,10 @@ void WindowModel::updateLogics(float elapse)
     }
     this->onUpdateLogic(elapse);
 }
+
+const SIZE WindowModel::getWidth() { return width; }
+
+const SIZE WindowModel::getHeight() { return height; }
 
 /*******************************************************************************
  * @brief `WindowWithController` implementation
@@ -105,70 +108,6 @@ void
 WindowWithCamera::onUpdateLogic(float elapse)
 {
     _scene.updateLogicSystems(elapse);
-}
-
-void 
-WindowWithCamera::setBorderView(bool visible, int top, int bottom, int left, int right, int corner)
-{
-    Registry &registry = getScene().getRegistry();
-    if (registry.hasGlobal<CBorderView>() == false) {
-        registry.emplaceGlobal<CBorderView>(visible, top, bottom, left, right, corner);
-    }
-}
-
-void 
-WindowWithCamera::setSolidBorder(bool top, bool bottom, bool left, bool right)
-{
-    Registry &registry = getScene().getRegistry();
-    if (registry.hasGlobal<CSolidBorder>() == true) {
-        return;
-    }
-
-    // If the borderView is displaying, we move the bounding box of the border
-    // inside by one more pixel.
-    bool visible = false;
-    if (registry.hasGlobal<CBorderView>()) {
-        visible = registry.queryGlobal<CBorderView>().visible;
-    }
-    
-    // construct top solid border
-    Entity *topEntity = nullptr;
-    if (top) {
-        topEntity = &registry.create();
-        CPosition &topPosition = registry.emplace<CPosition>(*topEntity, 0, 0, 0);
-        CRectBox &topBox = registry.emplace<CRectBox>(*topEntity, topPosition, width, 1);
-        registry.emplace<CCollidable>(*topEntity, topBox);
-    }
-    
-    // bottom solid border
-    Entity *bottomEntity = nullptr;
-    if (bottom) {
-        bottomEntity = &registry.create();
-        CPosition &bottomPosition = registry.emplace<CPosition>(*bottomEntity, 0, height, 0);
-        CRectBox &bottomBox = registry.emplace<CRectBox>(*bottomEntity, bottomPosition, width, height);
-        registry.emplace<CCollidable>(*bottomEntity, bottomBox);
-    }
-
-    // left solid border
-    Entity *leftEntity = nullptr;
-    if (left) {
-        leftEntity = &registry.create();
-        CPosition &leftPosition = registry.emplace<CPosition>(*leftEntity, 0, 0, 0);
-        CRectBox &leftBox = registry.emplace<CRectBox>(*leftEntity, leftPosition, 1, height);
-        registry.emplace<CCollidable>(*leftEntity, leftBox);
-    }
-
-    // right solid border
-    Entity *rightEntity = nullptr;
-    if (right) {
-        rightEntity = &registry.create();
-        CPosition &rightPosition = registry.emplace<CPosition>(*rightEntity, 0, width, 0);
-        CRectBox &rightBox = registry.emplace<CRectBox>(*rightEntity, rightPosition, 1, height);
-        registry.emplace<CCollidable>(*rightEntity, rightBox);
-    }
-
-    // stores them into `CSolidBorder`
-    registry.emplaceGlobal<CSolidBorder>(topEntity, bottomEntity, leftEntity, rightEntity);
 }
 
 } // AGE

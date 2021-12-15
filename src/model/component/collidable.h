@@ -15,12 +15,12 @@
 namespace AGE
 {
 
-using onCollisionFunc = void (*)(Entity &);
+using onCollisionFunc = void (*)(Entity &, Entity &);
 
 class CCollidable : public Component
 {
 public:
-    CCollidable(Entity &entity, CBoundingBox &box, onCollisionFunc onCollision = [](Entity &e) {})
+    CCollidable(Entity &entity, CBoundingBox &box, onCollisionFunc onCollision = [](Entity &self, Entity &other) {})
         : Component {entity}, box {box}, onCollision {onCollision} 
     {}
     ~CCollidable() override {}

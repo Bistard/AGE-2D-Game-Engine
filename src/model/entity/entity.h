@@ -71,7 +71,7 @@ public:
     /** @brief returns the reference to where this `Entity` is registered. */
     Registry &getRegistry();
 
-    // FIX: circling include happens
+    // FIX:  circling include happens when including template methods
     // /**
     //  * @brief The Following methods are simply wrappers for the `Registry` API's.
     //  * It gives oppotunity to just pass a single `Entity` type into the a

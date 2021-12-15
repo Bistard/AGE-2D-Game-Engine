@@ -32,7 +32,7 @@ public:
 class CSolidBorder : public GlobalComponent
 {
 public:
-    CSolidBorder(Entity *top, Entity *bottom, Entity *left, Entity *right)
+    CSolidBorder(Entity *top = nullptr, Entity *bottom = nullptr, Entity *left = nullptr, Entity *right = nullptr)
         : GlobalComponent {}, top {top}, bottom {bottom}, left {left}, right {right} 
     {}
     ~CSolidBorder() override {}

@@ -53,6 +53,9 @@ public:
      * @param elapse The time elapsed since the last frame.
      */
     void updateLogics(float elapse);
+
+    const SIZE getWidth();
+    const SIZE getHeight();
 private:
     virtual void onDrawView() {}
     virtual void onUpdateLogic(float elapse) {}
@@ -95,10 +98,6 @@ public:
     Camera &getCamera() noexcept;
     Scene &getScene() noexcept;
     Ncurses::WindowBuffer &getWindowBuffer() noexcept;
-    /** @brief displays the border view  */
-    void setBorderView(bool visible, int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32);
-    /** @brief set the border be solid  */
-    void setSolidBorder(bool top = true, bool bottom = true, bool left = true, bool right = true);
 private:
     void onDrawView() override;
     void onUpdateLogic(float elapse) override;
