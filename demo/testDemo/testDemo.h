@@ -59,7 +59,7 @@ private:
         
         Registry &registry1 = bwin.getScene().getRegistry();
 
-        utils::setBorderView(registry1, true, '-', '-', '|', '|', '+');
+        utils::window::setBorderView(registry1, true, '-', '-', '|', '|', '+');
 
         /** @brief testing - ascii rendering */
         Entity &e1 = registry1.create();
@@ -126,11 +126,11 @@ private:
         BoardWindow &bwin = win.getBoardWindow();
         Registry &registry = bwin.getScene().getRegistry();
 
-        utils::setSolidBorder(registry, bwin.getWidth(), bwin.getHeight(), true, true, true, true);
-        utils::setSolidBorderCollisionResponse(registry, true);
+        utils::window::setSolidBorder(registry, bwin.getWidth(), bwin.getHeight(), true, true, true, true);
+        utils::window::setSolidBorderCollisionResponse(registry, true);
         
         Entity &e1 = registry.create();
-        CBitmap &texture1 = registry.emplace<CBitmap>(e1, std::vector<triple> { {0, 0, "O"} } );
+        CASCII &texture1 = registry.emplace<CASCII>(e1, "0");
         CPosition &position1 = registry.emplace<CPosition>(e1, 50.0f, 10.0f, 10);
         CRectBox &box1 = registry.emplace<CRectBox>(e1, position1, 1, 1);
         registry.emplace<CRenderer>(e1, texture1, position1);
@@ -144,6 +144,14 @@ private:
         registry.emplace<CRenderer>(e2, texture2, position2);
         registry.emplace<CVelocity>(e2, -0.5f, -0.5f);
         registry.emplace<CCollidable>(e2, box2);
+
+        Entity &e3 = registry.create();
+        CBitmap &texture3 = registry.emplace<CBitmap>(e3, std::vector<triple> { {0, 0, "1"}, {1, 1, "1"} } );
+        CPosition &position3 = registry.emplace<CPosition>(e3, 40.0f, 5.0f, 10);
+        CRectBox &box3 = registry.emplace<CRectBox>(e3, position3, 2, 2);
+        registry.emplace<CRenderer>(e3, texture3, position3);
+        registry.emplace<CVelocity>(e3, -0.5f, -0.3f);
+        registry.emplace<CCollidable>(e3, box3);
     }
 };
 

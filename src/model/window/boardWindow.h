@@ -13,6 +13,7 @@
 #include "../system/motionSystem.h"
 #include "../system/collisionSystem.h"
 #include "../system/renderSystem.h"
+#include "../system/despawnSystem.h"
 
 namespace AGE
 {
@@ -20,6 +21,13 @@ namespace AGE
 template<typename T>
 class vec2d;
 
+/**
+ * @brief The boardWindow has the following systems by default:
+ *  - MotionSystem
+ *  - CollisionSytem
+ *  - RenderSystem
+ *  - DespawnSystem
+ */
 class BoardWindow : public WindowWithCamera
 {
 public:
@@ -33,6 +41,7 @@ public:
         getScene().emplaceLogicSystem<MotionSystem>(registry);
         getScene().emplaceLogicSystem<CollisionSystem>(registry);
         getScene().emplaceViewSystem<RenderSystem>(registry, getWindowBuffer());
+        getScene().emplaceViewSystem<DespawnSystem>(registry);
     }
 
     ~BoardWindow() override {}

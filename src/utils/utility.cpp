@@ -3,7 +3,7 @@
 #include "../model/entity/entity.h"
 #include "../model/registry/registry.h"
 #include "../model/component/velocity.h"
-#include "../model/component/border.h"
+#include "../model/component/global/border.h"
 #include "../model/component/position.h"
 #include "../model/component/boundingBox.h"
 #include "../model/component/collidable.h"
@@ -14,6 +14,8 @@ namespace AGE
 namespace utils
 {
 
+namespace window
+{
 
 void setBorderView(Registry &registry, bool visible, int top, int bottom, int left, int right, int corner)
 {
@@ -128,6 +130,9 @@ void setSolidBorderCollisionResponse(Registry &registry, bool enable)
         // `CCollidable` components. We simply ignore the exceptions.
     }
 }
+
+}
+
 
 namespace physic
 {

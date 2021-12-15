@@ -32,7 +32,9 @@
 #include "model/component/velocity.h"
 #include "model/component/boundingBox.h"
 #include "model/component/collidable.h"
-#include "model/component/border.h"
+#include "model/component/despawn.h"
+#include "model/component/global/border.h"
+#include "model/component/global/windowInfo.h"
 
 #include "model/entity/entity.h"
 

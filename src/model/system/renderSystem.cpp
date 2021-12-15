@@ -2,7 +2,8 @@
 #include "../../controller/adapter/ncurseAdapter.h"
 #include "../registry/registry.h"
 #include "../component/renderer.h"
-#include "../component/border.h"
+#include "../component/global/border.h"
+#include "../component/despawn.h"
 
 #include <queue>
 
@@ -34,7 +35,7 @@ void RenderSystem::onUpdate()
 
     for (auto &entity : entities)  {
         auto &renderer = _registry.get<CRenderer>(*entity);
-        
+
         if (renderer.visible == true) {
             pq.push(&renderer);
         }

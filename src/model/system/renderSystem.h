@@ -18,17 +18,17 @@ namespace Ncurses {
 }
 class Registry;
 
+/**
+ * @brief RenderSystem is rendering based on the Painter's Algorithm. It sorts
+ * every `Entity` based on their altitude and renders things from the furthest 
+ * to the close most.
+ */
 class RenderSystem final : public ViewSystem
 {
 public:
     RenderSystem(Registry &registry, Ncurses::WindowBuffer &winBuffer);
     ~RenderSystem() override;
 public:
-    /**
-     * @brief RenderSystem is rendering based on the Painter's Algorithm. It sorts
-     * every `Entity` based on their altitude and renders things from the furthest 
-     * to the close most.
-     */
     void onUpdate() override;
 private:
     Ncurses::WindowBuffer &_winBuffer;

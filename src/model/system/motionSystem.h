@@ -15,15 +15,13 @@ namespace AGE
 
 class Registry;
 
+/** @brief MotionSystem updates all the velocity and gravity for each `Entity`. */
 class MotionSystem final : public LogicSystem
 {
 public:
     MotionSystem(Registry &registry);
     ~MotionSystem() override;
 public:
-    /**
-     * @brief MotionSystem updates all the velocity and gravity for each `Entity`.
-     */
     void onUpdate() override;
 };
 

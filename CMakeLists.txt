@@ -17,6 +17,7 @@ aux_source_directory(src/model/window SRC_LIST)
 aux_source_directory(src/model/registry SRC_LIST)
 aux_source_directory(src/model/entity SRC_LIST)
 aux_source_directory(src/model/component SRC_LIST)
+aux_source_directory(src/model/component/global SRC_LIST)
 aux_source_directory(src/model/system SRC_LIST)
 aux_source_directory(src/utils SRC_LIST)
 aux_source_directory(src/common SRC_LIST)
@@ -30,6 +31,7 @@ include_directories(
 	src/model/registry
 	src/model/entity
 	src/model/component
+	src/model/component/global
 	src/model/system
 	src/utils
 	src/common

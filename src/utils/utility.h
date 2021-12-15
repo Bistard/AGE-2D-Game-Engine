@@ -24,15 +24,17 @@ class Entity;
  */
 namespace utils
 {
-
-    /** @brief Displays the border view (default 32 -> whitespace) */
-    void setBorderView(Registry &registry, bool visible, int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32);
-    
-    /** @brief Sets the border be solid */
-    void setSolidBorder(Registry &registry, SIZE winWidth, SIZE winHeight, bool top, bool bottom, bool left, bool right);
-    
-    /** @brief Simulates the border collision response in real world */
-    void setSolidBorderCollisionResponse(Registry &registry, bool enable);
+    namespace window
+    {
+        /** @brief Displays the border view (default 32 -> whitespace) */
+        void setBorderView(Registry &registry, bool visible, int top = 32, int bottom = 32, int left = 32, int right = 32, int corner = 32);
+        
+        /** @brief Sets the border be solid */
+        void setSolidBorder(Registry &registry, SIZE winWidth, SIZE winHeight, bool top, bool bottom, bool left, bool right);
+        
+        /** @brief Simulates the border collision response in real world */
+        void setSolidBorderCollisionResponse(Registry &registry, bool enable);
+    }
     
     /**
      * @brief The inner namespace provides specially functionalities relates to

@@ -2,7 +2,7 @@
 #include "windowModel.h"
 #include "../../controller/controller.h"
 #include "../../utils/camera.h"
-#include "../component/border.h"
+#include "../component/global/border.h"
 #include "../component/boundingBox.h"
 #include "../component/collidable.h"
 #include "../component/position.h"
