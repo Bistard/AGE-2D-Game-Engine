@@ -19,7 +19,7 @@ typedef unsigned short SSIZE; // 0 ~ 65,535
 // round to the nearest integer position
 vec2d<int> roundvec2d(const vec2d<float> &p);
 
-bool contains(const vec2d<int> window, const vec2d<float> point);
+bool contains(const vec2d<int> box, const vec2d<float> point);
 
 } // AGE
 

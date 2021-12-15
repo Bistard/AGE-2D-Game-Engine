@@ -7,20 +7,29 @@
 namespace AGE
 {
 
-DespawnSystem::DespawnSystem(Registry &registry): System {registry} {}
+DespawnSystem::DespawnSystem(Registry &registry): LogicSystem {registry} {}
 
 DespawnSystem::~DespawnSystem() {}
 
-void DespawnSystem::onUpdate()
+void 
+DespawnSystem::onUpdate()
 {
     auto [despawns] = _registry.query<CDespawn>();
     
-    CWindowInfo &info = _registry.queryGlobal<CWindowInfo>();
+    CWindowInfo *info = nullptr;
+    try {
+        info = &_registry.queryGlobal<CWindowInfo>();
+    } catch (...) {
+        /** @brief no provided `CWindowInfo`. Since we do not have own logger 
+         * system, we simply throws exception. */
+        throw;
+    }
+    
     
     for (auto e : despawns) {
         CDespawn &despawn = _registry.get<CDespawn>(*e);
         
-        if (contains(info.dimension, despawn.pos.val)) {
+        if (contains(info->dimension, despawn.pos.val)) {
 
             ++despawn.count;
 

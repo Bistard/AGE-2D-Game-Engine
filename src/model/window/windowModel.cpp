@@ -6,6 +6,7 @@
 #include "../component/boundingBox.h"
 #include "../component/collidable.h"
 #include "../component/position.h"
+#include "../component/global/windowInfo.h"
 
 namespace AGE
 {
@@ -84,6 +85,7 @@ WindowWithCamera::WindowWithCamera(vec2d<int> pos, SIZE width, SIZE height):
     _winBuffer { std::make_unique<Ncurses::WindowBuffer>(width, height, position.X(), position.Y()) },
     _scene {}
 {
+    _scene.getRegistry().emplaceGlobal<CWindowInfo>( vec2d<int> {width, height} );
     _camera = std::make_unique<Camera>(pos, width, height);
 }
 

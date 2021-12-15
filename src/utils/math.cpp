@@ -10,4 +10,14 @@ vec2d<int> roundvec2d(const vec2d<float> &p)
     return vec2d<int> {x, y};
 }
 
+bool contains(const vec2d<int> box, const vec2d<float> point)
+{
+    if (0 <= point.X() && point.X() <= box.X() && 
+        0 <= point.Y() && point.Y() <= box.Y()) 
+    {
+        return true;
+    }
+    return false;
+}
+
 } // AGE

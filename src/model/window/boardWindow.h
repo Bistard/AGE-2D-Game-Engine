@@ -40,8 +40,8 @@ public:
         
         getScene().emplaceLogicSystem<MotionSystem>(registry);
         getScene().emplaceLogicSystem<CollisionSystem>(registry);
+        getScene().emplaceLogicSystem<DespawnSystem>(registry);
         getScene().emplaceViewSystem<RenderSystem>(registry, getWindowBuffer());
-        getScene().emplaceViewSystem<DespawnSystem>(registry);
     }
 
     ~BoardWindow() override {}

@@ -19,7 +19,7 @@ class Registry;
  * @brief DespawnSystem handles all the entities that has `CDespawn` components
  * and check if it goes out the screen for a given ticks.
  */
-class DespawnSystem : public System
+class DespawnSystem : public LogicSystem
 {
 public:
     DespawnSystem(Registry &registry);
