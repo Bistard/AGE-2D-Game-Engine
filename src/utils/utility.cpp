@@ -153,6 +153,14 @@ void onTopBottomSolidBorderCollision(Entity &border, Entity &other)
     }
 }
 
+void onStopCollision(Entity &self, Entity &other)
+{
+    if (self.getRegistry().has<CVelocity>(self) == true) {
+        CVelocity &velocity = other.getRegistry().get<CVelocity>(other);
+        velocity.val = vec2d<float> {0.0f, 0.0f};
+    }
+}
+
 void emptyOnCollision(Entity &border, Entity &other)
 {
     // empty function body.

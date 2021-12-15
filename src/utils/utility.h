@@ -43,11 +43,15 @@ namespace utils
     namespace physic
     {
         
-        /** @brief Collision Callback for physical solid border. */
+        /** @brief Collision callbacks for physical solid border. */
         void onLeftRightSolidBorderCollision(Entity &border, Entity &other);
         void onTopBottomSolidBorderCollision(Entity &border, Entity &other);
+        
+        /** @brief Collision callbacks for stoping. */
+        void onStopCollision(Entity &self, Entity &other);
+        
         /** @brief empty Collision Callback. */
-        void emptyOnCollision(Entity &border, Entity &other);
+        void emptyOnCollision(Entity &self, Entity &other);
 
     } // physic
 
