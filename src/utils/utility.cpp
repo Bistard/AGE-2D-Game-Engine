@@ -14,6 +14,17 @@ namespace AGE
 namespace utils
 {
 
+float randFloatNum(float range1, float range2)
+{
+    return range1 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (range2 - range1)));
+
+}
+
+int randNum(int range1, int range2)
+{
+    return rand() % range2 + range1;
+}
+
 namespace window
 {
 
@@ -107,22 +118,22 @@ void setSolidBorderCollisionResponse(Registry &registry, bool enable)
 
         if (border.top) {
             CCollidable &top = registry.get<CCollidable>(*border.top);
-            top.onCollision = enable ? physic::onTopBottomSolidBorderCollision : physic::emptyOnCollision;
+            top.onCollisionList.push_back(enable ? physic::onTopBottomSolidBorderCollision : physic::emptyOnCollision);
         }
 
         if (border.bottom) {
             CCollidable &bottom = registry.get<CCollidable>(*border.bottom);
-            bottom.onCollision = enable ? physic::onTopBottomSolidBorderCollision : physic::emptyOnCollision;
+            bottom.onCollisionList.push_back(enable ? physic::onTopBottomSolidBorderCollision : physic::emptyOnCollision);
         }
 
         if (border.left) {
             CCollidable &left = registry.get<CCollidable>(*border.left);
-            left.onCollision = enable ? physic::onLeftRightSolidBorderCollision : physic::emptyOnCollision;
+            left.onCollisionList.push_back(enable ? physic::onLeftRightSolidBorderCollision : physic::emptyOnCollision);
         }
 
         if (border.right) {
             CCollidable &right = registry.get<CCollidable>(*border.right);
-            right.onCollision = enable ? physic::onLeftRightSolidBorderCollision : physic::emptyOnCollision;
+            right.onCollisionList.push_back(enable ? physic::onLeftRightSolidBorderCollision : physic::emptyOnCollision);
         }
 
     } catch (...) {
@@ -150,6 +161,15 @@ void onTopBottomSolidBorderCollision(Entity &border, Entity &other)
     if (other.getRegistry().has<CVelocity>(other) == true) {
         CVelocity &velocity = other.getRegistry().get<CVelocity>(other);
         velocity.val.getY() *= -1;
+    }
+}
+
+void onEntityCollision(Entity &self, Entity &other)
+{
+    if (self.getRegistry().has<CVelocity>(self) == true) {
+        CVelocity &velocity = self.getRegistry().get<CVelocity>(self);
+        velocity.val.getX() *= -1; 
+        velocity.val.getY() *= -1; 
     }
 }
 

@@ -24,6 +24,9 @@ class Entity;
  */
 namespace utils
 {
+    float randFloatNum(float range1, float range2);
+    int randNum(int range1, int range2);
+
     namespace window
     {
         /** @brief Displays the border view (default 32 -> whitespace) */
@@ -47,6 +50,9 @@ namespace utils
         void onLeftRightSolidBorderCollision(Entity &border, Entity &other);
         void onTopBottomSolidBorderCollision(Entity &border, Entity &other);
         
+        /** @brief Collision callbacks for simulating actual entity collision. */
+        void onEntityCollision(Entity &self, Entity &other);
+
         /** @brief Collision callbacks for stoping. */
         void onStopCollision(Entity &self, Entity &other);
         

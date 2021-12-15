@@ -8,6 +8,7 @@
 #ifndef __AGE_MATH__
 #define __AGE_MATH__
 
+#include <math.h>
 #include "../common/vec2d.h"
 
 namespace AGE

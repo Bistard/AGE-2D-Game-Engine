@@ -21,12 +21,14 @@ class CCollidable : public Component
 {
 public:
     CCollidable(Entity &entity, CBoundingBox &box, onCollisionFunc onCollision = [](Entity &self, Entity &other) {})
-        : Component {entity}, box {box}, onCollision {onCollision} 
-    {}
+        : Component {entity}, box {box}
+    {
+        onCollisionList.push_back(onCollision);
+    }
     ~CCollidable() override {}
 public:
     CBoundingBox &box;
-    onCollisionFunc onCollision;
+    std::vector<onCollisionFunc> onCollisionList;
 };
 
 } // AGE

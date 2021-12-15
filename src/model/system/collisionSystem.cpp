@@ -30,8 +30,13 @@ void CollisionSystem::onUpdate()
 
             // FIXME: this is a terrible design, fix this later
             if (b1.collideWith(static_cast<CRectBox &>(b2))) {
-                c1.onCollision(e1, e2);
-                c2.onCollision(e2, e1);
+                for (auto onCollision : c1.onCollisionList) {
+                    onCollision(e1, e2);
+                }
+
+                for (auto onCollision : c2.onCollisionList) {
+                    onCollision(e2, e1);
+                }
             }
 
         }
